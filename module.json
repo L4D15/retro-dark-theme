@@ -1,0 +1,15 @@
+{
+    "id": "death-in-space-dark-theme",
+    "title": "Death in Space - Dark Theme",
+    "description": "Dark theme for a void-filled game.",
+    "authors": [
+        {
+            "name": "Ladislao Lainez"
+        }
+    ],
+    "version": "1.0.0",
+    "compatibility": {
+        "minimum": "11",
+        "verified": "11"
+    }
+}
