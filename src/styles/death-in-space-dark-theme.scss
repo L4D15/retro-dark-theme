@@ -1,11 +1,4 @@
-@import './variables';
 @import './imports';
-
-// General UI
-@import 'ui/main-ui';
-@import 'ui/window';
-
-// Sheets
-.sheet.journal-sheet {
-    @import 'sheets/journal-sheet';
-}
+@import './variables';
+@import 'ui/index';
+@import 'sheets/index';

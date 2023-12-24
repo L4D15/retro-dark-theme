@@ -1,0 +1,14 @@
+@import '../variables';
+
+ul#module-list {
+    .package {
+        border-bottom: 1px solid $faded-color;
+
+        .title-group {
+            .title {
+                color: $text-main-color;
+                text-decoration: none;
+            }
+        }
+    }
+}

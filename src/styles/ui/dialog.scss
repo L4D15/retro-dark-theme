@@ -1,0 +1,10 @@
+.dialog-content {
+    font-family: $ui-font;
+    @import './text';
+    @import './inputs';
+}
+
+.dialog-buttons {
+    font-family: $ui-font;
+    @import './inputs';
+}

@@ -1,8 +1,21 @@
 @import '../variables';
 @import './inputs';
+@import './window';
 
 body {
     background: #000;
+}
+
+.dialog {
+    @import './dialog';
+}
+
+.filepicker {
+    @import './filepicker';
+}
+
+#module-management {
+    @import './module-management';
 }
 
 // Scroll Bars

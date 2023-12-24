@@ -1,0 +1,16 @@
+.paths {
+    .path {
+        background: $faded-color;
+        color: $text-main-color;
+        border: none;
+
+        .link,
+        .remove {
+            color: $mutted-color;
+
+            ::before {
+                color: $text-main-color !important;
+            }
+        }
+    }
+}

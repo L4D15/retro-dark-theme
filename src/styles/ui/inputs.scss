@@ -2,7 +2,7 @@ button {
     background: $button-background-color;
     color: $button-text-color;
     font-family: $button-text-font;
-    border: none;
+    border: 1px solid $faded-color;
     border-radius: 3px;
 }
 
@@ -21,5 +21,16 @@ button:hover {
             background-color: $accent-color;
             color: $highlight-color;
         }
+    }
+}
+
+select {
+    color: $text-main-color;
+}
+
+form {
+    input,
+    input[type='text'] {
+        color: $text-main-color;
     }
 }
