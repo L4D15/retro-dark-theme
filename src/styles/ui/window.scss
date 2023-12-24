@@ -12,5 +12,33 @@
         color: $text-main-color;
 
         @import './prosemirror';
+
+        nav.sheet-tabs {
+            border: none;
+            border-top: 1px solid $faded-color;
+            border-bottom: 1px solid $faded-color;
+
+            color: $mutted-color;
+
+            .active {
+                color: $accent-color;
+                text-shadow: none;
+                font-weight: bold;
+            }
+        }
+
+        .notes {
+            font-family: $text-secondary-font;
+            color: $mutted-color;
+            font-style: italic;
+            font-weight: normal;
+            font-size: 0.8rem;
+        }
+
+        hr {
+            border: none;
+            border-bottom: 1px solid $faded-color;
+            margin: 1rem 0 0 1rem;
+        }
     }
 }

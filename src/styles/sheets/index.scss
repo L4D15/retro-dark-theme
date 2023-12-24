@@ -1,3 +1,7 @@
 .sheet.journal-sheet {
-    @import 'journal-sheet';
+    @import './journal-sheet';
+}
+
+.sheet.scene-sheet {
+    @import './scene-sheet';
 }

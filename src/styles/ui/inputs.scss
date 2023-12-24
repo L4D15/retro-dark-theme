@@ -26,11 +26,13 @@ button:hover {
 
 select {
     color: $text-main-color;
+    border: 1px solid $faded-color;
 }
 
 form {
     input,
     input[type='text'] {
         color: $text-main-color;
+        border: 1px solid $faded-color;
     }
 }
