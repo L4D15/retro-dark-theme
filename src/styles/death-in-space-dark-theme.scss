@@ -3,9 +3,9 @@
 
 // General UI
 @import 'ui/main-ui';
+@import 'ui/window';
 
 // Sheets
-
 .sheet.journal-sheet {
     @import 'sheets/journal-sheet';
 }

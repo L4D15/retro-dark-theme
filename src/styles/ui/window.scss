@@ -1,0 +1,16 @@
+@import '../variables';
+
+.window-app {
+    background: $background-color;
+    border: 1px solid $faded-color;
+    background: $background-color;
+    color: $text-main-color;
+    font-family: $ui-font;
+
+    .window-content {
+        background: $background-color;
+        color: $text-main-color;
+
+        @import './prosemirror';
+    }
+}

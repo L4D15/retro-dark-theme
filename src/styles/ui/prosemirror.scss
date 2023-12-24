@@ -1,0 +1,36 @@
+@import '../variables';
+
+.journal-header {
+    color: $mutted-color;
+
+    .title {
+        font-family: $journal-title-font;
+        color: $journal-title-color;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    .page-level {
+        .heading-level {
+            select {
+                color: $text-main-color;
+            }
+        }
+    }
+}
+
+.prosemirror {
+    .editor-menu {
+        @import '../ui/inputs';
+    }
+
+    .editor-container {
+        .editor-content {
+            @import '../ui/text';
+        }
+    }
+
+    textarea {
+        color: $text-main-color;
+    }
+}
