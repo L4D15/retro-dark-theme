@@ -1,1 +1,11 @@
 @import './variables';
+@import './imports';
+
+// General UI
+@import 'ui/main-ui';
+
+// Sheets
+
+.sheet.journal-sheet {
+    @import 'sheets/journal-sheet';
+}

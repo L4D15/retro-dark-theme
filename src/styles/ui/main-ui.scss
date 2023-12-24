@@ -1,0 +1,7 @@
+@import '../variables';
+
+// Scroll Bars
+::-webkit-scrollbar-thumb {
+    background: $scrollbar-color;
+    border: 1px solid $scrollbar-border-color;
+}

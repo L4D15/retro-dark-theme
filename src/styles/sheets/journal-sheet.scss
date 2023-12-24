@@ -1,0 +1,74 @@
+@import '../variables';
+
+&.journal-entry {
+    background: $background-color;
+    color: $text-main-color;
+    font-family: $button-font;
+
+    b {
+        color: $text-highlight-color;
+    }
+
+    .journal-header {
+        .title {
+            color: $title-top-color;
+            font-family: $title-top-font;
+            text-transform: uppercase;
+            font-weight: 900;
+            border: none;
+        }
+    }
+
+    .journal-entry-content {
+        background: $background-color;
+        color: $text-main-color;
+        font-family: $text-main-font;
+        line-height: $text-line-height;
+        font-size: $text-main-size;
+
+        h1 {
+            color: $title-h1-color;
+            font-family: $title-h1-font;
+            font-size: $title-h1-size;
+            font-weight: $title-h1-weight;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        h2 {
+            color: $title-h2-color;
+            font-family: $title-h2-font;
+            font-size: $title-h2-size;
+            font-weight: $title-h2-weight;
+            text-transform: uppercase;
+            border: none;
+            border-bottom: 1px solid $text-mutted-color;
+        }
+
+        h3 {
+            color: $title-h3-color;
+            font-family: $title-h3-font;
+            font-size: $title-h3-size;
+            font-weight: $title-h3-weight;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        h4 {
+            color: $title-h4-color;
+            font-family: $title-h4-font;
+            font-size: $title-h4-size;
+            font-weight: $title-h4-weight;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        h5 {
+            color: $title-h5-color;
+            font-family: $title-h5-font;
+            font-size: $title-h5-size;
+            font-weight: $title-h5-weight;
+            border: none;
+        }
+    }
+}

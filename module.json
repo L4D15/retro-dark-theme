@@ -11,5 +11,7 @@
     "compatibility": {
         "minimum": "11",
         "verified": "11"
-    }
+    },
+    "esmodules": ["death-in-space-dark-theme.bundle.mjs"],
+    "styles": ["death-in-space-dark-theme.css"]
 }

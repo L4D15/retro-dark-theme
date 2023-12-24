@@ -1,5 +1,58 @@
+$background-color: #000;
 
-$main-font: "Inconsolata", sans-serif;
-$main-text-color: #fff;
+$text-main-color: #ddd;
+$text-main-font: 'Inconsolata';
+$text-main-size: 1rem;
+$text-line-height: 1.3rem;
 
-$main-background-color: #000;
+$button-font: 'Roboto', sans-serif;
+
+$title-top-color: #af1c1c;
+$title-top-font: 'Roboto';
+
+$title-h1-color: #fff;
+$title-h1-font: 'Roboto';
+$title-h1-size: 1.6rem;
+$title-h1-weight: bold;
+
+$title-h2-color: #fff;
+$title-h2-font: 'Roboto';
+$title-h2-size: 1.3rem;
+$title-h2-weight: bold;
+
+$title-h3-color: #af1c1c;
+$title-h3-font: 'Inconsolata';
+$title-h3-size: 1rem;
+$title-h3-weight: bold;
+
+$title-h4-color: #fff;
+$title-h4-font: 'Inconsolata';
+$title-h4-size: 1rem;
+$title-h4-weight: normal;
+
+$title-h5-color: #fff;
+$title-h5-font: 'Inconsolata';
+$title-h5-size: 1rem;
+$title-h5-weight: bold;
+
+$link-resolve-color: #fff;
+$link-unresolve-color: #aaa;
+$text-mutted-color: rgb(36, 39, 49);
+$text-highlight-color: #fff;
+
+$line-color: #af1c1c;
+
+// Scroll Bar
+$scrollbar-color: #af1c1c;
+$scrollbar-border-color: #af1c1c;
+
+$table-row-strip-color: rgb(255, 255, 255, 0.06);
+
+$quote-text-color: #fff;
+$quote-background-color: #000;
+$quote-border-color: #af1c1c;
+
+$table-header-font: 'Inconsolata';
+$table-header-color: #fff;
+$table-body-font: 'Inconsolata';
+$table-body-color: #fff;
