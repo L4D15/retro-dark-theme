@@ -24,15 +24,23 @@ button:hover {
     }
 }
 
+label {
+    font-family: $ui-font;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: $mutted-color;
+}
+
 select {
     color: $text-main-color;
     border: 1px solid $faded-color;
 }
 
+input,
+input[type='text'] {
+    color: $text-main-color;
+    border: 1px solid $faded-color;
+}
+
 form {
-    input,
-    input[type='text'] {
-        color: $text-main-color;
-        border: 1px solid $faded-color;
-    }
 }

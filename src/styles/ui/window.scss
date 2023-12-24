@@ -7,10 +7,15 @@
     color: $text-main-color;
     font-family: $ui-font;
 
+    .window-header {
+        border-bottom: 1px solid $faded-color;
+    }
+
     .window-content {
         background: $background-color;
         color: $text-main-color;
 
+        @import './inputs';
         @import './prosemirror';
 
         nav.sheet-tabs {
