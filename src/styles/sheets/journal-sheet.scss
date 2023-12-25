@@ -1,10 +1,62 @@
 @import '../variables';
 
+.sidebar {
+    // Journal Improvemens specific
+    .journal-header {
+        input[type='text'] {
+            background: $background-color;
+            font-family: $journal-title-font;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: $accent-color;
+            border: 1px solid $faded-color;
+
+            &:focus {
+                border: 1px solid $accent-color;
+                box-shadow: none;
+            }
+        }
+    }
+
+    // ---
+
+    nav.pages-list {
+        .directory-list {
+            .directory-item {
+                border: none;
+
+                .page-heading {
+                    &:hover {
+                        text-shadow: none;
+                        color: $accent-color;
+                    }
+                }
+
+                .headings {
+                    .heading {
+                        &:hover {
+                            text-shadow: none;
+                            color: $accent-color;
+                        }
+                    }
+                }
+
+                &.active {
+                    border: none;
+                    border-top: 1px solid $accent-color;
+                    border-bottom: 1px solid $accent-color;
+                }
+            }
+        }
+    }
+}
+
 &.journal-entry {
     .journal-header {
         .title {
             color: $title-top-color;
             font-family: $title-top-font;
+            font-style: normal;
             text-transform: uppercase;
             font-weight: 900;
             border: none;
@@ -22,7 +74,7 @@
                 font-family: $journal-title-font;
                 color: $journal-title-color;
                 font-style: italic;
-                font-weight: bold;
+                font-weight: normal;
                 border: none;
                 margin-top: 0.5rem;
             }

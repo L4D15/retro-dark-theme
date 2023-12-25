@@ -38,8 +38,14 @@ select {
 
 input,
 input[type='text'] {
+    background: $background-color;
     color: $text-main-color;
     border: 1px solid $faded-color;
+
+    &:focus {
+        border: 1px solid $accent-color;
+        box-shadow: none;
+    }
 }
 
 form {

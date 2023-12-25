@@ -23,12 +23,19 @@
             border-top: 1px solid $faded-color;
             border-bottom: 1px solid $faded-color;
 
-            color: $mutted-color;
+            .item {
+                color: $mutted-color;
 
-            .active {
-                color: $accent-color;
-                text-shadow: none;
-                font-weight: bold;
+                &:hover {
+                    color: $accent-color;
+                    text-shadow: none;
+                }
+
+                &.active {
+                    color: $highlight-color;
+                    text-shadow: none;
+                    font-weight: bold;
+                }
             }
         }
 
