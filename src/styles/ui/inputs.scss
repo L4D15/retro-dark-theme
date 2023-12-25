@@ -2,6 +2,7 @@ button {
     background: $button-background-color;
     color: $button-text-color;
     font-family: $button-text-font;
+    font-size: 0.75rem;
     border: 1px solid $faded-color;
     border-radius: 3px;
 }
