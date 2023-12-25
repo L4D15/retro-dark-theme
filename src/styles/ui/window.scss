@@ -1,6 +1,6 @@
 @import '../variables';
 
-.window-app {
+.window-app:not(.actor) {
     background: $background-color;
     border: 1px solid $faded-color;
     background: $background-color;
