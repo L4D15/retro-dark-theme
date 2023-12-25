@@ -1,0 +1,36 @@
+.chat-message {
+    background: $background-color;
+    border: 1px solid $faded-color;
+    border-radius: 3px;
+    color: $text-main-color;
+
+    .message-header {
+        border-bottom: 1px solid $faded-color;
+        color: $mutted-color;
+        font-family: $text-secondary-font;
+    }
+
+    .message-content {
+        .dice-roll {
+            .dice-result {
+                .dice-formula {
+                    font-family: $text-secondary-font;
+                    font-style: italic;
+                    color: $mutted-color;
+                    border: 1px solid $faded-color;
+                }
+
+                .dice-total {
+                    font-family: $ui-font;
+                    color: $highlight-color;
+                    border: 1px solid $faded-color;
+                }
+            }
+        }
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid $faded-color;
+    }
+}

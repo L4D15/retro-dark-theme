@@ -36,6 +36,39 @@
 }
 
 #ui-right {
+    #sidebar {
+        background: $background-color;
+        border: 1px solid $faded-color;
+        color: $mutted-color;
+        font-family: $ui-font;
+
+        nav#sidebar-tabs {
+            border-bottom: 1px solid $faded-color;
+
+            .item {
+                border: none;
+                color: $mutted-color;
+                border-radius: 3px;
+
+                &:hover {
+                    color: $accent-color;
+                    text-shadow: none;
+                }
+
+                &.active {
+                    box-shadow: none;
+                    text-shadow: none;
+                    color: $highlight-color;
+                }
+            }
+        }
+
+        .chat-sidebar {
+            #chat-log {
+                @import './chat';
+            }
+        }
+    }
 }
 
 #ui-middle {
