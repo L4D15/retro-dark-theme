@@ -64,10 +64,8 @@
             }
         }
 
-        .chat-sidebar {
-            #chat-log {
-                @import './chat';
-            }
+        .tab#chat {
+            @import './chat';
         }
     }
 }

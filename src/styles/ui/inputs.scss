@@ -33,6 +33,7 @@ label {
 }
 
 select {
+    background: $background-color;
     color: $text-main-color;
     border: 1px solid $faded-color;
 }
@@ -43,11 +44,21 @@ input[type='text'] {
     color: $text-main-color;
     border: 1px solid $faded-color;
 
-    &:focus {
+    &:focus,
+    &:active {
         border: 1px solid $accent-color;
         box-shadow: none;
     }
 }
 
-form {
+textarea {
+    background: $background-color;
+    border: 1px solid $faded-color;
+    border-radius: 3px;
+    color: $text-main-color;
+
+    &:focus {
+        box-shadow: none;
+        border: 1px solid $accent-color;
+    }
 }
