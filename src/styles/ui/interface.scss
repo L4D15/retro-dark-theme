@@ -67,6 +67,10 @@
         .tab#chat {
             @import './chat';
         }
+
+        .tab#combat {
+            @import './combat';
+        }
     }
 }
 
