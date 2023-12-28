@@ -13,6 +13,8 @@
         }
 
         .message-content {
+            @import '../ui/text';
+
             .dice-roll {
                 .dice-result {
                     .dice-formula {
