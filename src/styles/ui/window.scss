@@ -1,18 +1,20 @@
 @import '../variables';
 
 .window-app:not(.actor):not(.item) {
-    background: $background-color;
+    background: none;
     border: 1px solid $faded-color;
-    background: $background-color;
     color: $text-main-color;
     font-family: $ui-font;
 
     .window-header {
+        background: $background-color;
         border-bottom: 1px solid $faded-color;
     }
 
     .window-content {
-        background: $background-color;
+        background: $transparent-background-color;
+        backdrop-filter: $transparent-background-filter;
+        -webkit-backdrop-filter: $transparent-background-filter;
         color: $text-main-color;
 
         @import './inputs';

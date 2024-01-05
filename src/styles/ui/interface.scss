@@ -37,7 +37,9 @@
 
 #ui-right {
     #sidebar {
-        background: $background-color;
+        background: $transparent-background-color;
+        backdrop-filter: $transparent-background-filter;
+        -webkit-backdrop-filter: $transparent-background-filter;
         border: 1px solid $faded-color;
         color: $mutted-color;
         font-family: $ui-font;
