@@ -8,18 +8,18 @@ $mutted-color: #aaa;
 $faded-color: #242731;
 
 // General UI
-$ui-font: 'IBM Plex Mono', monospace;
+$ui-font: 'PT Sans', monospace;
 
 $text-main-color: #ddd;
-$text-main-font: 'Inconsolata', sans-serif;
+$text-main-font: 'PT Sans', sans-serif;
 $text-main-size: 1rem;
-$text-line-height: 1.3rem;
-$text-secondary-font: 'IBM Plex Mono', monospace;
+$text-line-height: 1.5rem;
+$text-secondary-font: 'Roboto', monospace;
 
 $title-top-color: #af1c1c;
 $title-top-font: 'Roboto';
 
-$journal-title-font: 'IBM Plex Mono', monospace;
+$journal-title-font: 'PT Sans', monospace;
 $journal-title-color: #aaa;
 
 $title-h1-color: #fff;
@@ -33,17 +33,17 @@ $title-h2-size: 1.3rem;
 $title-h2-weight: bold;
 
 $title-h3-color: #af1c1c;
-$title-h3-font: 'Inconsolata';
+$title-h3-font: 'PT Sans';
 $title-h3-size: 1rem;
 $title-h3-weight: bold;
 
 $title-h4-color: #fff;
-$title-h4-font: 'Inconsolata';
+$title-h4-font: 'PT Sans';
 $title-h4-size: 1rem;
 $title-h4-weight: normal;
 
 $title-h5-color: #fff;
-$title-h5-font: 'Inconsolata';
+$title-h5-font: 'PT Sans';
 $title-h5-size: 1rem;
 $title-h5-weight: bold;
 
@@ -60,9 +60,9 @@ $scrollbar-border-color: #ddd;
 
 // Tables
 $table-row-strip-color: rgb(255, 255, 255, 0.06);
-$table-header-font: 'Inconsolata';
+$table-header-font: 'PT Sans';
 $table-header-color: #fff;
-$table-body-font: 'Inconsolata';
+$table-body-font: 'PT Sans';
 $table-body-color: #fff;
 
 // Quotes
@@ -73,4 +73,4 @@ $quote-border-color: #af1c1c;
 // Buttons
 $button-background-color: #000;
 $button-text-color: #aaa;
-$button-text-font: 'IBM Plex Mono', monospace;
+$button-text-font: 'PT Sans', monospace;
