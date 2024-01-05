@@ -28,15 +28,12 @@ module.exports = (env, argv) => {
     const devOutputPath = path.join(
         foundryConfig.data_folder,
         'modules',
-        'death-in-space-dark-theme'
+        'minimal-dark-theme'
     );
 
     let config = {
         context: __dirname,
-        entry: path.resolve(
-            __dirname,
-            './src/module/death-in-space-dark-theme.mjs'
-        ),
+        entry: path.resolve(__dirname, './src/module/minimal-dark-theme.mjs'),
         module: {
             rules: [
                 {
@@ -52,19 +49,19 @@ module.exports = (env, argv) => {
         plugins: [
             new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
             new MiniCssExtractPlugin({
-                filename: 'death-in-space-dark-theme.css',
+                filename: 'minimal-dark-theme.css',
             }),
             new CopyPlugin({
                 patterns: [{ from: 'module.json' }],
             }),
             new ZipPlugin({
                 path: '..',
-                filename: 'death-in-space-dark-theme.zip',
+                filename: 'minimal-dark-theme.zip',
             }),
         ],
         output: {
-            filename: 'death-in-space-dark-theme.bundle.mjs',
-            path: path.resolve(__dirname, 'dist/death-in-space-dark-theme'),
+            filename: 'minimal-dark-theme.bundle.mjs',
+            path: path.resolve(__dirname, 'dist/minimal-dark-theme'),
         },
     };
 
@@ -77,7 +74,7 @@ module.exports = (env, argv) => {
             config.output.path = path.join(
                 foundryConfig.data_folder,
                 'modules',
-                'death-in-space-dark-theme'
+                'minimal-dark-theme'
             );
         }
 

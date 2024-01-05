@@ -1,6 +1,6 @@
 {
-    "id": "death-in-space-dark-theme",
-    "title": "Death in Space - Dark Theme",
+    "id": "minimal-dark-theme",
+    "title": "Minimal - Dark Theme",
     "description": "Dark theme for a void-filled game.",
     "authors": [
         {
@@ -12,8 +12,8 @@
         "minimum": "11",
         "verified": "11"
     },
-    "esmodules": ["death-in-space-dark-theme.bundle.mjs"],
-    "styles": ["death-in-space-dark-theme.css"],
+    "esmodules": ["minimal-dark-theme.bundle.mjs"],
+    "styles": ["minimal-dark-theme.css"],
     "manifest": "https://raw.githubusercontent.com/L4D15/death-in-space-dark-theme/1.0.1/module.json",
     "download": "https://github.com/L4D15/death-in-space-dark-theme/releases/download/1.0.1/death-in-space-dark-theme.zip"
 }

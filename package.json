@@ -1,7 +1,7 @@
 {
-    "name": "death-in-space-dark-theme",
+    "name": "minimal-dark-theme",
     "version": "1.0.1",
-    "description": "Death in Space dark theme for FoundryVTT",
+    "description": "Minimalistic Dark theme for FoundryVTT",
     "scripts": {
         "build": "webpack --mode production",
         "build:dev": "webpack"
