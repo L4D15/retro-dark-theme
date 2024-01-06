@@ -1,0 +1,23 @@
+.system-mosh {
+    // Chat cards
+    #interface {
+        #ui-right {
+            #sidebar {
+                .chat-sidebar {
+                    #chat-log {
+                        .chat-message {
+                            .message-content {
+                                .mosh {
+                                    .rollcontainer {
+                                        background: none;
+                                        font-family: $ui-font;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

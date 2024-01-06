@@ -14,6 +14,7 @@
 
         .message-content {
             @import '../ui/text';
+            font-family: $ui-font;
 
             .dice-roll {
                 .dice-result {
