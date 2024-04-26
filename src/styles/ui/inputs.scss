@@ -29,7 +29,7 @@ label {
     font-family: $ui-font;
     font-weight: bold;
     font-size: 0.8rem;
-    color: $mutted-color;
+    color: $text-main-color;
 }
 
 select {
@@ -54,6 +54,10 @@ input[type='text'] {
         background: $faded-color;
         color: $mutted-color;
     }
+}
+
+input[type='range'] {
+    border: none;
 }
 
 textarea {

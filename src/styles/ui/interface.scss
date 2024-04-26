@@ -28,7 +28,6 @@
     }
 
     #players {
-        background: $background-color;
         border: 1px solid $faded-color;
         color: $mutted-color;
         font-family: $ui-font;
@@ -37,9 +36,6 @@
 
 #ui-right {
     #sidebar {
-        background: $transparent-background-color;
-        backdrop-filter: $transparent-background-filter;
-        -webkit-backdrop-filter: $transparent-background-filter;
         border: 1px solid $faded-color;
         color: $mutted-color;
         font-family: $ui-font;
@@ -81,7 +77,7 @@
         nav#navigation {
             #scene-list {
                 .scene {
-                    background: $background-color;
+                    background: $button-background-color;
                     color: $mutted-color;
                     border: 1px solid $faded-color;
                     box-shadow: none;

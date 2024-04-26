@@ -1,0 +1,11 @@
+@import '../variables';
+
+.creaturedescription {
+    .editor {
+        @import '../ui/text';
+    }
+}
+
+.sheet-body {
+    @import '../ui/text';
+}

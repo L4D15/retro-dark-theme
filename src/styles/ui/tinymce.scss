@@ -1,0 +1,19 @@
+@import '../variables';
+
+.tinymce {
+    .tox-tinymce {
+        .tox-editor-header {
+            @import '../ui/inputs';
+        }
+    }
+
+    .tox-sidebar-wrap {
+        .tox-edit-area {
+            @import '../ui/text';
+        }
+    }
+
+    textarea {
+        color: $text-main-color;
+    }
+}

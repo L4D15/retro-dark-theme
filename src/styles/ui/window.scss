@@ -1,24 +1,14 @@
 @import '../variables';
 
 .window-app:not(.actor):not(.item) {
-    background: none;
-    border: 1px solid $faded-color;
-    color: $text-main-color;
     font-family: $ui-font;
 
-    .window-header {
-        background: $background-color;
-        border-bottom: 1px solid $faded-color;
-    }
-
     .window-content {
-        background: $transparent-background-color;
-        backdrop-filter: $transparent-background-filter;
-        -webkit-backdrop-filter: $transparent-background-filter;
         color: $text-main-color;
 
         @import './inputs';
         @import './prosemirror';
+        @import './tinymce';
 
         nav.sheet-tabs {
             border: none;

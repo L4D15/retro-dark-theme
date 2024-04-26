@@ -1,14 +1,10 @@
 @import '../variables';
 
 .journal-header {
-    color: $journal-title-color;
-    background: $journal-header-background;
-
     .title {
         font-family: $journal-title-font;
-        color: $journal-title-color;
-        font-style: italic;
         font-weight: bold;
+        color: $text-main-color;
     }
 
     .page-level {
