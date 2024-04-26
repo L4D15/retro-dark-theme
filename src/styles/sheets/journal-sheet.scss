@@ -64,23 +64,33 @@
     }
 
     .journal-entry-content {
-        background: transparent;
+        background: $journal-background;
 
         .journal-page-header {
             border: none;
+            font-family: $journal-title-font;
             text-align: center;
+            background: $journal-header-background;
+            color: $journal-title-color;
+
+            input[type='text'] {
+                font-family: $journal-title-font;
+                color: $journal-title-color;
+            }
 
             h1 {
                 font-family: $journal-title-font;
                 color: $journal-title-color;
-                font-style: italic;
-                font-weight: normal;
+                font-style: normal;
+                font-weight: bold;
                 border: none;
                 margin-top: 0.5rem;
             }
         }
 
         .journal-page-content {
+            background: none;
+            color: $journal-text-color;
             @import '../ui/text';
         }
     }

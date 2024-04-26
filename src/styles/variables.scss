@@ -11,40 +11,46 @@ $faded-color: #242731;
 $ui-font: 'PT Sans', monospace;
 
 $text-main-color: #ddd;
-$text-main-font: 'PT Sans', sans-serif;
-$text-main-size: 1rem;
-$text-line-height: 1.5rem;
-$text-secondary-font: 'Roboto', monospace;
+$text-main-font: 'Roboto', sans-serif;
+$text-main-size: 0.9rem;
+$text-line-height: 1.2rem;
+$text-secondary-font: 'Roboto', sans-serif;
+
+// Journal
+
+$journal-background: #fff;
+$journal-text-color: #000;
 
 $title-top-color: #af1c1c;
-$title-top-font: 'Roboto';
+$title-top-font: 'Bebas Neue', sans-serif;
 
-$journal-title-font: 'PT Sans', monospace;
-$journal-title-color: #aaa;
+$journal-header-background: #000;
+$journal-title-font: 'Bebas Neue', monospace;
+$journal-title-color: #fff;
 
 $title-h1-color: #fff;
-$title-h1-font: 'Roboto';
+$title-h1-font: 'Bebas Neue';
 $title-h1-size: 1.6rem;
 $title-h1-weight: bold;
 
 $title-h2-color: #fff;
-$title-h2-font: 'Roboto';
+$title-h2-font: 'PT Sans Caption';
 $title-h2-size: 1.3rem;
 $title-h2-weight: bold;
 
 $title-h3-color: #af1c1c;
-$title-h3-font: 'PT Sans';
-$title-h3-size: 1rem;
+$title-h3-font: 'Roboto';
+$title-h3-size: 1.1rem;
 $title-h3-weight: bold;
 
 $title-h4-color: #fff;
-$title-h4-font: 'PT Sans';
+$title-h4-font: 'Roboto';
 $title-h4-size: 1rem;
 $title-h4-weight: normal;
 
 $title-h5-color: #fff;
-$title-h5-font: 'PT Sans';
-$title-h5-size: 1rem;
+$title-h5-font: 'Roboto';
+$title-h5-size: 0.9rem;
 $title-h5-weight: bold;
 
 $link-resolve-color: #fff;
@@ -74,3 +80,10 @@ $quote-border-color: #af1c1c;
 $button-background-color: #000;
 $button-text-color: #aaa;
 $button-text-font: 'PT Sans', monospace;
+
+// Table
+$table-border: none;
+
+$table-header-background: #000;
+$table-header-color: #fff;
+$table-header-font: 'Bebas Neue', sans-serif;
