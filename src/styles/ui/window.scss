@@ -2,9 +2,13 @@
 
 .window-app:not(.actor):not(.item) {
     font-family: $ui-font;
+    color: $ui-main-color;
 
     .window-content {
-        color: $text-main-color;
+        color: $ui-main-color;
+        background: $transparent-background-color;
+        backdrop-filter: $transparent-background-filter;
+        -webkit-backdrop-filter: $transparent-background-filter;
 
         @import './inputs';
         @import './prosemirror';

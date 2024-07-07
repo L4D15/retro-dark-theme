@@ -1,7 +1,7 @@
 .paths {
     .path {
         background: $faded-color;
-        color: $text-main-color;
+        color: $ui-main-color;
         border: none;
 
         .link,
@@ -9,7 +9,7 @@
             color: $mutted-color;
 
             ::before {
-                color: $text-main-color !important;
+                color: $ui-main-color !important;
             }
         }
     }

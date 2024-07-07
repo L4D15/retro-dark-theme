@@ -4,13 +4,13 @@
     .title {
         font-family: $journal-title-font;
         font-weight: bold;
-        color: $text-main-color;
+        color: $ui-main-color;
     }
 
     .page-level {
         .heading-level {
             select {
-                color: $text-main-color;
+                color: $ui-main-color;
             }
         }
     }
@@ -28,6 +28,6 @@
     }
 
     textarea {
-        color: $text-main-color;
+        color: $journal-text-color;
     }
 }
