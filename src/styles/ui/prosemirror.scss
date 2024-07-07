@@ -17,6 +17,9 @@
 }
 
 .prosemirror {
+    background: $journal-background;
+    color: $journal-text-color;
+
     .editor-menu {
         @import '../ui/inputs';
     }

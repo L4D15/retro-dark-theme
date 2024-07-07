@@ -1,8 +1,16 @@
 @import '../variables';
 
+.window-app {
+    border: $ui-window-border;
+}
+
 .window-app:not(.actor):not(.item) {
     font-family: $ui-font;
     color: $ui-main-color;
+
+    .window-header {
+        background: $ui-header-background-color;
+    }
 
     .window-content {
         color: $ui-main-color;
