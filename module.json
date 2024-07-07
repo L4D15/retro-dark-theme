@@ -7,13 +7,13 @@
             "name": "Ladislao Lainez"
         }
     ],
-    "version": "1.0.1",
+    "version": "2.0.0",
     "compatibility": {
         "minimum": "11",
-        "verified": "11"
+        "verified": "12"
     },
     "esmodules": ["minimal-dark-theme.bundle.mjs"],
     "styles": ["minimal-dark-theme.css"],
-    "manifest": "https://raw.githubusercontent.com/L4D15/death-in-space-dark-theme/1.0.1/module.json",
-    "download": "https://github.com/L4D15/death-in-space-dark-theme/releases/download/1.0.1/death-in-space-dark-theme.zip"
+    "manifest": "https://raw.githubusercontent.com/L4D15/minimal-dark-theme/2.0.0/module.json",
+    "download": "https://github.com/L4D15/minimal-dark-theme/releases/download/2.0.0/minimal-dark-theme.zip"
 }

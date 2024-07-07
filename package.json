@@ -1,6 +1,6 @@
 {
     "name": "minimal-dark-theme",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "Minimalistic Dark theme for FoundryVTT",
     "scripts": {
         "build": "webpack --mode production",
