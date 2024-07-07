@@ -39,9 +39,10 @@ select {
 }
 
 input,
-input[type='text'] {
-    background: $background-color;
-    color: $ui-main-color;
+input[type='text'],
+textarea {
+    background: $input-background-color;
+    color: $input-text-color;
     border: 1px solid $faded-color;
 
     &:focus,
@@ -59,16 +60,4 @@ input[type='text'] {
 input[type='range'] {
     border: none;
     background: none;
-}
-
-textarea {
-    background: $background-color;
-    border: 1px solid $faded-color;
-    border-radius: 3px;
-    color: $ui-main-color;
-
-    &:focus {
-        box-shadow: none;
-        border: 1px solid $accent-color;
-    }
 }

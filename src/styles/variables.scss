@@ -1,4 +1,4 @@
-$transparent-background-color: #00000081;
+$transparent-background-color: #00000064;
 $transparent-background-filter: blur(5px);
 $background-color: #fff;
 $highlight-color: #fff;
@@ -61,6 +61,10 @@ $text-highlight-color: #fff;
 
 $line-color: #af1c1c;
 
+// Inputs
+$input-background-color: #242731;
+$input-text-color: #fff;
+
 // Scroll Bar
 $scrollbar-color: #ddd;
 $scrollbar-border-color: #ddd;
@@ -82,9 +86,20 @@ $button-background-color: #000;
 $button-text-color: #aaa;
 $button-text-font: 'PT Sans', monospace;
 
+// Numbers
+$number-font: 'PT Sans Caption', serif;
+$number-weight: bold;
+
 // Table
 $table-border: none;
 
 $table-header-background: #000;
 $table-header-color: #fff;
 $table-header-font: 'Bebas Neue', sans-serif;
+
+// Chat
+$chat-msg-background: #171619;
+$chat-msg-color: #fff;
+$chat-msg-border: 1px solid #242731;
+$chat-msg-header-background: #242731;
+$chat-msg-header-color: #aaa;

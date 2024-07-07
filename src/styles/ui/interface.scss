@@ -62,12 +62,19 @@
             }
         }
 
-        .tab#chat {
-            @import './chat';
-        }
+        .tab {
+            color: $ui-main-color;
+            background: $transparent-background-color;
+            backdrop-filter: $transparent-background-filter;
+            -webkit-backdrop-filter: $transparent-background-filter;
 
-        .tab#combat {
-            @import './combat';
+            &#chat {
+                @import './chat';
+            }
+
+            &#combat {
+                @import './combat';
+            }
         }
     }
 }

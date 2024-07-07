@@ -4,57 +4,59 @@
     border: $ui-window-border;
 }
 
-.window-app:not(.actor):not(.item) {
-    font-family: $ui-font;
-    color: $ui-main-color;
-
-    .window-header {
-        background: $ui-header-background-color;
-    }
-
-    .window-content {
+.window-app {
+    &:not(.item):not(.actor) {
+        font-family: $ui-font;
         color: $ui-main-color;
-        background: $transparent-background-color;
-        backdrop-filter: $transparent-background-filter;
-        -webkit-backdrop-filter: $transparent-background-filter;
 
-        @import './inputs';
-        @import './prosemirror';
-        @import './tinymce';
+        .window-header {
+            background: $ui-header-background-color;
+        }
 
-        nav.sheet-tabs {
-            border: none;
-            border-top: 1px solid $faded-color;
-            border-bottom: 1px solid $faded-color;
+        .window-content {
+            color: $ui-main-color;
+            background: $transparent-background-color;
+            backdrop-filter: $transparent-background-filter;
+            -webkit-backdrop-filter: $transparent-background-filter;
 
-            .item {
-                color: $mutted-color;
+            @import './inputs';
+            @import './prosemirror';
+            @import './tinymce';
 
-                &:hover {
-                    color: $accent-color;
-                    text-shadow: none;
-                }
+            nav.sheet-tabs {
+                border: none;
+                border-top: 1px solid $faded-color;
+                border-bottom: 1px solid $faded-color;
 
-                &.active {
-                    color: $highlight-color;
-                    text-shadow: none;
-                    font-weight: bold;
+                .item {
+                    color: $mutted-color;
+
+                    &:hover {
+                        color: $accent-color;
+                        text-shadow: none;
+                    }
+
+                    &.active {
+                        color: $highlight-color;
+                        text-shadow: none;
+                        font-weight: bold;
+                    }
                 }
             }
-        }
 
-        .notes {
-            font-family: $ui-font;
-            color: $mutted-color;
-            font-style: italic;
-            font-weight: normal;
-            font-size: 0.8rem;
-        }
+            .notes {
+                font-family: $ui-font;
+                color: $mutted-color;
+                font-style: italic;
+                font-weight: normal;
+                font-size: 0.8rem;
+            }
 
-        hr {
-            border: none;
-            border-bottom: 1px solid $faded-color;
-            margin: 1rem 0 0 1rem;
+            hr {
+                border: none;
+                border-bottom: 1px solid $faded-color;
+                margin: 1rem 0 0 1rem;
+            }
         }
     }
 }
