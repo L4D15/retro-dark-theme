@@ -1,25 +1,25 @@
 @import '../variables';
 
 .journal-header {
-    color: $mutted-color;
-
     .title {
         font-family: $journal-title-font;
-        color: $journal-title-color;
-        font-style: italic;
         font-weight: bold;
+        color: $ui-main-color;
     }
 
     .page-level {
         .heading-level {
             select {
-                color: $text-main-color;
+                color: $ui-main-color;
             }
         }
     }
 }
 
 .prosemirror {
+    background: $journal-background;
+    color: $journal-text-color;
+
     .editor-menu {
         @import '../ui/inputs';
     }
@@ -31,6 +31,6 @@
     }
 
     textarea {
-        color: $text-main-color;
+        color: $journal-text-color;
     }
 }

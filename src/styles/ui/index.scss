@@ -6,10 +6,6 @@ body {
     font-family: $ui-font;
 }
 
-.window-app:not(.actor) {
-    @import './inputs';
-}
-
 #interface {
     @import './interface';
     @import './inputs';

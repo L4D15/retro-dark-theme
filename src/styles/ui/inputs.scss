@@ -29,19 +29,20 @@ label {
     font-family: $ui-font;
     font-weight: bold;
     font-size: 0.8rem;
-    color: $mutted-color;
+    color: $ui-main-color;
 }
 
 select {
-    background: $background-color;
-    color: $text-main-color;
+    background: $faded-color;
+    color: $ui-main-color;
     border: 1px solid $faded-color;
 }
 
 input,
-input[type='text'] {
-    background: $background-color;
-    color: $text-main-color;
+input[type='text'],
+textarea {
+    background: $input-background-color;
+    color: $input-text-color;
     border: 1px solid $faded-color;
 
     &:focus,
@@ -56,14 +57,14 @@ input[type='text'] {
     }
 }
 
-textarea {
-    background: $background-color;
-    border: 1px solid $faded-color;
-    border-radius: 3px;
-    color: $text-main-color;
-
-    &:focus {
-        box-shadow: none;
-        border: 1px solid $accent-color;
-    }
+input[type='number'] {
+    font-family: $number-font;
+    font-weight: $number-weight;
 }
+
+range-picker {
+    border: none;
+    background: none;
+}
+
+@import './table';

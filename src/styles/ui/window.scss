@@ -1,24 +1,37 @@
 @import '../variables';
 
-.window-app:not(.actor):not(.item) {
-    background: none;
-    border: 1px solid $faded-color;
-    color: $text-main-color;
+.window-app {
+    border: $ui-window-border;
+}
+
+.window-app:not(.item):not(.actor) {
     font-family: $ui-font;
+    color: $ui-main-color;
+
+    &.journal-sheet {
+        background: none;
+
+        .window-content {
+            background: none;
+
+            aside.sidebar {
+                background: $journal-sidebar-background;
+            }
+        }
+    }
 
     .window-header {
-        background: $background-color;
-        border-bottom: 1px solid $faded-color;
+        background: $ui-header-background-color;
     }
 
     .window-content {
-        background: $transparent-background-color;
-        backdrop-filter: $transparent-background-filter;
-        -webkit-backdrop-filter: $transparent-background-filter;
-        color: $text-main-color;
+        color: $ui-main-color;
+        background: $ui-window-background;
 
         @import './inputs';
         @import './prosemirror';
+        @import './tinymce';
+        @import './table';
 
         nav.sheet-tabs {
             border: none;
@@ -42,7 +55,7 @@
         }
 
         .notes {
-            font-family: $text-secondary-font;
+            font-family: $ui-font;
             color: $mutted-color;
             font-style: italic;
             font-weight: normal;

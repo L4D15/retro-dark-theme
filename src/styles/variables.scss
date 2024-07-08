@@ -1,50 +1,58 @@
-$background-color: #000;
-$transparent-background-color: #000000ce;
-$transparent-background-filter: blur(5px);
-$main-color: #ddd;
+$background-color: #fff;
 $highlight-color: #fff;
 $accent-color: #af1c1c;
 $mutted-color: #aaa;
 $faded-color: #242731;
 
 // General UI
-$ui-font: 'IBM Plex Mono', monospace;
+$ui-font: 'PT Sans', monospace;
+$ui-header-background-color: #242731;
+$ui-background-color: #000;
+$ui-main-color: #ddd;
+$ui-window-border: 1px solid #242731;
+$ui-window-background: #000;
+$ui-tab-background: #000000a6;
 
-$text-main-color: #ddd;
-$text-main-font: 'Inconsolata', sans-serif;
-$text-main-size: 1rem;
-$text-line-height: 1.3rem;
-$text-secondary-font: 'IBM Plex Mono', monospace;
+$text-main-font: 'Roboto', sans-serif;
+$text-main-size: 0.9rem;
+$text-line-height: 1.2rem;
+$text-secondary-font: 'Roboto', sans-serif;
+
+// Journal
+$journal-background: #171619;
+$journal-text-color: #aaa;
 
 $title-top-color: #af1c1c;
-$title-top-font: 'Roboto';
+$title-top-font: 'Bebas Neue', sans-serif;
 
-$journal-title-font: 'IBM Plex Mono', monospace;
-$journal-title-color: #aaa;
+$journal-sidebar-background: #000000d1;
+$journal-header-background: #000;
+$journal-title-font: 'Bebas Neue', monospace;
+$journal-title-color: #fff;
 
 $title-h1-color: #fff;
-$title-h1-font: 'Roboto';
+$title-h1-font: 'Bebas Neue';
 $title-h1-size: 1.6rem;
 $title-h1-weight: bold;
 
 $title-h2-color: #fff;
-$title-h2-font: 'Roboto';
+$title-h2-font: 'PT Sans Caption';
 $title-h2-size: 1.3rem;
 $title-h2-weight: bold;
 
 $title-h3-color: #af1c1c;
-$title-h3-font: 'Inconsolata';
-$title-h3-size: 1rem;
+$title-h3-font: 'Roboto';
+$title-h3-size: 1.1rem;
 $title-h3-weight: bold;
 
 $title-h4-color: #fff;
-$title-h4-font: 'Inconsolata';
+$title-h4-font: 'Roboto';
 $title-h4-size: 1rem;
 $title-h4-weight: normal;
 
 $title-h5-color: #fff;
-$title-h5-font: 'Inconsolata';
-$title-h5-size: 1rem;
+$title-h5-font: 'Roboto';
+$title-h5-size: 0.9rem;
 $title-h5-weight: bold;
 
 $link-resolve-color: #fff;
@@ -54,15 +62,21 @@ $text-highlight-color: #fff;
 
 $line-color: #af1c1c;
 
+// Inputs
+$input-background-color: #242731;
+$input-text-color: #fff;
+
 // Scroll Bar
 $scrollbar-color: #ddd;
 $scrollbar-border-color: #ddd;
 
 // Tables
+$table-border: 1px solid #242731;
+$table-header-background: #242731;
 $table-row-strip-color: rgb(255, 255, 255, 0.06);
-$table-header-font: 'Inconsolata';
-$table-header-color: #fff;
-$table-body-font: 'Inconsolata';
+$table-header-font: 'PT Sans Caption';
+$table-header-color: #aaa;
+$table-body-font: 'PT Sans';
 $table-body-color: #fff;
 
 // Quotes
@@ -73,4 +87,15 @@ $quote-border-color: #af1c1c;
 // Buttons
 $button-background-color: #000;
 $button-text-color: #aaa;
-$button-text-font: 'IBM Plex Mono', monospace;
+$button-text-font: 'PT Sans', monospace;
+
+// Numbers
+$number-font: 'PT Sans Caption', serif;
+$number-weight: bold;
+
+// Chat
+$chat-msg-background: #171619;
+$chat-msg-color: #fff;
+$chat-msg-border: 1px solid #242731;
+$chat-msg-header-background: #242731;
+$chat-msg-header-color: #aaa;

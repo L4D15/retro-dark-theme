@@ -1,4 +1,4 @@
-import '../styles/death-in-space-dark-theme.scss';
+import '../styles/minimal-dark-theme.scss';
 
 Hooks.once('init', function () {});
 

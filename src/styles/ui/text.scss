@@ -1,53 +1,40 @@
 p {
     font-family: $text-main-font;
-    color: $text-main-color;
     font-size: $text-main-size;
     line-height: $text-line-height;
 }
 
-b {
-    color: $text-highlight-color;
-}
-
 h1 {
-    color: $title-h1-color;
     font-family: $title-h1-font;
     font-size: $title-h1-size;
     font-weight: $title-h1-weight;
     text-transform: uppercase;
     border: none;
+    border-bottom: 2px solid #242731;
 }
 
 h2 {
-    color: $title-h2-color;
     font-family: $title-h2-font;
     font-size: $title-h2-size;
     font-weight: $title-h2-weight;
-    text-transform: uppercase;
     border: none;
-    border-bottom: 1px solid $text-mutted-color;
 }
 
 h3 {
-    color: $title-h3-color;
     font-family: $title-h3-font;
     font-size: $title-h3-size;
     font-weight: $title-h3-weight;
-    text-transform: uppercase;
     border: none;
 }
 
 h4 {
-    color: $title-h4-color;
     font-family: $title-h4-font;
     font-size: $title-h4-size;
     font-weight: $title-h4-weight;
-    text-transform: uppercase;
     border: none;
 }
 
 h5 {
-    color: $title-h5-color;
     font-family: $title-h5-font;
     font-size: $title-h5-size;
     font-weight: $title-h5-weight;
@@ -55,24 +42,27 @@ h5 {
 }
 
 blockquote {
-    font-family: $text-secondary-font;
-    border: 1px dotted $mutted-color;
-    font-style: italic;
+    border: none;
+    border-left: 4px solid #fff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #242731;
+    margin: 1rem 0.4rem 1rem 0rem;
+    padding: 1rem;
 
     p {
         font-family: $text-secondary-font;
-        font-size: 0.9rem; // Secondary font is a bit larger than the normal font
     }
 }
 
 .content-link {
     background: none;
-    color: $highlight-color;
     font-weight: bold;
     border: none;
     text-decoration: underline;
 
     .fas {
-        color: $mutted-color;
     }
 }
+
+@import './table';

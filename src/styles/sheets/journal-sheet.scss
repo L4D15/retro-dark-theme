@@ -4,12 +4,10 @@
     // Journal Improvemens specific
     .journal-header {
         input[type='text'] {
-            background: $background-color;
+            //background: $background-color;
             font-family: $journal-title-font;
             font-size: 1.2rem;
             text-transform: uppercase;
-            color: $accent-color;
-            border: 1px solid $faded-color;
 
             &:focus {
                 border: 1px solid $accent-color;
@@ -21,6 +19,7 @@
     // ---
 
     nav.pages-list {
+        background: none;
         .directory-list {
             .directory-item {
                 border: none;
@@ -64,23 +63,35 @@
     }
 
     .journal-entry-content {
-        background: transparent;
+        background: $journal-background;
 
         .journal-page-header {
             border: none;
+            font-family: $journal-title-font;
             text-align: center;
+            background: $journal-header-background;
+            color: $journal-title-color;
+
+            input[type='text'] {
+                font-family: $journal-title-font;
+                color: $journal-title-color;
+                background: none;
+                border: none;
+            }
 
             h1 {
                 font-family: $journal-title-font;
                 color: $journal-title-color;
-                font-style: italic;
-                font-weight: normal;
+                font-style: normal;
+                font-weight: bold;
                 border: none;
                 margin-top: 0.5rem;
             }
         }
 
         .journal-page-content {
+            background: none;
+            color: $journal-text-color;
             @import '../ui/text';
         }
     }
