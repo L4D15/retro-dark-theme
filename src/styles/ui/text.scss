@@ -10,7 +10,7 @@ h1 {
     font-weight: $title-h1-weight;
     text-transform: uppercase;
     border: none;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #242731;
 }
 
 h2 {
@@ -42,10 +42,13 @@ h5 {
 }
 
 blockquote {
-    border: 2px solid #000;
+    border: none;
+    border-left: 4px solid #fff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #242731;
     margin: 1rem 0.4rem 1rem 0rem;
     padding: 1rem;
-    box-shadow: 8px 8px #cecece;
 
     p {
         font-family: $text-secondary-font;
