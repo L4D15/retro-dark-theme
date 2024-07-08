@@ -8,15 +8,25 @@
     font-family: $ui-font;
     color: $ui-main-color;
 
+    &.journal-sheet {
+        background: none;
+
+        .window-content {
+            background: none;
+
+            aside.sidebar {
+                background: $journal-sidebar-background;
+            }
+        }
+    }
+
     .window-header {
         background: $ui-header-background-color;
     }
 
     .window-content {
         color: $ui-main-color;
-        background: $transparent-background-color;
-        backdrop-filter: $transparent-background-filter;
-        -webkit-backdrop-filter: $transparent-background-filter;
+        background: $ui-window-background;
 
         @import './inputs';
         @import './prosemirror';

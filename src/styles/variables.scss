@@ -1,5 +1,3 @@
-$transparent-background-color: #00000064;
-$transparent-background-filter: blur(5px);
 $background-color: #fff;
 $highlight-color: #fff;
 $accent-color: #af1c1c;
@@ -12,6 +10,8 @@ $ui-header-background-color: #242731;
 $ui-background-color: #000;
 $ui-main-color: #ddd;
 $ui-window-border: 1px solid #242731;
+$ui-window-background: #000;
+$ui-tab-background: #000000a6;
 
 $text-main-font: 'Roboto', sans-serif;
 $text-main-size: 0.9rem;
@@ -25,6 +25,7 @@ $journal-text-color: #aaa;
 $title-top-color: #af1c1c;
 $title-top-font: 'Bebas Neue', sans-serif;
 
+$journal-sidebar-background: #000000d1;
 $journal-header-background: #000;
 $journal-title-font: 'Bebas Neue', monospace;
 $journal-title-color: #fff;
