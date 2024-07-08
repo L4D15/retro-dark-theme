@@ -62,32 +62,4 @@ blockquote {
     }
 }
 
-table {
-    border: 2px solid #000;
-
-    thead {
-        background: $table-header-background;
-
-        tr {
-            td {
-                p {
-                    font-size: 1.1rem;
-                    color: $table-header-color;
-                    font-family: $table-header-font;
-                }
-            }
-        }
-    }
-
-    tbody {
-        background: #fff;
-
-        tr {
-            border-bottom: 1px solid #cecece;
-
-            td {
-                padding: 0.5rem;
-            }
-        }
-    }
-}
+@import './table';

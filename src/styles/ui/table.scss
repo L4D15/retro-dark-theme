@@ -1,0 +1,40 @@
+table {
+    border: $table-border;
+    border-radius: 5px;
+
+    thead {
+        background: $table-header-background;
+        font-family: $table-header-font;
+        color: $table-header-color;
+        border: none;
+        border-radius: 5px;
+
+        tr {
+            &.table-header {
+                background: none;
+                border: none;
+            }
+
+            td {
+                p {
+                    color: $table-header-color;
+                    font-family: $table-header-font;
+                }
+            }
+        }
+    }
+
+    tbody {
+        color: $ui-main-color;
+        tr {
+            background: #000;
+
+            &:nth-child(even) {
+                background: #171619;
+            }
+
+            td {
+            }
+        }
+    }
+}

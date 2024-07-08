@@ -70,8 +70,10 @@ $scrollbar-color: #ddd;
 $scrollbar-border-color: #ddd;
 
 // Tables
+$table-border: 1px solid #242731;
+$table-header-background: #242731;
 $table-row-strip-color: rgb(255, 255, 255, 0.06);
-$table-header-font: 'PT Sans';
+$table-header-font: 'PT Sans Caption';
 $table-header-color: #fff;
 $table-body-font: 'PT Sans';
 $table-body-color: #fff;
@@ -89,13 +91,6 @@ $button-text-font: 'PT Sans', monospace;
 // Numbers
 $number-font: 'PT Sans Caption', serif;
 $number-weight: bold;
-
-// Table
-$table-border: none;
-
-$table-header-background: #000;
-$table-header-color: #fff;
-$table-header-font: 'Bebas Neue', sans-serif;
 
 // Chat
 $chat-msg-background: #171619;

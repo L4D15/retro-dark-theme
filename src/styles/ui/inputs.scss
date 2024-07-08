@@ -57,7 +57,14 @@ textarea {
     }
 }
 
-input[type='range'] {
+input[type='number'] {
+    font-family: $number-font;
+    font-weight: $number-weight;
+}
+
+range-picker {
     border: none;
     background: none;
 }
+
+@import './table';
