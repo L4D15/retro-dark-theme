@@ -1,0 +1,40 @@
+.gm-screen-app {
+    .gm-screen-actions {
+        .gm-screen-tabs {
+            button {
+                &.item {
+                    background: #242731;
+                    color: $button-text-color;
+                    font-family: $button-text-font;
+                    border: $button-border;
+                }
+
+                &.active {
+                    background: #000;
+                }
+            }
+        }
+    }
+
+    .gm-screen-actions,
+    .gm-screen-actions .meta-actions {
+        button {
+            background: $button-background-color;
+            color: $button-text-color;
+            font-family: $button-text-font;
+            border: $button-border;
+        }
+    }
+
+    .gm-screen-container {
+        .gm-screen-grid {
+            .gm-screen-grid-cell {
+                .gm-screen-grid-cell-content-wrapper {
+                    @import '../ui/text';
+                    background: $journal-background;
+                    color: $journal-text-color;
+                }
+            }
+        }
+    }
+}
