@@ -54,10 +54,6 @@ module.exports = (env, argv) => {
             new CopyPlugin({
                 patterns: [{ from: 'module.json' }],
             }),
-            new ZipPlugin({
-                path: '..',
-                filename: 'minimal-dark-theme.zip',
-            }),
         ],
         output: {
             filename: 'minimal-dark-theme.bundle.mjs',
@@ -67,6 +63,13 @@ module.exports = (env, argv) => {
 
     if (isProduction) {
         config.mode = 'production';
+
+        var zipPlugin = new ZipPlugin({
+            path: '..',
+            filename: 'minimal-dark-theme.zip',
+        });
+
+        config.plugins.push(zipPlugin);
     } else {
         console.log(`Dev build detected.`);
 
