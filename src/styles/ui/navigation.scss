@@ -1,0 +1,35 @@
+nav {
+    background: none;
+    border: none;
+    border-bottom: $main-border;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: center;
+
+    .tab-select {
+        flex: 1 auto;
+        background: $muted-background;
+        border: $main-border;
+        border-bottom: none;
+        border-radius: $main-border-radius;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        color: $mutted-color;
+
+        &.active {
+            background: $main-background;
+            color: $ui-main-color;
+            text-decoration: none;
+            box-shadow: none;
+            text-shadow: none;
+        }
+
+        &:hover {
+            color: $accent-color;
+            box-shadow: none;
+            text-shadow: none;
+        }
+    }
+}

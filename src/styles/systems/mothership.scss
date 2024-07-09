@@ -33,6 +33,10 @@
             background: $ui-background-color;
             color: $ui-main-color;
 
+            .headergrid {
+                padding: 0rem 0.5rem;
+            }
+
             .header-fields {
                 grid-template-columns: 180px auto 100px;
 
@@ -149,7 +153,21 @@
                         }
                     }
                 }
+
+                .saves {
+                    background: none;
+                    padding: 0px;
+
+                    .resource {
+                        input {
+                            font-family: $number-font;
+                            font-weight: $number-weight;
+                        }
+                    }
+                }
             }
+
+            @import '../ui/navigation';
         }
     }
 }
