@@ -13,6 +13,17 @@ $ui-window-border: 1px solid #242731;
 $ui-window-background: #000;
 $ui-tab-background: #000000a6;
 
+// Background
+$main-background: #000;
+$secondary-background: #242731;
+$muted-background: #171619;
+
+// Borders
+$main-border: 1px solid #242731;
+$main-border-radius: 5px;
+$accent-border: 1px solid #af1c1c;
+$active-border: 1px solid #aaa;
+
 $text-main-font: 'Roboto', sans-serif;
 $text-main-size: 0.9rem;
 $text-line-height: 1.2rem;
@@ -63,7 +74,10 @@ $text-highlight-color: #fff;
 $line-color: #af1c1c;
 
 // Inputs
+$input-label-font: 'PT Sans Caption', sans-serif;
+$input-label-color: #fff;
 $input-background-color: #242731;
+$input-text-font: 'Roboto', sans-serif;
 $input-text-color: #fff;
 
 // Scroll Bar

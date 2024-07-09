@@ -21,3 +21,135 @@
         }
     }
 }
+
+// Sheets
+.sheet {
+    // Actor
+    &.actor {
+        width: 500px;
+        .window-content {
+            @import '../ui/inputs';
+
+            background: $ui-background-color;
+            color: $ui-main-color;
+
+            .header-fields {
+                grid-template-columns: 180px auto 100px;
+
+                .header {
+                    background: none;
+                    border-radius: 0px;
+                    border-bottom: $main-border;
+                    grid-template-columns: 100px 1fr;
+
+                    .profile {
+                        width: 100px;
+                        border: $main-border;
+                        border-radius: $main-border-radius;
+                        padding: 2px;
+
+                        &:hover {
+                            border: $accent-border;
+                        }
+                    }
+
+                    .headerinputtext {
+                        font-family: $input-label-font;
+                        font-size: 0.7rem;
+                    }
+
+                    .headerinputfield {
+                        @extend label;
+                        padding-left: 0px;
+                        border-radius: $main-border-radius;
+                        background: none;
+                    }
+                }
+
+                .health {
+                    .resource {
+                        width: 100%;
+                        padding: 0rem 0.2rem;
+                    }
+
+                    .healthmaxtext {
+                        margin-top: -3px;
+                    }
+
+                    .minmaxwrapper {
+                        background: none;
+                        border-radius: 0px;
+                        border: none;
+                        grid-template-columns: 1fr 1fr;
+
+                        input,
+                        .whiteText {
+                            font-family: $number-font;
+                            font-weight: $number-weight;
+                            font-size: 0.8rem;
+                        }
+
+                        .slant {
+                            display: none;
+                        }
+                    }
+                }
+
+                .abilities {
+                    .mainstatwrapper {
+                        display: grid;
+                        grid-template-columns: 1fr 34px 10px;
+                        align-items: center;
+
+                        .mainstat {
+                            grid-template-columns: 1fr 40px;
+                            .mainstatlabel {
+                                border: $main-border;
+                                border-radius: $main-border-radius;
+                                background: $muted-background;
+                                display: grid;
+                                align-items: center;
+                                padding-left: 0.1rem;
+
+                                span {
+                                    padding: 0px;
+                                }
+
+                                .mainstattext {
+                                    font-size: 0.8rem;
+                                    padding: 0.1rem;
+                                }
+                            }
+
+                            .circle-input {
+                                width: 44px;
+                                height: auto;
+                                font-size: 1.25rem;
+                                font-family: $number-font;
+                                font-weight: $number-weight;
+                                padding: 0.2rem;
+                                border-radius: $main-border-radius;
+                                border-top-left-radius: 0px;
+                                border-bottom-left-radius: 0px;
+                            }
+                        }
+
+                        .mainstatmod-input {
+                            position: static;
+                            border: $main-border;
+                            border-radius: $main-border-radius;
+                            margin: 0px;
+                            margin-left: 26px;
+                        }
+
+                        .mainstatmod-title {
+                            position: static;
+                            margin: 0px;
+                            margin-left: -26px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
