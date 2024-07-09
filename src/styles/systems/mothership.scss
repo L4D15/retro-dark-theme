@@ -168,6 +168,11 @@
             }
 
             @import '../ui/navigation';
+
+            .sheet-body {
+                border: $main-border;
+                @import '../ui/items-list';
+            }
         }
     }
 }

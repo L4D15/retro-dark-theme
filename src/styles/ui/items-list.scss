@@ -1,0 +1,21 @@
+ol {
+    &.items-list {
+        background: none;
+        border: $table-border;
+        border-radius: $main-border-radius;
+
+        li {
+            &.item {
+                &.item-header {
+                    background: $table-header-background;
+                    font-family: $table-header-font;
+                    color: $table-header-color;
+                    border: $table-border;
+                    border-radius: $main-border-radius;
+                    border-bottom-left-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                }
+            }
+        }
+    }
+}
