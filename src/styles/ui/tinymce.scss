@@ -1,15 +1,41 @@
 @import '../variables';
 
 .tinymce {
-    .tox-tinymce {
-        .tox-editor-header {
-            @import '../ui/inputs';
-        }
-    }
+    padding: 0.5rem;
 
-    .tox-sidebar-wrap {
-        .tox-edit-area {
-            @import '../ui/text';
+    .editor-content,
+    .tox-tinymce {
+        background: $journal-background;
+        color: $journal-text-color;
+        border: $main-border;
+        border-radius: $main-border-radius;
+        @import '../ui/text';
+
+        .tox-editor-container {
+            background: none;
+
+            .tox-editor-header {
+                color: $ui-main-color;
+                border-radius: $main-border-radius;
+                border-bottom-left-radius: 0px;
+                border-bottom-right-radius: 0px;
+                background-color: $secondary-background;
+
+                .tox-toolbar-overlord {
+                    background: none;
+
+                    .tox-toolbar__primary {
+                        background: none;
+                        @import '../ui/inputs';
+                    }
+                }
+            }
+
+            .tox-sidebar-wrap {
+                .tox-edit-area {
+                    background: #fff;
+                }
+            }
         }
     }
 

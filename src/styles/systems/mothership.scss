@@ -173,6 +173,43 @@
             .sheet-body {
                 border: $main-border;
                 @import '../ui/items-list';
+
+                .tab {
+                    .skill_training_frame {
+                        background: none;
+                        color: $table-header-color;
+                        font-family: $table-header-font;
+                        border: $main-border;
+                        border-radius: $main-border-radius;
+                        font-size: 0.8rem;
+                    }
+
+                    .editor {
+                        .editor-edit {
+                            background: $button-background-color;
+                            color: $button-text-color;
+                            font-family: $button-text-font;
+                            border: none;
+                            border-radius: $button-border-radius;
+                            height: 24px;
+                            width: 24px;
+
+                            &:hover {
+                                color: $accent-color;
+                                box-shadow: none;
+                                text-shadow: none;
+                            }
+                        }
+
+                        .editor-content {
+                            padding: 0.5rem;
+                            @import '../ui/text';
+                        }
+                    }
+
+                    // In case there is a Tiny MCE editor somewhere
+                    @import '../ui/tinymce';
+                }
             }
         }
     }

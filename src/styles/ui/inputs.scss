@@ -4,13 +4,26 @@ button {
     font-family: $button-text-font;
     font-size: 0.75rem;
     border: 1px solid $faded-color;
-    border-radius: 3px;
+    border-radius: $button-border-radius;
+
+    .tox-icon {
+        svg {
+            fill: $button-text-color;
+        }
+    }
 }
 
 button:hover {
     background: $accent-color;
     color: $highlight-color;
     box-shadow: none;
+    text-shadow: none;
+
+    .tox-icon {
+        svg {
+            fill: $highlight-color;
+        }
+    }
 
     ul {
         background: $button-background-color;
