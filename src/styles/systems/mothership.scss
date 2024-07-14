@@ -305,4 +305,66 @@
             }
         }
     }
+
+    &.item {
+        .window-content {
+            @import '../ui/inputs';
+            @import '../ui/navigation';
+
+            background: $ui-background-color;
+            color: $ui-main-color;
+
+            .sheet-header {
+                background: none;
+
+                .header {
+                    background: none;
+                }
+
+                .headerinputtext {
+                    font-family: $input-label-font;
+                    font-size: 0.7rem;
+                }
+
+                .headerinputfield {
+                    @extend label;
+                    padding-left: 0px;
+                    border-radius: $main-border-radius;
+                    background: none;
+                }
+            }
+
+            .resource {
+                .textvaluewrapper,
+                .valuewrapper {
+                    background: none !important;
+                    border: none;
+                }
+            }
+
+            .circle-statwrapper-vertical {
+                background: $muted-background;
+                border: $main-border;
+                border-radius: $main-border-radius;
+            }
+
+            .circle-statwrapper-horizontal {
+                background: none;
+                border: none;
+            }
+
+            br {
+                display: none;
+            }
+
+            .sheet-body {
+                border: $main-border;
+
+                .tab {
+                    @import '../ui/text';
+                    padding: 0.5rem;
+                }
+            }
+        }
+    }
 }
