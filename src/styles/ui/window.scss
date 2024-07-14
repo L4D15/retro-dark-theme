@@ -2,6 +2,10 @@
 
 .window-app {
     border: $ui-window-border;
+
+    .window-header {
+        background: $ui-header-background-color;
+    }
 }
 
 .window-app:not(.item):not(.actor) {
@@ -16,10 +20,6 @@
                 background: $journal-sidebar-background;
             }
         }
-    }
-
-    .window-header {
-        background: $ui-header-background-color;
     }
 
     .window-content {
