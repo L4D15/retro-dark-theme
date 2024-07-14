@@ -368,3 +368,27 @@
         }
     }
 }
+
+.dialog {
+    .window-content {
+        .dialog-content {
+            .macro_window {
+                background: none;
+                color: $journal-text-color;
+            }
+
+            label {
+                .macro_window {
+                    background: $muted-background;
+                    border: $main-border;
+                    border-radius: $main-border-radius;
+
+                    &:has(input[type='radio']:checked) {
+                        background: $secondary-background;
+                        color: $ui-main-color;
+                    }
+                }
+            }
+        }
+    }
+}
