@@ -33,6 +33,8 @@
             background: $ui-background-color;
             color: $ui-main-color;
 
+            // Character sheet
+
             .headergrid {
                 padding: 0rem 0.5rem;
             }
@@ -209,6 +211,96 @@
 
                     // In case there is a Tiny MCE editor somewhere
                     @import '../ui/tinymce';
+                }
+            }
+
+            // NPC sheet
+            .creature-header-grid {
+                background: none;
+
+                .whiteline {
+                    border: $main-border;
+                }
+            }
+
+            .creature-description-grid {
+                .creaturedescription {
+                    .grid {
+                        .resource {
+                            .minmaxwrapper {
+                                background: none;
+                                border: none;
+                                grid-template-columns: 1fr 1fr;
+
+                                .slant {
+                                    display: none;
+                                }
+                            }
+
+                            .healthmaxtext {
+                                color: $faded-color;
+                            }
+                        }
+                    }
+                }
+
+                .editor {
+                    padding-top: 0.5rem;
+                    color: $journal-text-color;
+
+                    .editor-content {
+                        @import '../ui/text';
+                    }
+                }
+
+                .creature-abilities {
+                    border: $main-border;
+                    border-radius: $main-border-radius;
+                    background: $main-background;
+                    color: $journal-text-color;
+                    outline: none;
+
+                    .whiteline {
+                        border: $main-border;
+                    }
+
+                    li {
+                        list-style-type: none;
+                    }
+
+                    .creature-ability-container {
+                        position: relative;
+
+                        .creature-ability-title {
+                            font-family: $journal-title-font;
+                            font-size: 1rem;
+                            text-align: left;
+                            color: $journal-title-color;
+
+                            &:hover {
+                                color: $accent-color;
+                                text-shadow: none;
+                            }
+                        }
+
+                        .creature-ability-text {
+                            @import '../ui/text';
+                            color: $journal-text-color;
+                        }
+
+                        .item-controls {
+                            position: absolute;
+                            top: 6px;
+                            right: 6px;
+                        }
+
+                        .item-control {
+                            &:hover {
+                                color: $accent-color;
+                                text-shadow: none;
+                            }
+                        }
+                    }
                 }
             }
         }
