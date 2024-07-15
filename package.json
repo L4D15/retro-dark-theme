@@ -1,7 +1,7 @@
 {
-    "name": "minimal-dark-theme",
-    "version": "2.1.0",
-    "description": "Minimalistic Dark theme for FoundryVTT",
+    "name": "retro-dark-theme",
+    "version": "1.0.0",
+    "description": "Dark theme with old terminal vibes.",
     "scripts": {
         "build": "webpack --mode production",
         "build:dev": "webpack"

@@ -1,11 +1,11 @@
-import '../styles/minimal-dark-theme.scss';
+import '../styles/retro-dark-theme.scss';
 
 Hooks.once('init', function () {
-    console.log(`Initializing Minimal Dark Theme...`);
+    console.log(`Initializing Retro Dark Theme...`);
 });
 
 Hooks.once('ready', function () {
-    console.log(`Minimal Dark Theme initialized successfully.`);
+    console.log(`Retro Dark Theme initialized successfully.`);
 });
 
 Hooks.on('createProseMirrorEditor', function (uuid, plugins, options) {});

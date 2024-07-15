@@ -28,12 +28,12 @@ module.exports = (env, argv) => {
     const devOutputPath = path.join(
         foundryConfig.data_folder,
         'modules',
-        'minimal-dark-theme'
+        'retro-dark-theme'
     );
 
     let config = {
         context: __dirname,
-        entry: path.resolve(__dirname, './src/module/minimal-dark-theme.mjs'),
+        entry: path.resolve(__dirname, './src/module/retro-dark-theme.mjs'),
         module: {
             rules: [
                 {
@@ -49,15 +49,15 @@ module.exports = (env, argv) => {
         plugins: [
             new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
             new MiniCssExtractPlugin({
-                filename: 'minimal-dark-theme.css',
+                filename: 'retro-dark-theme.css',
             }),
             new CopyPlugin({
                 patterns: [{ from: 'module.json' }],
             }),
         ],
         output: {
-            filename: 'minimal-dark-theme.bundle.mjs',
-            path: path.resolve(__dirname, 'dist/minimal-dark-theme'),
+            filename: 'retro-dark-theme.bundle.mjs',
+            path: path.resolve(__dirname, 'dist/retro-dark-theme'),
         },
     };
 
@@ -66,7 +66,7 @@ module.exports = (env, argv) => {
 
         var zipPlugin = new ZipPlugin({
             path: '..',
-            filename: 'minimal-dark-theme.zip',
+            filename: 'retro-dark-theme.zip',
         });
 
         config.plugins.push(zipPlugin);
@@ -77,7 +77,7 @@ module.exports = (env, argv) => {
             config.output.path = path.join(
                 foundryConfig.data_folder,
                 'modules',
-                'minimal-dark-theme'
+                'retro-dark-theme'
             );
         }
 

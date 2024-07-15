@@ -1,19 +1,19 @@
 {
-    "id": "minimal-dark-theme",
-    "title": "Minimal - Dark Theme",
-    "description": "Dark theme for a void-filled game.",
+    "id": "retro-dark-theme",
+    "title": "Retro - Dark Theme",
+    "description": "Dark theme with old terminal vibes.",
     "authors": [
         {
             "name": "Ladislao Lainez"
         }
     ],
-    "version": "2.1.0",
+    "version": "1.0.0",
     "compatibility": {
         "minimum": "11",
         "verified": "12"
     },
-    "esmodules": ["minimal-dark-theme.bundle.mjs"],
-    "styles": ["minimal-dark-theme.css"],
-    "manifest": "https://raw.githubusercontent.com/L4D15/minimal-dark-theme/2.1.0/module.json",
-    "download": "https://github.com/L4D15/minimal-dark-theme/releases/download/2.1.0/minimal-dark-theme.zip"
+    "esmodules": ["retro-dark-theme.bundle.mjs"],
+    "styles": ["retro-dark-theme.css"],
+    "manifest": "https://raw.githubusercontent.com/L4D15/retro-dark-theme/1.0.0/module.json",
+    "download": "https://github.com/L4D15/retro-dark-theme/releases/download/1.0.0/retro-dark-theme.zip"
 }
