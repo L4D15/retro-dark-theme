@@ -2,6 +2,14 @@
 
 .window-app {
     border: $ui-window-border;
+
+    .window-header {
+        background: $ui-header-background-color;
+    }
+
+    .window-content {
+        padding: 0.1rem 0.5rem;
+    }
 }
 
 .window-app:not(.item):not(.actor) {
@@ -12,16 +20,10 @@
         background: none;
 
         .window-content {
-            background: none;
-
             aside.sidebar {
                 background: $journal-sidebar-background;
             }
         }
-    }
-
-    .window-header {
-        background: $ui-header-background-color;
     }
 
     .window-content {
