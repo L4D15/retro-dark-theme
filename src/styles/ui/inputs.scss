@@ -4,13 +4,26 @@ button {
     font-family: $button-text-font;
     font-size: 0.75rem;
     border: 1px solid $faded-color;
-    border-radius: 3px;
+    border-radius: $button-border-radius;
+
+    .tox-icon {
+        svg {
+            fill: $button-text-color;
+        }
+    }
 }
 
 button:hover {
     background: $accent-color;
     color: $highlight-color;
     box-shadow: none;
+    text-shadow: none;
+
+    .tox-icon {
+        svg {
+            fill: $highlight-color;
+        }
+    }
 
     ul {
         background: $button-background-color;
@@ -26,10 +39,10 @@ button:hover {
 }
 
 label {
-    font-family: $ui-font;
+    font-family: $input-label-font;
     font-weight: bold;
     font-size: 0.8rem;
-    color: $ui-main-color;
+    color: $input-label-color;
 }
 
 select {
@@ -41,19 +54,26 @@ select {
 input,
 input[type='text'],
 textarea {
-    background: $input-background-color;
-    color: $input-text-color;
-    border: 1px solid $faded-color;
+    font-family: $input-text-font;
+    font-weight: normal;
+    background: $input-background-color !important;
+    color: $input-text-color !important;
+    border: $main-border !important;
+    border-radius: $main-border-radius !important;
+
+    &:hover {
+        border: $accent-border !important;
+    }
 
     &:focus,
     &:active {
-        border: 1px solid $accent-color;
+        border: $active-border !important;
         box-shadow: none;
     }
 
     &:disabled {
-        background: $faded-color;
-        color: $mutted-color;
+        background: $faded-color !important;
+        color: $mutted-color !important;
     }
 }
 
@@ -65,6 +85,14 @@ input[type='number'] {
 range-picker {
     border: none;
     background: none;
+}
+
+.rollable {
+    &:hover {
+        color: $accent-color;
+        box-shadow: none;
+        text-shadow: none;
+    }
 }
 
 @import './table';

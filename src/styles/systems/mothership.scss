@@ -21,3 +21,377 @@
         }
     }
 }
+
+// Sheets
+.sheet {
+    // Actor
+    &.actor {
+        .window-content {
+            @import '../ui/inputs';
+
+            background: $ui-background-color;
+            color: $ui-main-color;
+
+            // Character sheet
+
+            .headergrid {
+                padding: 0rem 0.5rem;
+            }
+
+            .header-fields {
+                grid-template-columns: 180px auto 100px;
+
+                .header {
+                    background: none;
+                    border-radius: 0px;
+                    border-bottom: $main-border;
+                    grid-template-columns: 100px 1fr;
+
+                    .profile {
+                        width: 100px;
+                        border: $main-border;
+                        border-radius: $main-border-radius;
+                        padding: 2px;
+
+                        &:hover {
+                            border: $accent-border;
+                        }
+                    }
+
+                    .headerinputtext {
+                        font-family: $input-label-font;
+                        font-size: 0.7rem;
+                    }
+
+                    .headerinputfield {
+                        @extend label;
+                        padding-left: 0px;
+                        border-radius: $main-border-radius;
+                        background: none;
+                    }
+                }
+
+                .health {
+                    .resource {
+                        width: 100%;
+                        padding: 0rem 0.2rem;
+                    }
+
+                    .healthmaxtext {
+                        margin-top: -3px;
+                        color: $faded-color;
+                    }
+
+                    .minmaxwrapper {
+                        background: none;
+                        border-radius: 0px;
+                        border: none;
+                        grid-template-columns: 1fr 1fr;
+
+                        input,
+                        .whiteText {
+                            font-family: $number-font;
+                            font-weight: $number-weight;
+                            font-size: 0.8rem;
+                        }
+
+                        .slant {
+                            display: none;
+                        }
+                    }
+                }
+
+                .abilities {
+                    .mainstatwrapper {
+                        display: grid;
+                        grid-template-columns: 1fr 34px 10px;
+                        align-items: center;
+
+                        .mainstat {
+                            grid-template-columns: 1fr 40px;
+                            .mainstatlabel {
+                                border: $main-border;
+                                border-radius: $main-border-radius;
+                                background: $muted-background;
+                                display: grid;
+                                align-items: center;
+                                padding-left: 0.1rem;
+
+                                span {
+                                    padding: 0px;
+                                }
+
+                                .mainstattext {
+                                    font-size: 0.8rem;
+                                    padding: 0.1rem;
+                                }
+                            }
+
+                            .circle-input {
+                                width: 44px;
+                                height: auto;
+                                font-size: 1.25rem;
+                                font-family: $number-font;
+                                font-weight: $number-weight;
+                                padding: 0.2rem;
+                                border-radius: $main-border-radius;
+                                border-top-left-radius: 0px;
+                                border-bottom-left-radius: 0px;
+                            }
+                        }
+
+                        .mainstatmod-input {
+                            position: static;
+                            border: $main-border;
+                            border-radius: $main-border-radius;
+                            margin: 0px;
+                            margin-left: 26px;
+                        }
+
+                        .mainstatmod-title {
+                            position: static;
+                            margin: 0px;
+                            margin-left: -26px;
+                        }
+                    }
+                }
+
+                .saves {
+                    background: none;
+                    padding: 0px;
+
+                    .resource {
+                        input {
+                            font-family: $number-font;
+                            font-weight: $number-weight;
+                        }
+                    }
+                }
+            }
+
+            @import '../ui/navigation';
+
+            .sheet-body {
+                border: $main-border;
+                @import '../ui/items-list';
+
+                .tab {
+                    .skill_training_frame {
+                        background: none;
+                        color: $table-header-color;
+                        font-family: $table-header-font;
+                        border: $main-border;
+                        border-radius: $main-border-radius;
+                        font-size: 0.8rem;
+                    }
+
+                    .editor {
+                        .editor-edit {
+                            background: $button-background-color;
+                            color: $button-text-color;
+                            font-family: $button-text-font;
+                            border: none;
+                            border-radius: $button-border-radius;
+                            height: 24px;
+                            width: 24px;
+
+                            &:hover {
+                                color: $accent-color;
+                                box-shadow: none;
+                                text-shadow: none;
+                            }
+                        }
+
+                        .editor-content {
+                            padding: 0.5rem;
+                            @import '../ui/text';
+                        }
+                    }
+
+                    // In case there is a Tiny MCE editor somewhere
+                    @import '../ui/tinymce';
+                }
+            }
+
+            // NPC sheet
+            .creature-header-grid {
+                background: none;
+
+                .whiteline {
+                    border: $main-border;
+                }
+            }
+
+            .creature-description-grid {
+                .creaturedescription {
+                    .grid {
+                        .resource {
+                            .minmaxwrapper {
+                                background: none;
+                                border: none;
+                                grid-template-columns: 1fr 1fr;
+
+                                .slant {
+                                    display: none;
+                                }
+                            }
+
+                            .healthmaxtext {
+                                color: $faded-color;
+                            }
+                        }
+                    }
+                }
+
+                .editor {
+                    padding-top: 0.5rem;
+                    color: $journal-text-color;
+
+                    .editor-content {
+                        @import '../ui/text';
+                    }
+                }
+
+                .creature-abilities {
+                    border: $main-border;
+                    border-radius: $main-border-radius;
+                    background: $main-background;
+                    color: $journal-text-color;
+                    outline: none;
+
+                    .whiteline {
+                        border: $main-border;
+                    }
+
+                    li {
+                        list-style-type: none;
+                    }
+
+                    .creature-ability-container {
+                        position: relative;
+
+                        .creature-ability-title {
+                            font-family: $journal-title-font;
+                            font-size: 1rem;
+                            text-align: left;
+                            color: $journal-title-color;
+
+                            &:hover {
+                                color: $accent-color;
+                                text-shadow: none;
+                            }
+                        }
+
+                        .creature-ability-text {
+                            @import '../ui/text';
+                            color: $journal-text-color;
+                        }
+
+                        .item-controls {
+                            position: absolute;
+                            top: 6px;
+                            right: 6px;
+                        }
+
+                        .item-control {
+                            &:hover {
+                                color: $accent-color;
+                                text-shadow: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.item {
+        .window-content {
+            @import '../ui/inputs';
+            @import '../ui/navigation';
+
+            background: $ui-background-color;
+            color: $ui-main-color;
+
+            .sheet-header {
+                background: none;
+
+                .header {
+                    background: none;
+                }
+
+                .headerinputtext {
+                    font-family: $input-label-font;
+                    font-size: 0.7rem;
+                }
+
+                .headerinputfield {
+                    @extend label;
+                    padding-left: 0px;
+                    border-radius: $main-border-radius;
+                    background: none;
+                }
+            }
+
+            .resource {
+                .textvaluewrapper,
+                .valuewrapper {
+                    background: none !important;
+                    border: none;
+                }
+            }
+
+            .circle-statwrapper-vertical {
+                background: $muted-background;
+                border: $main-border;
+                border-radius: $main-border-radius;
+            }
+
+            .circle-statwrapper-horizontal {
+                background: none;
+                border: none;
+            }
+
+            br {
+                display: none;
+            }
+
+            .sheet-body {
+                border: $main-border;
+
+                .tab {
+                    @import '../ui/text';
+                    padding: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.dialog {
+    .window-content {
+        .dialog-content {
+            .macro_window {
+                background: none;
+                color: $journal-text-color;
+
+                .macro_desc {
+                    padding-top: 0px;
+                }
+            }
+
+            label {
+                .macro_window {
+                    background: $muted-background;
+                    border: $main-border;
+                    border-radius: $main-border-radius;
+
+                    &:has(input[type='radio']:checked) {
+                        background: $secondary-background;
+                        color: $ui-main-color;
+                    }
+                }
+            }
+        }
+    }
+}
