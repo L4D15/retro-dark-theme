@@ -26,7 +26,6 @@
 .sheet {
     // Actor
     &.actor {
-        width: 500px;
         .window-content {
             @import '../ui/inputs';
 
@@ -375,6 +374,10 @@
             .macro_window {
                 background: none;
                 color: $journal-text-color;
+
+                .macro_desc {
+                    padding-top: 0px;
+                }
             }
 
             label {

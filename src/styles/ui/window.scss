@@ -6,6 +6,10 @@
     .window-header {
         background: $ui-header-background-color;
     }
+
+    .window-content {
+        padding: 0.1rem 0.5rem;
+    }
 }
 
 .window-app:not(.item):not(.actor) {
