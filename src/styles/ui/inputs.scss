@@ -3,8 +3,10 @@ button {
     color: $button-text-color;
     font-family: $button-text-font;
     font-size: 0.75rem;
+    font-weight: bold;
     border: 1px solid $faded-color;
     border-radius: $button-border-radius;
+    text-transform: uppercase;
 
     .tox-icon {
         svg {

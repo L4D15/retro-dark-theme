@@ -18,6 +18,17 @@ Hooks.on('renderActorSheet', function (app, html, data) {
             width: 500,
         },
     });
+
+    html.find('.window-content').addClass('crt').addClass('blink');
 });
 
-Hooks.on('renderApplication', function (app, html, data) {});
+function _applyCRTEffect(html) {
+    // Do not apply effects to the following windows
+    // if (html.hasClass('journal')) return;
+
+    html.find('.window-content').addClass('crt');
+}
+
+Hooks.on('renderApplication', function (app, html, data) {
+    _applyCRTEffect(html);
+});

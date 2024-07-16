@@ -4,8 +4,11 @@ $accent-color: #af1c1c;
 $mutted-color: #aaa;
 $faded-color: #242731;
 
+// Colors
+$main-color: #000;
+
 // General UI
-$ui-font: 'PT Sans', monospace;
+$ui-font: 'Blinker', monospace;
 $ui-header-background-color: #242731;
 $ui-background-color: #000;
 $ui-main-color: #ddd;
@@ -24,45 +27,45 @@ $main-border-radius: 5px;
 $accent-border: 1px solid #af1c1c;
 $active-border: 1px solid #aaa;
 
-$text-main-font: 'Nunito', sans-serif;
-$text-main-size: 0.9rem;
+$text-main-font: 'Blinker', sans-serif;
+$text-main-size: 1rem;
 $text-line-height: 1.2rem;
-$text-secondary-font: 'Nunito', sans-serif;
+$text-secondary-font: 'IBM Plex Mono', monospace;
 
 // Journal
-$journal-background: #171619;
+$journal-background: #000;
 $journal-text-color: #aaa;
 
 $title-top-color: #af1c1c;
-$title-top-font: 'Bebas Neue', sans-serif;
+$title-top-font: 'Orbitron', monospace;
 
 $journal-sidebar-background: #000000d1;
 $journal-header-background: #000;
-$journal-title-font: 'Bebas Neue', monospace;
+$journal-title-font: 'Orbitron', monospace;
 $journal-title-color: #fff;
 
 $title-h1-color: #fff;
-$title-h1-font: 'Bebas Neue';
+$title-h1-font: 'Orbitron';
 $title-h1-size: 1.6rem;
 $title-h1-weight: bold;
 
 $title-h2-color: #fff;
-$title-h2-font: 'PT Sans Caption';
+$title-h2-font: 'IBM Plex Mono';
 $title-h2-size: 1.3rem;
 $title-h2-weight: bold;
 
 $title-h3-color: #af1c1c;
-$title-h3-font: 'Nunito';
+$title-h3-font: 'IBM Plex Mono';
 $title-h3-size: 1.1rem;
 $title-h3-weight: bold;
 
 $title-h4-color: #fff;
-$title-h4-font: 'Nunito';
+$title-h4-font: 'IBM Plex Mono';
 $title-h4-size: 1rem;
 $title-h4-weight: normal;
 
 $title-h5-color: #fff;
-$title-h5-font: 'Nunito';
+$title-h5-font: 'Blinker';
 $title-h5-size: 0.9rem;
 $title-h5-weight: bold;
 
@@ -74,10 +77,10 @@ $text-highlight-color: #fff;
 $line-color: #af1c1c;
 
 // Inputs
-$input-label-font: 'PT Sans Caption', sans-serif;
+$input-label-font: 'Kosugi', sans-serif;
 $input-label-color: #fff;
 $input-background-color: #242731;
-$input-text-font: 'Nunito', sans-serif;
+$input-text-font: 'IBM Plex Mono', sans-serif;
 $input-text-color: #aaa;
 
 // Scroll Bar
@@ -88,9 +91,9 @@ $scrollbar-border-color: #ddd;
 $table-border: 1px solid #242731;
 $table-header-background: #242731;
 $table-row-strip-color: #171619;
-$table-header-font: 'PT Sans Caption';
+$table-header-font: 'IBM Plex Mono';
 $table-header-color: #aaa;
-$table-body-font: 'Nunito';
+$table-body-font: 'IMB Plex Mono';
 $table-body-color: #fff;
 
 // Quotes
@@ -99,14 +102,14 @@ $quote-background-color: #000;
 $quote-border-color: #af1c1c;
 
 // Buttons
-$button-background-color: #000;
-$button-text-color: #aaa;
-$button-text-font: 'PT Sans', monospace;
-$button-border: 1px solid #242731;
-$button-border-radius: 3px;
+$button-background-color: $main-color;
+$button-text-color: #fff;
+$button-text-font: 'Kosugi', monospace;
+$button-border: 1px solid $main-color;
+$button-border-radius: 0px;
 
 // Numbers
-$number-font: 'PT Sans Caption', serif;
+$number-font: 'Kosugi', serif;
 $number-weight: bold;
 
 // Chat

@@ -1,12 +1,6 @@
 @import '../variables';
 
 .journal-header {
-    .title {
-        font-family: $journal-title-font;
-        font-weight: bold;
-        color: $ui-main-color;
-    }
-
     .page-level {
         .heading-level {
             select {
