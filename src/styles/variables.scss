@@ -1,8 +1,10 @@
 $background-color: #fff;
 $highlight-color: #fff;
-$accent-color: #af1c1c;
+$accent-color: #fff;
 $mutted-color: #aaa;
 $faded-color: #242731;
+$terminal-color: #e9e9e9;
+$terminal-color-inverse: #242731;
 
 // Colors
 $main-color: #000;
@@ -24,8 +26,8 @@ $muted-background: #171619;
 // Borders
 $main-border: 1px solid #242731;
 $main-border-radius: 5px;
-$accent-border: 1px solid #af1c1c;
-$active-border: 1px solid #aaa;
+$accent-border: 1px solid $accent-color;
+$active-border: 1px solid $highlight-color;
 
 $text-main-font: 'Blinker', sans-serif;
 $text-main-size: 1rem;
@@ -78,10 +80,13 @@ $line-color: #af1c1c;
 
 // Inputs
 $input-label-font: 'Kosugi', sans-serif;
-$input-label-color: #fff;
+$input-label-color: $terminal-color;
+$input-label-color-inverse: $terminal-color-inverse;
 $input-background-color: #242731;
 $input-text-font: 'IBM Plex Mono', sans-serif;
-$input-text-color: #aaa;
+$input-text-color: $terminal-color;
+$input-border: 1px solid $terminal-color;
+$input-border-radius: 0px;
 
 // Scroll Bar
 $scrollbar-color: #ddd;

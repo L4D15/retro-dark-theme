@@ -47,11 +47,15 @@
                     border-bottom: $main-border;
                     grid-template-columns: 100px 1fr;
 
+                    .headergrid {
+                        padding: 0rem 0rem 0rem 0.5rem;
+                    }
+
                     .profile {
                         width: 100px;
-                        border: $main-border;
-                        border-radius: $main-border-radius;
-                        padding: 2px;
+                        border: $input-border;
+                        border-radius: $input-border-radius;
+                        padding: 0px;
 
                         &:hover {
                             border: $accent-border;
@@ -59,15 +63,24 @@
                     }
 
                     .headerinputtext {
-                        font-family: $input-label-font;
+                        @extend label;
+                        padding: 0.1rem 0.5rem;
+                        margin: 0px;
                         font-size: 0.7rem;
+                        background: $terminal-color;
+                        color: $input-label-color-inverse;
                     }
 
                     .headerinputfield {
-                        @extend label;
-                        padding-left: 0px;
-                        border-radius: $main-border-radius;
-                        background: none;
+                        @extend input;
+                        padding: 0px;
+                        margin: 0px;
+
+                        input,
+                        input[type='text'],
+                        textarea {
+                            border: none !important;
+                        }
                     }
                 }
 
@@ -106,16 +119,26 @@
                         display: grid;
                         grid-template-columns: 1fr 34px 10px;
                         align-items: center;
+                        width: auto;
 
                         .mainstat {
                             grid-template-columns: 1fr 40px;
+                            position: inherit;
+                            width: auto;
+
                             .mainstatlabel {
-                                border: $main-border;
-                                border-radius: $main-border-radius;
-                                background: $muted-background;
-                                display: grid;
-                                align-items: center;
-                                padding-left: 0.1rem;
+                                @extend label;
+                                height: auto;
+                                position: inherit;
+                                background: $terminal-color;
+                                border: $input-border;
+                                border-radius: $input-border-radius;
+                                padding: 4px 0.5rem;
+                                text-align: right;
+
+                                .ability-mod {
+                                    color: $terminal-color-inverse;
+                                }
 
                                 span {
                                     padding: 0px;
@@ -128,15 +151,11 @@
                             }
 
                             .circle-input {
-                                width: 44px;
+                                z-index: inherit;
+                                width: auto;
                                 height: auto;
-                                font-size: 1.25rem;
-                                font-family: $number-font;
-                                font-weight: $number-weight;
-                                padding: 0.2rem;
-                                border-radius: $main-border-radius;
-                                border-top-left-radius: 0px;
-                                border-bottom-left-radius: 0px;
+                                margin: 0rem;
+                                font-size: 1rem;
                             }
                         }
 
@@ -145,25 +164,74 @@
                             border: $main-border;
                             border-radius: $main-border-radius;
                             margin: 0px;
-                            margin-left: 26px;
+                            margin-left: 16px;
+                            z-index: inherit;
+
+                            &::before {
+                                content: '+';
+                            }
                         }
 
                         .mainstatmod-title {
                             position: static;
                             margin: 0px;
-                            margin-left: -26px;
+                            margin-left: -30px;
                         }
                     }
                 }
 
                 .saves {
+                    display: grid;
+                    grid-template-rows: 49px 49px 49px;
+                    gap: 0.5rem;
                     background: none;
                     padding: 0px;
 
                     .resource {
-                        input {
-                            font-family: $number-font;
-                            font-weight: $number-weight;
+                        display: grid;
+                        grid-template-rows: 1fr 1fr;
+                        align-items: start;
+                        gap: 0px;
+                        padding: 0px;
+
+                        .ability-mod {
+                            @extend label;
+                            margin: 0px;
+                        }
+
+                        .inputs-list {
+                            display: grid;
+                            grid-template-columns: 2fr 12px 1fr;
+                            justify-content: stretch;
+                            margin: 0px;
+                            padding: 0px;
+
+                            input {
+                                font-family: $number-font;
+                                font-weight: $number-weight;
+
+                                &.square-input {
+                                    margin: 0px;
+                                    padding: 4px;
+                                    height: auto;
+                                    font-size: 1rem;
+                                    z-index: inherit;
+                                }
+
+                                &.mainsavemod-input {
+                                    position: inherit;
+                                    z-index: inherit;
+                                    height: auto;
+                                    width: auto;
+                                    margin: 0px;
+                                }
+                            }
+
+                            .mainstatmod-title {
+                                position: inherit;
+                                margin: 0px;
+                                z-index: inherit;
+                            }
                         }
                     }
                 }

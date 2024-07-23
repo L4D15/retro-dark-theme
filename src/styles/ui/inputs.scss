@@ -44,7 +44,7 @@ label {
     font-family: $input-label-font;
     font-weight: bold;
     font-size: 0.8rem;
-    color: $input-label-color;
+    color: $terminal-color;
 }
 
 select {
@@ -58,18 +58,20 @@ input[type='text'],
 textarea {
     font-family: $input-text-font;
     font-weight: normal;
-    background: $input-background-color !important;
+    background: none !important;
     color: $input-text-color !important;
-    border: $main-border !important;
-    border-radius: $main-border-radius !important;
+    border: $input-border !important;
+    border-radius: $input-border-radius !important;
 
     &:hover {
         border: $accent-border !important;
+        color: $highlight-color !important;
     }
 
     &:focus,
     &:active {
         border: $active-border !important;
+        color: $highlight-color !important;
         box-shadow: none;
     }
 

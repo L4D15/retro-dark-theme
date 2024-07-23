@@ -20,6 +20,15 @@ Hooks.on('renderActorSheet', function (app, html, data) {
     });
 
     html.find('.window-content').addClass('crt').addClass('blink');
+
+    // Mothership specific fixes
+    html.find('.saves')
+        .children('.resource')
+        .children('.grid')
+        .css({ 'grid-template-columns': '', 'margin-left': '' })
+        .addClass('inputs-list')
+        .removeClass('grid')
+        .removeClass('grid-3col');
 });
 
 function _applyCRTEffect(html) {
@@ -29,6 +38,30 @@ function _applyCRTEffect(html) {
     html.find('.window-content').addClass('crt');
 }
 
+function _applyMothershipFixes(html) {
+    console.log('#RDT# Appying fixes to application.');
+    let saves = html.find('.saves');
+
+    if (saves !== null) {
+        console.log('#RDT# Found saves area.');
+        console.log(JSON.stringify(saves));
+
+        var grids = saves.children('.grid');
+
+        if (grids !== undefined) {
+            console.log('#RDT# Found grids inside saves.');
+            console.log(JSON.stringify(grids));
+
+            saves.children('.grid').each(function () {
+                console.log(
+                    '#RDT# Fixing grid for element in Mothership application.'
+                );
+            });
+        }
+    }
+}
+
 Hooks.on('renderApplication', function (app, html, data) {
     _applyCRTEffect(html);
+    _applyMothershipFixes(html);
 });
