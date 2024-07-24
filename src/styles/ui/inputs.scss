@@ -64,15 +64,16 @@ textarea {
     border-radius: $input-border-radius !important;
 
     &:hover {
-        border: $accent-border !important;
+        // border: $accent-border !important;
         color: $highlight-color !important;
     }
 
     &:focus,
     &:active {
-        border: $active-border !important;
+        // border: $active-border !important;
         color: $highlight-color !important;
         box-shadow: none;
+        text-shadow: none;
     }
 
     &:disabled {

@@ -11,7 +11,7 @@ Hooks.once('ready', function () {
 Hooks.on('createProseMirrorEditor', function (uuid, plugins, options) {});
 
 Hooks.on('renderActorSheet', function (app, html, data) {
-    html.css('width', '500');
+    html.css({ width: '500' });
 
     foundry.utils.mergeObject(app, {
         options: {
@@ -29,6 +29,24 @@ Hooks.on('renderActorSheet', function (app, html, data) {
         .addClass('inputs-list')
         .removeClass('grid')
         .removeClass('grid-3col');
+
+    var headerFields = html.find('.header-fields');
+
+    html.find('.health')
+        .filter('.grid')
+        .children('div')
+        .last()
+        .addClass('trauma-response')
+        .detach()
+        .appendTo(headerFields)
+        .css({
+            'grid-column-start': '',
+            'grid-column-end': '',
+            'margin-left': '',
+            'margin-right': '',
+        });
+
+    html.find('.trauma-response').find('textarea').css({ height: '' });
 });
 
 function _applyCRTEffect(html) {

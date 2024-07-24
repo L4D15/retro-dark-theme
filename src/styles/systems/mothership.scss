@@ -40,6 +40,7 @@
 
             .header-fields {
                 grid-template-columns: 180px auto 100px;
+                grid-template-rows: auto 165px 64px;
 
                 .header {
                     background: none;
@@ -233,6 +234,29 @@
                                 z-index: inherit;
                             }
                         }
+                    }
+                }
+
+                .trauma-response {
+                    display: grid;
+                    grid-column-start: 1;
+                    grid-column-end: 4;
+                    grid-template-rows: 18px 1fr;
+
+                    .resource-label {
+                        @extend label;
+                        padding: 0.1rem 0.5rem;
+                        margin: 0px;
+                        font-size: 0.7rem;
+                        background: $terminal-color;
+                        color: $input-label-color-inverse;
+                        text-align: left;
+                    }
+
+                    textarea {
+                        @extend textarea;
+                        margin: 0px;
+                        font-size: 0.8rem;
                     }
                 }
             }
