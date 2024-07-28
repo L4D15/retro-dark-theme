@@ -5,31 +5,27 @@ nav {
     margin-bottom: 0px;
     padding-bottom: 0px;
     display: flex;
-    justify-content: start;
+    justify-content: stretch;
 
     .tab-select {
-        flex: 0 0 auto;
+        flex: 1 0 auto;
         background: $muted-background;
-        border: $main-border;
-        border-bottom: none;
-        border-radius: $main-border-radius;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-        color: $mutted-color;
-        font-family: $ui-font;
-        font-weight: normal;
+        border: $nav-border;
+        border-radius: 0px;
+        color: $terminal-color;
+        font-family: $input-label-font;
+        font-weight: bold;
         font-size: 0.8rem;
         padding: 0.5rem 0.7rem;
-        margin: 0rem 0.2rem;
+        margin: 0rem;
+        text-transform: uppercase;
 
         &.active {
-            background: $main-background;
-            color: $ui-main-color;
+            background: $terminal-color;
+            color: $terminal-color-inverse;
             text-decoration: none;
             box-shadow: none;
             text-shadow: none;
-            position: relative;
-            top: 1px;
         }
 
         &:hover {

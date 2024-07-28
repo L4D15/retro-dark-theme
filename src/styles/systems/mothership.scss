@@ -332,7 +332,8 @@
             @import '../ui/navigation';
 
             .sheet-body {
-                border: $main-border;
+                border: $nav-border;
+                border-radius: 0px;
                 @import '../ui/items-list';
 
                 .tab {
