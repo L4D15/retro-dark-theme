@@ -34,13 +34,14 @@
 
             // Character sheet
 
-            .headergrid {
+            .header-grid {
                 padding: 0rem 0.5rem;
+                flex: 0 1 auto;
             }
 
             .header-fields {
                 grid-template-columns: 3fr 2fr 2fr;
-                grid-template-rows: auto 165px 64px;
+                grid-template-rows: 110px 110px 64px;
 
                 .header {
                     background: none;
@@ -93,15 +94,15 @@
                     justify-items: start;
 
                     .resource {
-                        width: auto;
+                        width: 100%;
+                        height: 26px;
                         padding: 0px;
+                        align-items: center;
+                        justify-items: center;
 
                         &.minmaxtopstat {
                             display: grid;
                             grid-template-columns: 1fr 70px;
-                            grid-template-rows: 26px;
-                            align-items: center;
-                            width: 100%;
                         }
 
                         .resource-label {
@@ -127,7 +128,24 @@
 
                         .minmaxwrapper {
                             grid-column: 2;
-                            height: auto;
+                            height: 100%;
+                            width: 100%;
+
+                            div.maxhealth-input {
+                                width: calc(100% - 2px);
+                                min-width: 20px;
+                                height: var(--form-field-height);
+                                padding: 1px 3px;
+                                background: $faded-color;
+                                border: $input-border;
+                                border-radius: $input-border-radius;
+                                font-family: $input-text-font;
+                                font-weight: normal;
+                                color: $input-text-color !important;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
                         }
                     }
 
@@ -156,20 +174,26 @@
                 }
 
                 .abilities {
+                    .grid {
+                        gap: 2px;
+                    }
+
                     .mainstatwrapper {
                         display: grid;
                         grid-template-columns: 1fr 34px 10px;
                         align-items: center;
                         width: auto;
+                        height: 26px;
 
                         .mainstat {
                             grid-template-columns: 1fr 40px;
                             position: inherit;
                             width: auto;
+                            height: 100%;
 
                             .mainstatlabel {
                                 @extend label;
-                                height: auto;
+                                height: 100%;
                                 position: inherit;
                                 background: $terminal-color;
                                 border: $input-border;
@@ -194,7 +218,7 @@
                             .circle-input {
                                 z-index: inherit;
                                 width: auto;
-                                height: auto;
+                                height: 100%;
                                 margin: 0rem;
                                 font-size: 1rem;
                             }
@@ -207,6 +231,7 @@
                             margin: 0px;
                             margin-left: 16px;
                             z-index: inherit;
+                            height: 100%;
 
                             &::before {
                                 content: '+';
@@ -223,55 +248,58 @@
 
                 .saves {
                     display: grid;
-                    grid-template-rows: 49px 49px 49px;
-                    gap: 0.5rem;
-                    background: none;
-                    padding: 0px;
+                    grid-template-columns: 1fr;
+                    gap: 2px;
+                    align-items: start;
+                    justify-items: stretch;
+
+                    .saves-list {
+                        display: grid;
+                        grid-template-rows: repeat(3, 1fr);
+                        gap: 2px;
+                    }
 
                     .resource {
                         display: grid;
-                        grid-template-rows: 1fr 1fr;
+                        grid-template-columns: 1fr 1fr;
                         align-items: start;
                         gap: 0px;
                         padding: 0px;
+                        height: 26px;
 
                         .ability-mod {
                             @extend label;
-                            margin: 0px;
+                            background: $terminal-color;
+                            border: $input-border;
+                            border-radius: $input-border-radius;
+                            padding: 4px 0.5rem;
+                            margin-bottom: 0px;
+                            text-align: right;
+                            color: $terminal-color-inverse;
+                            width: 100%;
+                            height: 100%;
                         }
 
                         .inputs-list {
                             display: grid;
-                            grid-template-columns: 2fr 12px 1fr;
-                            justify-content: stretch;
-                            margin: 0px;
-                            padding: 0px;
+                            grid-template-columns: 1fr 12px 1fr;
+                            align-items: center;
 
-                            input {
-                                font-family: $number-font;
-                                font-weight: $number-weight;
-
-                                &.square-input {
-                                    margin: 0px;
-                                    padding: 4px;
-                                    height: auto;
-                                    font-size: 1rem;
-                                    z-index: inherit;
-                                }
-
-                                &.mainsavemod-input {
-                                    position: inherit;
-                                    z-index: inherit;
-                                    height: auto;
-                                    width: auto;
-                                    margin: 0px;
-                                }
+                            .square-input {
+                                height: 100%;
+                                margin: 0px;
                             }
 
                             .mainstatmod-title {
-                                position: inherit;
+                                position: static;
                                 margin: 0px;
+                            }
+
+                            .mainsavemod-input {
+                                height: 100%;
+                                position: static;
                                 z-index: inherit;
+                                margin: 0px;
                             }
                         }
                     }

@@ -76,7 +76,22 @@ function _applyMothershipFixes(html) {
     html.find('.health')
         .children('.resource')
         .last()
-        .css({ 'grid-column': '' });
+        .css({ 'grid-column': '' })
+        .children('.minmaxwrapper')
+        .css({ width: '', background: '', 'border-radius': '', display: '' })
+        .children('.maxhealth-input')
+        .css({ display: '' });
+
+    // Fix Saves grid
+    html.find('.saves')
+        .removeClass('grid')
+        .removeClass('grid-1col')
+        .removeClass('savebackground');
+
+    html.find('.saves').append('<div class="saves-list"></div>');
+    var savesList = html.find('.saves-list');
+
+    html.find('.saves').children('.resource').detach().appendTo(savesList);
 }
 
 Hooks.on('renderApplication', function (app, html, data) {
