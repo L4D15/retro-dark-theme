@@ -19,6 +19,17 @@ Hooks.on('renderActorSheet', function (app, html, data) {
         },
     });
 
+    _applyMothershipFixes(html);
+});
+
+function _applyCRTEffect(html) {
+    // Do not apply effects to the following windows
+    // if (html.hasClass('journal')) return;
+
+    html.find('.window-content').addClass('crt');
+}
+
+function _applyMothershipFixes(html) {
     html.find('.window-content').addClass('crt').addClass('blink');
 
     // Mothership specific fixes
@@ -46,37 +57,26 @@ Hooks.on('renderActorSheet', function (app, html, data) {
             'margin-right': '',
         });
 
+    // Fix incorrect space in main abilities grid
+    html.find('.abilities').find('.widegap').removeClass('widegap');
+
+    // Fix Trauma Response text area with incorrect height
     html.find('.trauma-response').find('textarea').css({ height: '' });
-});
 
-function _applyCRTEffect(html) {
-    // Do not apply effects to the following windows
-    // if (html.hasClass('journal')) return;
+    // Fix grid of Health, Wounds, Stress and Armor stats
+    html.find('.health.grid')
+        .css({
+            'margin-top': '',
+            'grid-template-rows': '',
+        })
+        .removeClass('grid')
+        .removeClass('grid-2col');
 
-    html.find('.window-content').addClass('crt');
-}
-
-function _applyMothershipFixes(html) {
-    console.log('#RDT# Appying fixes to application.');
-    let saves = html.find('.saves');
-
-    if (saves !== null) {
-        console.log('#RDT# Found saves area.');
-        console.log(JSON.stringify(saves));
-
-        var grids = saves.children('.grid');
-
-        if (grids !== undefined) {
-            console.log('#RDT# Found grids inside saves.');
-            console.log(JSON.stringify(grids));
-
-            saves.children('.grid').each(function () {
-                console.log(
-                    '#RDT# Fixing grid for element in Mothership application.'
-                );
-            });
-        }
-    }
+    // Fix Armor stat with in-line grid properties messing with proper grid
+    html.find('.health')
+        .children('.resource')
+        .last()
+        .css({ 'grid-column': '' });
 }
 
 Hooks.on('renderApplication', function (app, html, data) {
