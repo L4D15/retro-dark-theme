@@ -30,7 +30,18 @@ function _applyCRTEffect(html) {
 }
 
 function _applyMothershipFixes(html) {
-    html.find('.window-content').addClass('crt').addClass('blink');
+    html.find('.window-content').addClass('crt');
+
+    html.find('.rollable').hover(function () {
+        var target = $(this);
+        console.log(`Hovered over rollable ${JSON.stringify(target)}.`);
+        target.toggleClass('aberration');
+    });
+
+    html.find('.button').hover(function () {
+        console.log(`Hovered over button.`);
+        $(this).toggleClass('aberration');
+    });
 
     // Mothership specific fixes
     html.find('.saves')
