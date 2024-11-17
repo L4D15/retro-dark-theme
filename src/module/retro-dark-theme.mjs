@@ -20,7 +20,7 @@ Hooks.on('renderMothershipActorSheet', function (app, html, data) {
     var sheetHtml = $('#' + id);
 
     _applyInitialSheetSize(sheetHtml, app);
-    _applyMothershipFixes(sheetHtml);
+    _applyMothershipFixes(html);
     _applyCharacterFixes(sheetHtml);
 });
 
@@ -29,7 +29,7 @@ Hooks.on('renderMothershipCreatureSheet', function (app, html, data) {
     var sheetHtml = $('#' + id);
 
     _applyInitialSheetSize(sheetHtml, app);
-    _applyMothershipFixes(sheetHtml);
+    _applyMothershipFixes(html);
     _applyNPCFixes(sheetHtml);
 });
 
@@ -45,7 +45,7 @@ function _applyInitialSheetSize(html, app) {
 }
 
 function _applyMothershipFixes(html) {
-    html.find('.window-content').addClass('crt');
+    _applyCRTEffect(html);
 
     html.find('.rollable').hover(function () {
         var target = $(this);
@@ -165,6 +165,16 @@ function _applyNPCFixes(html) {
         .appendTo(
             html.find('.creature-name-wrapper .headerinputfield.charname')
         );
+
+    html.find('.creature-description-grid')
+        .children('.creaturedescription')
+        .children('.grid')
+        .detach()
+        .prependTo(html.find('.creature-description-grid'));
 }
 
-Hooks.on('renderApplication', function (app, html, data) {});
+Hooks.on('renderApplication', function (app, html, data) {
+    if (html.hasClass('window-app') || app._element[0].hasClass('window-app')) {
+        _applyMothershipFixes(html);
+    }
+});

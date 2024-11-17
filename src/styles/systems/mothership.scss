@@ -504,6 +504,7 @@
                         height: 100%;
                         margin: 0rem;
                         font-size: 1rem;
+                        text-align: center;
 
                         &:hover {
                             border-color: $highlight-color;
@@ -534,33 +535,96 @@
         }
 
         .creature-description-grid {
-            .creaturedescription {
-                .grid {
-                    .resource {
-                        .minmaxwrapper {
-                            background: none;
-                            border: none;
-                            grid-template-columns: 1fr 1fr;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
 
-                            .slant {
-                                display: none;
-                            }
+            .grid {
+                grid-column: 1 / span 2;
+                font-size: 1rem;
+
+                .resource {
+                    width: 100%;
+                    height: 26px;
+                    padding: 0px;
+                    align-items: center;
+                    justify-items: center;
+
+                    &.minmaxtopstat {
+                        display: grid;
+                        grid-template-columns: 1fr 70px;
+                    }
+
+                    .resource-label {
+                        @extend label;
+                        background: none;
+                        border: none;
+                        padding: 8px 0.5rem;
+                        text-align: right;
+                        color: $terminal-color;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .healthmaxtext {
+                        display: none;
+                    }
+
+                    .minmaxtext {
+                        grid-column: 1;
+                        margin: 0px;
+                    }
+
+                    .minmaxwrapper {
+                        grid-column: 2;
+                        height: 100%;
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+
+                        .slant {
+                            display: none;
                         }
 
-                        .healthmaxtext {
-                            color: $faded-color;
+                        .maxhealth-input {
+                            width: calc(100% - 2px);
+                            min-width: 20px;
+                            height: var(--form-field-height);
+                            padding: 1px 3px;
+                            background: $faded-color;
+                            border: $input-border;
+                            border-radius: $input-border-radius;
+                            font-family: $input-text-font;
+                            font-weight: normal;
+                            color: $input-text-color !important;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 0.85rem;
                         }
                     }
                 }
             }
 
-            .editor {
-                padding-top: 0.5rem;
-                color: $journal-text-color;
+            .creaturedescription {
+                grid-column: 1 / span 2;
+                overflow-y: visible;
+                height: auto;
+                padding: 0rem;
+                margin: 0rem;
+                @import '../ui/tinymce';
 
-                .editor-content {
-                    @import '../ui/text';
+                .editor.tinymce {
+                    min-height: 300px;
                 }
+            }
+
+            .creature-abilities {
+                grid-column: 1 / span 2;
+                overflow-y: visible;
+                height: auto;
+                min-height: 150px;
+                padding: 0rem;
+                margin: 0rem;
             }
 
             .creature-abilities {
@@ -609,6 +673,20 @@
                             color: $accent-color;
                             text-shadow: none;
                         }
+                    }
+                }
+            }
+        }
+        .sheet-body {
+            height: auto;
+            min-height: 100px;
+
+            .tab {
+                &.briography {
+                    @import '../ui/tinymce';
+
+                    .editor.tinymce {
+                        min-height: 300px;
                     }
                 }
             }
