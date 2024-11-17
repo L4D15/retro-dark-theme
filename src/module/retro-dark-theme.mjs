@@ -15,28 +15,33 @@ Hooks.on('renderJournalSheet', function (app, html, data) {
 });
 
 Hooks.on('renderMothershipActorSheet', function (app, html, data) {
-    console.log(`#DEBUG# Rendering Character sheet..`);
-
     // Target sheet with unique ID to avoid altering other open sheets
     var id = app._element[0].id;
     var sheetHtml = $('#' + id);
 
+    _applyInitialSheetSize(sheetHtml, app);
     _applyMothershipFixes(sheetHtml);
     _applyCharacterFixes(sheetHtml);
 });
 
 Hooks.on('renderMothershipCreatureSheet', function (app, html, data) {
-    console.log(`#DEBUG# Rendering NPC sheet..`);
-
     var id = app._element[0].id;
     var sheetHtml = $('#' + id);
 
+    _applyInitialSheetSize(sheetHtml, app);
     _applyMothershipFixes(sheetHtml);
     _applyNPCFixes(sheetHtml);
 });
 
 function _applyCRTEffect(html) {
     html.find('.window-content').addClass('crt');
+}
+
+function _applyInitialSheetSize(html, app) {
+    html.css({ width: 475, height: 700 });
+
+    app.position.width = 475;
+    app.position.height = 700;
 }
 
 function _applyMothershipFixes(html) {
@@ -122,9 +127,6 @@ function _applyCharacterFixes(html) {
 }
 
 function _applyNPCFixes(html) {
-    console.log(`#DEBUG# Applying NPC fixes to sheet`);
-    console.log(html);
-
     html.find('.whiteline').remove();
     // Move NPC profile picture to top-left corner
     html.find('img.profile')
