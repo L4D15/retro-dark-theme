@@ -102,6 +102,42 @@ function _applyMothershipFixes(html) {
     var savesList = html.find('.saves-list');
 
     html.find('.saves').children('.resource').detach().appendTo(savesList);
+
+    // NPC sheet fixes
+    if (html.hasClass('creature')) {
+        html.find('.whiteline').remove();
+        // Move NPC profile picture to top-left corner
+        html.find('img.profile').detach().prependTo('.creature-header-grid');
+
+        // Move name field inside the attributes grid
+        html.find('input.creaturename').detach().prependTo('.creature-header');
+
+        // Remove hard-coded width for creature stats
+        html.find('.mainstatwrapper')
+            .children('.creature-mainstat')
+            .children('input.creaturestat')
+            .css({ width: '' });
+
+        // Remove hard-coded size for the profile
+        html.find('.profile')
+            .removeClass('noborder')
+            .css({ width: '', height: '' });
+
+        // Add missing label for creature name
+        html.find('input.creaturename')
+            .parent()
+            .prepend('<div class="creature-name-wrapper"</div>');
+
+        html.find('.creature-name-wrapper')
+            .append('<div class="headerinputtext">Name</div>')
+            .append('<div class="headerinputfield charname"></div>');
+
+        html.find('input.creaturename')
+            .removeClass('noborder')
+            .attr('style', '')
+            .detach()
+            .appendTo('.headerinputfield.charname');
+    }
 }
 
 Hooks.on('renderApplication', function (app, html, data) {
