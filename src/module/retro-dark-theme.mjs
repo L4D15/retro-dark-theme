@@ -10,22 +10,32 @@ Hooks.once('ready', function () {
 
 Hooks.on('createProseMirrorEditor', function (uuid, plugins, options) {});
 
-Hooks.on('renderActorSheet', function (app, html, data) {
-    html.css({ width: '500' });
+Hooks.on('renderJournalSheet', function (app, html, data) {
+    _applyCRTEffect(html);
+});
 
-    foundry.utils.mergeObject(app, {
-        options: {
-            width: 500,
-        },
-    });
+Hooks.on('renderMothershipActorSheet', function (app, html, data) {
+    console.log(`#DEBUG# Rendering Character sheet..`);
 
-    _applyMothershipFixes(html);
+    // Target sheet with unique ID to avoid altering other open sheets
+    var id = app._element[0].id;
+    var sheetHtml = $('#' + id);
+
+    _applyMothershipFixes(sheetHtml);
+    _applyCharacterFixes(sheetHtml);
+});
+
+Hooks.on('renderMothershipCreatureSheet', function (app, html, data) {
+    console.log(`#DEBUG# Rendering NPC sheet..`);
+
+    var id = app._element[0].id;
+    var sheetHtml = $('#' + id);
+
+    _applyMothershipFixes(sheetHtml);
+    _applyNPCFixes(sheetHtml);
 });
 
 function _applyCRTEffect(html) {
-    // Do not apply effects to the following windows
-    // if (html.hasClass('journal')) return;
-
     html.find('.window-content').addClass('crt');
 }
 
@@ -38,11 +48,13 @@ function _applyMothershipFixes(html) {
     });
 
     html.find('.button').hover(function () {
-        console.log(`Hovered over button.`);
         $(this).toggleClass('aberration');
     });
+}
 
-    // Mothership specific fixes
+function _applyCharacterFixes(html) {
+    console.log(`#DEBUG# Applying Character fixes to sheet`);
+
     html.find('.saves')
         .children('.resource')
         .children('.grid')
@@ -88,7 +100,12 @@ function _applyMothershipFixes(html) {
         .last()
         .css({ 'grid-column': '' })
         .children('.minmaxwrapper')
-        .css({ width: '', background: '', 'border-radius': '', display: '' })
+        .css({
+            width: '',
+            background: '',
+            'border-radius': '',
+            display: '',
+        })
         .children('.maxhealth-input')
         .css({ display: '' });
 
@@ -102,45 +119,50 @@ function _applyMothershipFixes(html) {
     var savesList = html.find('.saves-list');
 
     html.find('.saves').children('.resource').detach().appendTo(savesList);
-
-    // NPC sheet fixes
-    if (html.hasClass('creature')) {
-        html.find('.whiteline').remove();
-        // Move NPC profile picture to top-left corner
-        html.find('img.profile').detach().prependTo('.creature-header-grid');
-
-        // Move name field inside the attributes grid
-        html.find('input.creaturename').detach().prependTo('.creature-header');
-
-        // Remove hard-coded width for creature stats
-        html.find('.mainstatwrapper')
-            .children('.creature-mainstat')
-            .children('input.creaturestat')
-            .css({ width: '' });
-
-        // Remove hard-coded size for the profile
-        html.find('.profile')
-            .removeClass('noborder')
-            .css({ width: '', height: '' });
-
-        // Add missing label for creature name
-        html.find('input.creaturename')
-            .parent()
-            .prepend('<div class="creature-name-wrapper"</div>');
-
-        html.find('.creature-name-wrapper')
-            .append('<div class="headerinputtext">Name</div>')
-            .append('<div class="headerinputfield charname"></div>');
-
-        html.find('input.creaturename')
-            .removeClass('noborder')
-            .attr('style', '')
-            .detach()
-            .appendTo('.headerinputfield.charname');
-    }
 }
 
-Hooks.on('renderApplication', function (app, html, data) {
-    _applyCRTEffect(html);
-    _applyMothershipFixes(html);
-});
+function _applyNPCFixes(html) {
+    console.log(`#DEBUG# Applying NPC fixes to sheet`);
+    console.log(html);
+
+    html.find('.whiteline').remove();
+    // Move NPC profile picture to top-left corner
+    html.find('img.profile')
+        .detach()
+        .prependTo(html.find('.creature-header-grid'));
+
+    // Move name field inside the attributes grid
+    html.find('input.creaturename')
+        .detach()
+        .prependTo(html.find('.creature-header'));
+
+    // Remove hard-coded width for creature stats
+    html.find('.mainstatwrapper')
+        .children('.creature-mainstat')
+        .children('input.creaturestat')
+        .css({ width: '' });
+
+    // Remove hard-coded size for the profile
+    html.find('.profile')
+        .removeClass('noborder')
+        .css({ width: '', height: '' });
+
+    // Add missing label for creature name
+    html.find('.creature-header').prepend(
+        '<div class="creature-name-wrapper"</div>'
+    );
+
+    html.find('.creature-name-wrapper')
+        .append('<div class="headerinputtext">Name</div>')
+        .append('<div class="headerinputfield charname"></div>');
+
+    html.find('input.creaturename')
+        .removeClass('noborder')
+        .attr('style', '')
+        .detach()
+        .appendTo(
+            html.find('.creature-name-wrapper .headerinputfield.charname')
+        );
+}
+
+Hooks.on('renderApplication', function (app, html, data) {});
