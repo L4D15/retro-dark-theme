@@ -95,10 +95,10 @@ $scrollbar-border-color: #ddd;
 
 // Tables
 $table-border: 1px solid #242731;
-$table-header-background: #242731;
+$table-header-background: $terminal-color;
 $table-row-strip-color: #171619;
-$table-header-font: 'IBM Plex Mono';
-$table-header-color: #aaa;
+$table-header-font: 'Kosugi', sans-serif;
+$table-header-color: $terminal-color-inverse;
 $table-body-font: 'IMB Plex Mono';
 $table-body-color: #fff;
 

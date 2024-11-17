@@ -34,7 +34,6 @@ function _applyMothershipFixes(html) {
 
     html.find('.rollable').hover(function () {
         var target = $(this);
-        console.log(`Hovered over rollable ${JSON.stringify(target)}.`);
         target.toggleClass('aberration');
     });
 
