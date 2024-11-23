@@ -171,6 +171,10 @@ function _applyNPCFixes(html) {
         .children('.grid')
         .detach()
         .prependTo(html.find('.creature-description-grid'));
+
+    html.find('.creature-abilities')
+        .children('li.creature-ability-container')
+        .css({ 'margin-top': '' });
 }
 
 Hooks.on('renderApplication', function (app, html, data) {

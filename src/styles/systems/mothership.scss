@@ -537,8 +537,11 @@
         .creature-description-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
 
             .grid {
+                @import '../ui/inputs';
                 grid-column: 1 / span 2;
                 font-size: 1rem;
 
@@ -580,6 +583,7 @@
                         width: 100%;
                         display: grid;
                         grid-template-columns: 1fr 1fr;
+                        background: none;
 
                         .slant {
                             display: none;
@@ -628,8 +632,9 @@
             }
 
             .creature-abilities {
-                border: $main-border;
-                border-radius: $main-border-radius;
+                position: relative;
+                border: 1px solid #cecece;
+                border-radius: 0px;
                 background: $main-background;
                 color: $journal-text-color;
                 outline: none;
@@ -638,16 +643,27 @@
                     border: $main-border;
                 }
 
-                li {
-                    list-style-type: none;
+                .creature-ability-container {
+                    // position: relative;
+
+                    &.creature-ability-title {
+                        font-family: $journal-title-font;
+                        font-size: 0.8rem;
+                        text-align: left;
+                        padding: 0.2rem;
+                        margin: 0rem;
+                        background: #cecece;
+                        color: $terminal-color-inverse;
+                    }
                 }
 
-                .creature-ability-container {
+                li {
+                    list-style-type: none;
                     position: relative;
 
                     .creature-ability-title {
                         font-family: $journal-title-font;
-                        font-size: 1rem;
+                        font-size: 0.8rem;
                         text-align: left;
                         color: $journal-title-color;
 
@@ -671,6 +687,27 @@
                     .item-control {
                         &:hover {
                             color: $accent-color;
+                            text-shadow: none;
+                        }
+                    }
+                }
+
+                a {
+                    &.item-control.weapon-create {
+                        position: absolute;
+                        top: 0px;
+                        right: 0px;
+                        text-align: center;
+                        font-family: 'Kosugi', sans-serif;
+                        font-weight: bold;
+                        font-size: 0.8rem;
+                        color: $terminal-color-inverse;
+                        text-transform: uppercase;
+                        margin-right: 12px;
+                        margin-top: 2px;
+
+                        &:hover {
+                            color: $highlight-color;
                             text-shadow: none;
                         }
                     }
