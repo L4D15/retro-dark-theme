@@ -170,8 +170,10 @@ function _applyNPCFixes(html) {
     html.find('.creature-description-grid')
         .children('.creaturedescription')
         .children('.grid')
+        .attr('id', 'resources')
+        .removeClass('grid')
         .detach()
-        .prependTo(html.find('.creature-description-grid'));
+        .appendTo(html.find('.creaturedescription'));
 
     html.find('.creature-abilities')
         .children('li.creature-ability-container')
