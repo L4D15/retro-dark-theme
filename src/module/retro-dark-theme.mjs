@@ -127,6 +127,7 @@ function _applyCharacterFixes(html) {
 }
 
 function _applyNPCFixes(html) {
+    html.find('form').addClass('flexcol');
     html.find('.whiteline').remove();
     // Move NPC profile picture to top-left corner
     html.find('img.profile')
