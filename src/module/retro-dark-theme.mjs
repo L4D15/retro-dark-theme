@@ -19,7 +19,7 @@ Hooks.on('renderMothershipActorSheet', function (app, html, data) {
     var id = app._element[0].id;
     var sheetHtml = $('#' + id);
 
-    _applyInitialSheetSize(sheetHtml, app);
+    _applyInitialSheetSize(sheetHtml, app, 475, 700);
     _applyMothershipFixes(html);
     _applyCharacterFixes(sheetHtml);
 });
@@ -28,20 +28,29 @@ Hooks.on('renderMothershipCreatureSheet', function (app, html, data) {
     var id = app._element[0].id;
     var sheetHtml = $('#' + id);
 
-    _applyInitialSheetSize(sheetHtml, app);
+    _applyInitialSheetSize(sheetHtml, app, 475, 700);
     _applyMothershipFixes(html);
     _applyNPCFixes(sheetHtml);
+});
+
+Hooks.on('renderMothershipItemSheet', function (app, html, data) {
+    var id = app._element[0].id;
+    var sheetHtml = $('#' + id);
+
+    _applyInitialSheetSize(sheetHtml, app, 475, 350);
+    _applyMothershipFixes(html);
+    _applyItemFixes(html);
 });
 
 function _applyCRTEffect(html) {
     html.find('.window-content').addClass('crt');
 }
 
-function _applyInitialSheetSize(html, app) {
-    html.css({ width: 475, height: 700 });
+function _applyInitialSheetSize(html, app, width, height) {
+    html.css({ width: width, height: height });
 
-    app.position.width = 475;
-    app.position.height = 700;
+    app.position.width = width;
+    app.position.height = height;
 }
 
 function _applyMothershipFixes(html) {
@@ -180,8 +189,20 @@ function _applyNPCFixes(html) {
         .css({ 'margin-top': '' });
 }
 
+function _applyItemFixes(html) {
+    html.find('form').addClass('flexcol');
+}
+
 Hooks.on('renderApplication', function (app, html, data) {
-    if (html.hasClass('window-app') || app._element[0].hasClass('window-app')) {
+    if (html.hasClass('window-app')) {
         _applyMothershipFixes(html);
     }
+
+    // if (
+    //     app._element !== null &&
+    //     app._element.length > 0 &&
+    //     app._element[0].hasClass('window-app')
+    // ) {
+    //     _applyMothershipFixes(html);
+    // }
 });
