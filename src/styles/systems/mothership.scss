@@ -42,7 +42,6 @@
     width: 100%;
     height: 100%;
     position: static;
-    color: $terminal-color-inverse;
 
     &:hover {
         background: $highlight-color;
@@ -87,7 +86,40 @@
     padding: 0rem;
 }
 
-.horizontal-field-minmaxwrapper {
+.horizontal-field-minmax {
+    display: grid;
+    width: 100%;
+    height: 26px;
+    padding: 0px;
+    align-items: center;
+    justify-items: center;
+}
+
+.horizontal-field-minmax-label {
+    @extend label;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    padding: 6px 0.25rem;
+    margin-bottom: 0px;
+    text-align: right;
+    color: $terminal-color;
+    width: 100%;
+    height: 100%;
+    position: static;
+    font-size: 0.8rem;
+}
+
+.horizontal-field-minmax-min-input {
+    @extend .horizontal-field-input;
+}
+
+.horizontal-field-minmax-max-input {
+    @extend .horizontal-field-input;
+}
+
+.horizontal-field-minmax-input-label {
+    display: none;
 }
 
 .profile-picture {
@@ -152,7 +184,7 @@
             }
 
             .header-fields {
-                grid-template-columns: 3fr 2fr 2fr;
+                grid-template-columns: 3fr 2fr 116px;
                 grid-template-rows: 100px 1fr 64px;
 
                 .header {
@@ -189,30 +221,14 @@
                     justify-items: start;
 
                     .resource {
-                        width: 100%;
-                        height: 26px;
-                        padding: 0px;
-                        align-items: center;
-                        justify-items: center;
-
-                        &.minmaxtopstat {
-                            display: grid;
-                            grid-template-columns: 1fr 70px;
-                        }
+                        @extend .horizontal-field-minmax;
 
                         .resource-label {
-                            @extend label;
-                            background: none;
-                            border: none;
-                            padding: 4px 0.5rem;
-                            text-align: right;
-                            color: $terminal-color;
-                            width: 100%;
-                            height: 100%;
+                            @extend .horizontal-field-minmax-label;
                         }
 
                         .healthmaxtext {
-                            display: none;
+                            @extend .horizontal-field-minmax-input-label;
                         }
 
                         .minmaxtext {
@@ -315,6 +331,11 @@
                     gap: 4px;
                     align-items: start;
                     justify-items: start;
+                    padding: 0rem;
+                    height: auto;
+                    background: none;
+                    border-radius: 0px;
+                    height: min-content;
 
                     .saves-list {
                         display: grid;

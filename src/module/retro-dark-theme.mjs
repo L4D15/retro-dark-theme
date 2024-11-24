@@ -77,6 +77,14 @@ function _applyCharacterFixes(html) {
         .removeClass('grid')
         .removeClass('grid-3col');
 
+    html.find('.saves')
+        .children('.resource')
+        .children('.inputs-list')
+        .children('.mainstatmod-title')
+        .each(function () {
+            $(this).css({ top: '' });
+        });
+
     var headerFields = html.find('.header-fields');
 
     html.find('.health')
