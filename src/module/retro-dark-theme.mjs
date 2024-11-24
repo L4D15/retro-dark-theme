@@ -280,26 +280,13 @@ function _applyItemFixes(html) {
     html.find('.header').children().eq(1).addClass('name-field');
     html.find('.item-armor-grid').attr({ style: '' });
 
-    // Fix features field working as regular attributes
-    // html.find('form')
-    //     .children('.resource')
-    //     .last()
-    //     .addClass('features-field')
-    //     .removeClass('resource')
-    //     .attr({ style: '' });
-
     // Fix missing wrapper parent for attributes
     html.find('.resource').each(function () {
         // Remove hardcoded style
         $(this).attr({ style: '' });
-        $(this).removeClass('minmaxtopstat').removeClass('flex-center');
-
-        // Fix label missing a wrapping div
-        $(this)
-            .children('label.resource-label')
-            .before('<div class="mainstatlabel"></div>');
-        var labelContainer = $(this).find('.mainstatlabel');
-        $(this).find('.resource-label').detach().appendTo($(labelContainer));
+        $(this).removeClass('minmaxtopstat');
+        $(this).removeClass('flex-center');
+        $(this).find('.maxhealth-input').removeClass('darkGreyText');
 
         // Move inputs out of the wrapper
         $(this)
@@ -309,6 +296,17 @@ function _applyItemFixes(html) {
             .appendTo($(this));
         $(this).find('.valuewrapper').remove();
     });
+
+    html.find('.maxhealth-input').wrap('<div class="mainstat-input"></div>');
+
+    // Remove hardcoded values
+    html.find('.textvaluewrapper').attr({ style: '' });
+
+    // Fix armor features section with no class
+    html.find('.sheet-header')
+        .siblings('.resource')
+        .first()
+        .addClass('features-wrapper');
 
     // Move all field to the parent grid
     html.find('.item-armor-grid')

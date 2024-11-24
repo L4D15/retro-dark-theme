@@ -171,22 +171,6 @@
     display: none;
 }
 
-// .horizontal-field-minmax-input {
-//     width: calc(100% - 2px);
-//     min-width: 20px;
-//     height: var(--form-field-height);
-//     padding: 1px 3px;
-//     background: $faded-color;
-//     border: $input-border;
-//     border-radius: $input-border-radius;
-//     font-family: $input-text-font;
-//     font-weight: normal;
-//     color: $input-text-color !important;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// }
-
 .profile-picture {
     flex: 0;
     width: 100px;
@@ -745,27 +729,59 @@
                 }
             }
 
+            .circle-statwrapper-horizontal {
+                background: none;
+                border: none;
+                gap: 4px;
+                flex: 0;
+                padding: 0.25rem 0rem;
+            }
+
             .item-armor-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr;
                 gap: 4px;
                 flex: 0;
                 padding: 0.5rem 0rem;
+            }
 
-                .resource {
-                    @extend .horizontal-field;
-                    grid-template-rows: inherit;
+            .resource {
+                @extend .vertical-field;
+                grid-template-rows: inherit;
 
-                    .mainstatlabel {
-                        @extend .horizontal-field-label;
+                label {
+                    @extend .vertical-field-label;
+                    text-align: left;
+                }
 
-                        label {
-                            @extend .horizontal-field-label-text;
-                        }
+                .mainstat-input,
+                .textvaluewrapper {
+                    @extend .vertical-field-input;
+                    height: 26px;
+
+                    .maxhealth-input,
+                    .textvaluewrapper-input {
+                        font-size: 0.8rem;
+                        height: 26px;
                     }
+                }
+            }
 
-                    .maxhealth-input {
-                        @extend .horizontal-field-input;
+            .features-wrapper {
+                @extend .vertical-field;
+
+                .resource-label {
+                    @extend .vertical-field-label;
+                    text-align: left;
+                }
+
+                .textvaluewrapper {
+                    @extend .vertical-field-input;
+                    text-align: left;
+
+                    .textvaluewrapper-input {
+                        text-align: left;
+                        font-size: 0.8rem;
                     }
                 }
             }
