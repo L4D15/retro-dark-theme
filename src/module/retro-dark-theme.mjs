@@ -258,6 +258,19 @@ function _applyNPCFixes(html) {
     html.find('.creature-abilities')
         .children('li.creature-ability-container')
         .css({ 'margin-top': '' });
+
+    // Fix missing wrapper parent for attributes
+    html.find('.mainstatwrapper')
+        .children('.resource')
+        .each(function () {
+            // Fix label missing a wrapping div
+            $(this)
+                .children('span.ability-mod')
+                .removeClass('creaturestat')
+                .before('<div class="mainstatlabel"></div>');
+            var labelContainer = $(this).find('.mainstatlabel');
+            $(this).find('.ability-mod').detach().appendTo($(labelContainer));
+        });
 }
 
 function _applyItemFixes(html) {
