@@ -197,6 +197,13 @@ function _applyCharacterFixes(html) {
         .each(function () {
             $(this).css({ top: '' });
         });
+
+    // Move Skill Training to Notes section
+    var skillsTab = html.find('.tab.items[data-tab="skills"]');
+    var notesTab = html.find('.tab.biography[data-tab="notes"]');
+    var trainingFrame = $(skillsTab).find('.skill_training_frame');
+
+    $(trainingFrame).detach().prependTo($(notesTab));
 }
 
 function _applyNPCFixes(html) {
