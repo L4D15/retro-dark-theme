@@ -275,6 +275,9 @@ function _applyNPCFixes(html) {
 
 function _applyItemFixes(html) {
     html.find('form').addClass('flexcol');
+
+    html.find('header').children('.header').attr({ style: '' });
+    html.find('.header').children().eq(1).addClass('name-field');
 }
 
 Hooks.on('renderApplication', function (app, html, data) {
