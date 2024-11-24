@@ -110,6 +110,45 @@
     font-size: 0.8rem;
 }
 
+.horizontal-field-minmax-values {
+    grid-column: 2;
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .slant {
+        display: none;
+    }
+
+    input,
+    .maxhealth-input {
+        width: calc(100% - 2px);
+        min-width: 20px;
+        height: var(--form-field-height);
+        padding: 1px 3px;
+        background: $faded-color;
+        border: $input-border;
+        border-radius: $input-border-radius;
+        font-family: $input-text-font;
+        font-weight: normal;
+        color: $input-text-color !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: $number-font;
+        font-weight: $number-weight;
+        font-size: 0.8rem;
+
+        &:hover {
+            color: $highlight-color;
+        }
+    }
+}
+
 .horizontal-field-minmax-min-input {
     @extend .horizontal-field-input;
 }
@@ -121,6 +160,22 @@
 .horizontal-field-minmax-input-label {
     display: none;
 }
+
+// .horizontal-field-minmax-input {
+//     width: calc(100% - 2px);
+//     min-width: 20px;
+//     height: var(--form-field-height);
+//     padding: 1px 3px;
+//     background: $faded-color;
+//     border: $input-border;
+//     border-radius: $input-border-radius;
+//     font-family: $input-text-font;
+//     font-weight: normal;
+//     color: $input-text-color !important;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
 
 .profile-picture {
     flex: 0;
@@ -217,7 +272,7 @@
                 .health {
                     display: grid;
                     grid-template-columns: 1fr;
-                    gap: 2px;
+                    gap: 4px;
                     align-items: start;
                     justify-items: start;
                     height: min-content;
@@ -239,48 +294,7 @@
                         }
 
                         .minmaxwrapper {
-                            grid-column: 2;
-                            height: 100%;
-                            width: 100%;
-
-                            div.maxhealth-input {
-                                width: calc(100% - 2px);
-                                min-width: 20px;
-                                height: var(--form-field-height);
-                                padding: 1px 3px;
-                                background: $faded-color;
-                                border: $input-border;
-                                border-radius: $input-border-radius;
-                                font-family: $input-text-font;
-                                font-weight: normal;
-                                color: $input-text-color !important;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
-                        }
-                    }
-
-                    .healthmaxtext {
-                        margin-top: -3px;
-                        color: $faded-color;
-                    }
-
-                    .minmaxwrapper {
-                        background: none;
-                        border-radius: 0px;
-                        border: none;
-                        grid-template-columns: 1fr 1fr;
-
-                        input,
-                        .whiteText {
-                            font-family: $number-font;
-                            font-weight: $number-weight;
-                            font-size: 0.8rem;
-                        }
-
-                        .slant {
-                            display: none;
+                            @extend .horizontal-field-minmax-values;
                         }
                     }
                 }
@@ -544,70 +558,85 @@
                     display: flex;
                     flex-direction: column;
                     font-size: 1rem;
-                    gap: 2px;
+                    gap: 4px;
 
                     .resource {
-                        width: 100%;
-                        height: 26px;
-                        padding: 0px;
-                        align-items: center;
-                        justify-items: center;
+                        @extend .horizontal-field-minmax;
 
-                        &.minmaxtopstat {
-                            display: grid;
-                            grid-template-columns: 1fr 70px;
-                        }
-
-                        .resource-label {
-                            @extend label;
-                            background: none;
-                            border: none;
-                            padding: 8px 0.5rem;
-                            text-align: right;
-                            color: $terminal-color;
-                            width: 100%;
-                            height: 100%;
-                        }
-
-                        .healthmaxtext {
-                            display: none;
-                        }
-
-                        .minmaxtext {
+                        label {
+                            @extend .horizontal-field-minmax-label;
                             grid-column: 1;
-                            margin: 0px;
                         }
 
                         .minmaxwrapper {
-                            grid-column: 2;
-                            height: 100%;
-                            width: 100%;
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-                            background: none;
-                            border: none;
-
-                            .slant {
-                                display: none;
-                            }
-
-                            .maxhealth-input {
-                                width: calc(100% - 2px);
-                                min-width: 20px;
-                                height: var(--form-field-height);
-                                padding: 1px 3px;
-                                background: $faded-color;
-                                border: $input-border;
-                                border-radius: $input-border-radius;
-                                font-family: $input-text-font;
-                                font-weight: normal;
-                                color: $input-text-color !important;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-size: 0.85rem;
-                            }
+                            @extend .horizontal-field-minmax-values;
                         }
+
+                        .healthmaxtext {
+                            @extend .horizontal-field-minmax-input-label;
+                        }
+
+                        // width: 100%;
+                        // height: 26px;
+                        // padding: 0px;
+                        // align-items: center;
+                        // justify-items: center;
+
+                        // &.minmaxtopstat {
+                        //     display: grid;
+                        //     grid-template-columns: 1fr 70px;
+                        // }
+
+                        // .resource-label {
+                        //     @extend label;
+                        //     background: none;
+                        //     border: none;
+                        //     padding: 8px 0.5rem;
+                        //     text-align: right;
+                        //     color: $terminal-color;
+                        //     width: 100%;
+                        //     height: 100%;
+                        // }
+
+                        // .healthmaxtext {
+                        //     display: none;
+                        // }
+
+                        // .minmaxtext {
+                        //     grid-column: 1;
+                        //     margin: 0px;
+                        // }
+
+                        // .minmaxwrapper {
+                        //     grid-column: 2;
+                        //     height: 100%;
+                        //     width: 100%;
+                        //     display: grid;
+                        //     grid-template-columns: 1fr 1fr;
+                        //     background: none;
+                        //     border: none;
+
+                        //     .slant {
+                        //         display: none;
+                        //     }
+
+                        //     .maxhealth-input {
+                        //         width: calc(100% - 2px);
+                        //         min-width: 20px;
+                        //         height: var(--form-field-height);
+                        //         padding: 1px 3px;
+                        //         background: $faded-color;
+                        //         border: $input-border;
+                        //         border-radius: $input-border-radius;
+                        //         font-family: $input-text-font;
+                        //         font-weight: normal;
+                        //         color: $input-text-color !important;
+                        //         display: flex;
+                        //         align-items: center;
+                        //         justify-content: center;
+                        //         font-size: 0.85rem;
+                        //     }
+                        // }
                     }
                 }
             }
