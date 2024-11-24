@@ -278,6 +278,48 @@ function _applyItemFixes(html) {
 
     html.find('header').children('.header').attr({ style: '' });
     html.find('.header').children().eq(1).addClass('name-field');
+    html.find('.item-armor-grid').attr({ style: '' });
+
+    // Fix features field working as regular attributes
+    // html.find('form')
+    //     .children('.resource')
+    //     .last()
+    //     .addClass('features-field')
+    //     .removeClass('resource')
+    //     .attr({ style: '' });
+
+    // Fix missing wrapper parent for attributes
+    html.find('.resource').each(function () {
+        // Remove hardcoded style
+        $(this).attr({ style: '' });
+        $(this).removeClass('minmaxtopstat').removeClass('flex-center');
+
+        // Fix label missing a wrapping div
+        $(this)
+            .children('label.resource-label')
+            .before('<div class="mainstatlabel"></div>');
+        var labelContainer = $(this).find('.mainstatlabel');
+        $(this).find('.resource-label').detach().appendTo($(labelContainer));
+
+        // Move inputs out of the wrapper
+        $(this)
+            .find('.valuewrapper')
+            .children('input')
+            .detach()
+            .appendTo($(this));
+        $(this).find('.valuewrapper').remove();
+    });
+
+    // Move all field to the parent grid
+    html.find('.item-armor-grid')
+        .find('.resource')
+        .each(function () {
+            $(this).detach().appendTo(html.find('.item-armor-grid'));
+        });
+
+    // Remove unecessary divs
+    html.find('.item-armor-grid').children('div').first().remove();
+    html.find('.item-armor-grid').children('div').first().remove();
 }
 
 Hooks.on('renderApplication', function (app, html, data) {
