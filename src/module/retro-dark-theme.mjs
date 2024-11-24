@@ -69,22 +69,6 @@ function _applyMothershipFixes(html) {
 function _applyCharacterFixes(html) {
     console.log(`#DEBUG# Applying Character fixes to sheet`);
 
-    html.find('.saves')
-        .children('.resource')
-        .children('.grid')
-        .css({ 'grid-template-columns': '', 'margin-left': '' })
-        .addClass('inputs-list')
-        .removeClass('grid')
-        .removeClass('grid-3col');
-
-    html.find('.saves')
-        .children('.resource')
-        .children('.inputs-list')
-        .children('.mainstatmod-title')
-        .each(function () {
-            $(this).css({ top: '' });
-        });
-
     var headerFields = html.find('.header-fields');
 
     html.find('.health')
@@ -141,6 +125,78 @@ function _applyCharacterFixes(html) {
     var savesList = html.find('.saves-list');
 
     html.find('.saves').children('.resource').detach().appendTo(savesList);
+
+    html.find('.saves')
+        .children('.resource')
+        .children('.grid')
+        .css({ 'grid-template-columns': '', 'margin-left': '' })
+        .addClass('inputs-list')
+        .removeClass('grid')
+        .removeClass('grid-3col');
+
+    // Fix Saves with different structure than attributes
+
+    html.find('.saves')
+        .children('.saves-list')
+        .addClass('grid')
+        .addClass('grid-1col');
+
+    html.find('.saves')
+        .children('.saves-list')
+        .children('.resource')
+        .each(function () {
+            // Wrap the save in a contained to match the attributes structure
+            $(this).before('<div class="save-wrapper"></div>');
+            var wrapper = $(this).prev();
+            $(this).detach().appendTo(wrapper);
+
+            var badContainer = $(this).children().eq(1);
+
+            // Remove hard-coded styling
+            $(badContainer)
+                .removeClass('grid')
+                .removeClass('grid-3col')
+                .css({ 'grid-template-columns': '', 'margin-left': '' });
+
+            // Move main input outside, so its on level with the label
+            $(badContainer)
+                .children()
+                .eq(0)
+                .attr({ style: '' })
+                .detach()
+                .appendTo($(this));
+
+            // Move bonus input and + sign out to the main wrapper
+            $(badContainer)
+                .children()
+                .eq(0)
+                .attr({ style: '' })
+                .detach()
+                .appendTo($(wrapper));
+            $(badContainer)
+                .children()
+                .eq(0)
+                .attr({ style: '' })
+                .detach()
+                .appendTo($(wrapper));
+
+            $(badContainer).remove();
+
+            // Fix label missing a wrapping div
+            $(this)
+                .children('span.ability-mod')
+                .before('<div class="mainsavelabel"></div>');
+            var labelContainer = $(this).find('.mainsavelabel');
+            $(this).find('.ability-mod').detach().appendTo($(labelContainer));
+        });
+
+    html.find('.saves')
+        .children('.resource')
+        .children('.inputs-list')
+        .children('.mainstatmod-title')
+        .each(function () {
+            $(this).css({ top: '' });
+        });
 }
 
 function _applyNPCFixes(html) {
