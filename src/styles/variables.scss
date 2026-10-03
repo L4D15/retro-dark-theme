@@ -3,7 +3,7 @@ $highlight-color: #fff;
 $accent-color: #fff;
 $mutted-color: #aaa;
 $faded-color: #242731;
-$terminal-color: #e9e9e9;
+$terminal-color: #cecece;
 $terminal-color-inverse: #242731;
 
 // Colors
@@ -28,6 +28,7 @@ $main-border: 1px solid #242731;
 $main-border-radius: 5px;
 $accent-border: 1px solid $accent-color;
 $active-border: 1px solid $highlight-color;
+$disabled-border: 1px dashed $terminal-color;
 
 $text-main-font: 'Blinker', sans-serif;
 $text-main-size: 1rem;
@@ -43,7 +44,7 @@ $title-top-font: 'Orbitron', monospace;
 
 $journal-sidebar-background: #000000d1;
 $journal-header-background: #000;
-$journal-title-font: 'Orbitron', monospace;
+$journal-title-font: 'Kosugi', monospace;
 $journal-title-color: #fff;
 
 $title-h1-color: #fff;
@@ -94,10 +95,10 @@ $scrollbar-border-color: #ddd;
 
 // Tables
 $table-border: 1px solid #242731;
-$table-header-background: #242731;
+$table-header-background: $terminal-color;
 $table-row-strip-color: #171619;
-$table-header-font: 'IBM Plex Mono';
-$table-header-color: #aaa;
+$table-header-font: 'Kosugi', sans-serif;
+$table-header-color: $terminal-color-inverse;
 $table-body-font: 'IMB Plex Mono';
 $table-body-color: #fff;
 
@@ -123,3 +124,6 @@ $chat-msg-color: #fff;
 $chat-msg-border: 1px solid #242731;
 $chat-msg-header-background: #242731;
 $chat-msg-header-color: #aaa;
+
+// Navigation
+$nav-border: 1px solid $terminal-color;

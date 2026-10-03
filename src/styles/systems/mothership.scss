@@ -1,3 +1,189 @@
+// Pre-defined styles
+
+.vertical-field {
+    display: grid;
+    grid-template-rows: 15px 1fr;
+}
+
+.vertical-field-label {
+    @extend label;
+    padding: 0.1rem 0.5rem;
+    margin: 0px;
+    font-size: 0.7rem;
+    background: $terminal-color;
+    color: $input-label-color-inverse;
+    text-transform: uppercase;
+}
+
+.vertical-field-input {
+    @extend input;
+    padding: 0px;
+    margin: 0px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+
+    input,
+    input[type='text'],
+    textarea {
+        border: none !important;
+        padding-left: 0.5rem;
+        text-transform: none;
+    }
+}
+
+.horizontal-field {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    height: 26px;
+}
+
+.horizontal-field-label {
+    @extend label;
+    background: $terminal-color;
+    border: $input-border;
+    border-radius: $input-border-radius;
+    padding: 0rem;
+    margin-bottom: 0px;
+    text-align: right;
+    color: $terminal-color-inverse;
+    width: 100%;
+    height: 26px;
+    position: static;
+
+    &:hover {
+        background: $highlight-color;
+    }
+}
+
+.horizontal-field-label-text {
+    font-size: 0.8rem;
+    padding: 6px 0.25rem;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+}
+
+.horizontal-field-input {
+    @extend input;
+    z-index: inherit;
+    width: auto;
+    height: 100%;
+    margin: 0rem;
+    padding: 0rem 0rem;
+    text-align: center;
+    font-size: 1rem;
+
+    &:hover {
+        border-color: $highlight-color;
+    }
+}
+
+.horizontal-field-bonus-input {
+    @extend .horizontal-field-input;
+}
+
+.horizontal-field-with-bonus {
+    display: grid;
+    grid-template-columns: 1fr 10px 34px;
+    align-items: center;
+    width: auto;
+    height: 26px;
+    padding: 0rem;
+}
+
+.horizontal-field-minmax {
+    display: grid;
+    width: 100%;
+    height: 26px;
+    padding: 0px;
+    align-items: center;
+    justify-items: center;
+}
+
+.horizontal-field-minmax-label {
+    @extend label;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    padding: 6px 0.25rem;
+    margin-bottom: 0px;
+    text-align: right;
+    color: $terminal-color;
+    width: 100%;
+    height: 100%;
+    position: static;
+    font-size: 0.8rem;
+}
+
+.horizontal-field-minmax-values {
+    grid-column: 2;
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .slant {
+        display: none;
+    }
+
+    input,
+    .maxhealth-input {
+        width: calc(100% - 2px);
+        min-width: 20px;
+        height: var(--form-field-height);
+        padding: 1px 3px;
+        background: $faded-color;
+        border: $input-border;
+        border-radius: $input-border-radius;
+        font-family: $input-text-font;
+        font-weight: normal;
+        color: $input-text-color !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: $number-font;
+        font-weight: $number-weight;
+        font-size: 0.8rem;
+
+        &:hover {
+            color: $highlight-color;
+        }
+    }
+}
+
+.horizontal-field-minmax-min-input {
+    @extend .horizontal-field-input;
+}
+
+.horizontal-field-minmax-max-input {
+    @extend .horizontal-field-input;
+}
+
+.horizontal-field-minmax-input-label {
+    display: none;
+}
+
+.profile-picture {
+    flex: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 0px;
+    border: 1px solid $terminal-color;
+    padding: 0rem;
+
+    &:hover {
+        border: $accent-border;
+    }
+}
+
 .system-mosh {
     // Chat cards
     #interface {
@@ -34,205 +220,200 @@
 
             // Character sheet
 
-            .headergrid {
-                padding: 0rem 0.5rem;
+            header {
+                &.header-grid {
+                    margin-top: 0.25rem;
+                    flex: 0;
+                }
+
+                .header-grid {
+                    padding: 0rem;
+                    flex: 0 1 auto;
+                    grid-template-areas: 'header header header' 'abilities saves centercol';
+                }
             }
 
             .header-fields {
-                grid-template-columns: 180px auto 100px;
+                grid-template-columns: 4fr 3fr 116px;
+                grid-template-rows: 100px 116px 64px;
 
                 .header {
                     background: none;
                     border-radius: 0px;
-                    border-bottom: $main-border;
+                    border: none;
                     grid-template-columns: 100px 1fr;
+                    align-items: start;
+                    justify-content: start;
+                    height: 100px;
 
                     .headergrid {
                         padding: 0rem 0rem 0rem 0.5rem;
+                        height: 100%;
+
+                        & > div {
+                            @extend .vertical-field;
+                        }
                     }
 
                     .profile {
-                        width: 100px;
-                        border: $input-border;
-                        border-radius: $input-border-radius;
-                        padding: 0px;
-
-                        &:hover {
-                            border: $accent-border;
-                        }
+                        @extend .profile-picture;
                     }
 
                     .headerinputtext {
-                        @extend label;
-                        padding: 0.1rem 0.5rem;
-                        margin: 0px;
-                        font-size: 0.7rem;
-                        background: $terminal-color;
-                        color: $input-label-color-inverse;
+                        @extend .vertical-field-label;
                     }
 
                     .headerinputfield {
-                        @extend input;
-                        padding: 0px;
-                        margin: 0px;
-
-                        input,
-                        input[type='text'],
-                        textarea {
-                            border: none !important;
-                        }
+                        @extend .vertical-field-input;
                     }
                 }
 
                 .health {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 4px;
+                    align-items: start;
+                    justify-items: start;
+                    height: min-content;
+
                     .resource {
-                        width: 100%;
-                        padding: 0rem 0.2rem;
-                    }
+                        @extend .horizontal-field-minmax;
 
-                    .healthmaxtext {
-                        margin-top: -3px;
-                        color: $faded-color;
-                    }
-
-                    .minmaxwrapper {
-                        background: none;
-                        border-radius: 0px;
-                        border: none;
-                        grid-template-columns: 1fr 1fr;
-
-                        input,
-                        .whiteText {
-                            font-family: $number-font;
-                            font-weight: $number-weight;
-                            font-size: 0.8rem;
+                        .resource-label {
+                            @extend .horizontal-field-minmax-label;
                         }
 
-                        .slant {
-                            display: none;
+                        .healthmaxtext {
+                            @extend .horizontal-field-minmax-input-label;
+                        }
+
+                        .minmaxtext {
+                            grid-column: 1;
+                            margin: 0px;
+                        }
+
+                        .minmaxwrapper {
+                            @extend .horizontal-field-minmax-values;
                         }
                     }
                 }
 
                 .abilities {
+                    height: min-content;
+                    .grid {
+                        gap: 4px;
+                    }
+
                     .mainstatwrapper {
-                        display: grid;
-                        grid-template-columns: 1fr 34px 10px;
-                        align-items: center;
-                        width: auto;
+                        @extend .horizontal-field-with-bonus;
 
                         .mainstat {
-                            grid-template-columns: 1fr 40px;
-                            position: inherit;
-                            width: auto;
+                            @extend .horizontal-field;
+                            order: 1;
+                            height: 100%;
 
                             .mainstatlabel {
-                                @extend label;
-                                height: auto;
-                                position: inherit;
-                                background: $terminal-color;
-                                border: $input-border;
-                                border-radius: $input-border-radius;
-                                padding: 4px 0.5rem;
-                                text-align: right;
-
-                                .ability-mod {
-                                    color: $terminal-color-inverse;
-                                }
-
-                                span {
-                                    padding: 0px;
-                                }
+                                @extend .horizontal-field-label;
+                                height: 26px;
 
                                 .mainstattext {
-                                    font-size: 0.8rem;
-                                    padding: 0.1rem;
+                                    @extend .horizontal-field-label-text;
                                 }
                             }
 
                             .circle-input {
-                                z-index: inherit;
-                                width: auto;
-                                height: auto;
-                                margin: 0rem;
-                                font-size: 1rem;
+                                @extend .horizontal-field-input;
                             }
                         }
 
                         .mainstatmod-input {
+                            @extend .horizontal-field-bonus-input;
+                            order: 3;
+                            margin: 0rem;
+                            width: auto;
                             position: static;
-                            border: $main-border;
-                            border-radius: $main-border-radius;
-                            margin: 0px;
-                            margin-left: 16px;
-                            z-index: inherit;
-
-                            &::before {
-                                content: '+';
-                            }
                         }
 
                         .mainstatmod-title {
                             position: static;
                             margin: 0px;
-                            margin-left: -30px;
+                            order: 2;
                         }
                     }
                 }
 
                 .saves {
                     display: grid;
-                    grid-template-rows: 49px 49px 49px;
-                    gap: 0.5rem;
+                    grid-template-columns: 1fr;
+                    gap: 4px;
+                    align-items: start;
+                    justify-items: start;
+                    padding: 0rem;
+                    height: auto;
                     background: none;
-                    padding: 0px;
+                    border-radius: 0px;
+                    height: min-content;
 
-                    .resource {
+                    .saves-list {
                         display: grid;
-                        grid-template-rows: 1fr 1fr;
-                        align-items: start;
-                        gap: 0px;
-                        padding: 0px;
+                        grid-template-rows: repeat(3, 1fr);
+                        gap: 4px;
+                        width: 100%;
 
-                        .ability-mod {
-                            @extend label;
-                            margin: 0px;
-                        }
+                        .save-wrapper {
+                            @extend .horizontal-field-with-bonus;
 
-                        .inputs-list {
-                            display: grid;
-                            grid-template-columns: 2fr 12px 1fr;
-                            justify-content: stretch;
-                            margin: 0px;
-                            padding: 0px;
+                            .resource {
+                                @extend .horizontal-field;
+                                padding: 0px;
 
-                            input {
-                                font-family: $number-font;
-                                font-weight: $number-weight;
+                                .mainsavelabel {
+                                    @extend .horizontal-field-label;
+                                    height: 26px;
 
-                                &.square-input {
-                                    margin: 0px;
-                                    padding: 4px;
-                                    height: auto;
-                                    font-size: 1rem;
-                                    z-index: inherit;
+                                    .ability-mod {
+                                        @extend .horizontal-field-label-text;
+                                    }
                                 }
 
-                                &.mainsavemod-input {
-                                    position: inherit;
-                                    z-index: inherit;
-                                    height: auto;
-                                    width: auto;
-                                    margin: 0px;
+                                input.square-input {
+                                    @extend .horizontal-field-input;
                                 }
                             }
 
                             .mainstatmod-title {
-                                position: inherit;
+                                position: static;
                                 margin: 0px;
-                                z-index: inherit;
+                            }
+
+                            .mainsavemod-input {
+                                @extend .horizontal-field-input;
+                                position: static;
                             }
                         }
+                    }
+                }
+
+                .trauma-response {
+                    display: grid;
+                    grid-column-start: 1;
+                    grid-column-end: 4;
+                    grid-template-rows: 18px 1fr;
+
+                    .resource-label {
+                        @extend label;
+                        padding: 0.1rem 0.5rem;
+                        margin: 0px;
+                        font-size: 0.7rem;
+                        background: $terminal-color;
+                        color: $input-label-color-inverse;
+                        text-align: left;
+                    }
+
+                    textarea {
+                        @extend textarea;
+                        margin: 0px;
+                        font-size: 0.8rem;
                     }
                 }
             }
@@ -240,7 +421,8 @@
             @import '../ui/navigation';
 
             .sheet-body {
-                border: $main-border;
+                border: $nav-border;
+                border-radius: 0px;
                 @import '../ui/items-list';
 
                 .tab {
@@ -280,93 +462,226 @@
                     @import '../ui/tinymce';
                 }
             }
+        }
+    }
 
-            // NPC sheet
-            .creature-header-grid {
-                background: none;
+    // NPC sheet
+    &.creature {
+        @import '../ui/inputs';
+
+        .creature-header-grid {
+            background: none;
+            flex: 0;
+            display: flex;
+            flex-direction: row;
+            margin-top: 0.25rem;
+
+            .profile {
+                @extend .profile-picture;
+            }
+
+            .creature-header {
+                flex: 1;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: min-content min-content min-content;
+                gap: 4px;
+                align-items: start;
+                padding: 0rem 0rem 0rem 0.5rem;
+                margin: 0rem;
+                height: 100px;
+
+                .creature-name-wrapper {
+                    grid-column: 1 / span 3;
+                    text-transform: none;
+                    font-size: 1rem;
+
+                    .creaturename {
+                        font-size: 1rem;
+                    }
+                }
+
+                .headerinputtext {
+                    @extend .vertical-field-label;
+                }
+
+                .headerinputfield {
+                    @extend .vertical-field-input;
+                }
+            }
+
+            .mainstatwrapper {
+                height: 26px;
+
+                .resource {
+                    @extend .horizontal-field;
+
+                    .mainstatlabel {
+                        @extend .horizontal-field-label;
+                        height: 26px;
+
+                        span.ability-mod {
+                            @extend .horizontal-field-label-text;
+                            height: 26px;
+                        }
+                    }
+
+                    .creaturestat {
+                        @extend .horizontal-field-input;
+                        height: 26px;
+                    }
+                }
+            }
+        }
+
+        .creature-description-grid {
+            display: flex;
+            flex-direction: column;
+
+            .creaturedescription {
+                display: grid;
+                grid-template-columns: 1fr 124px;
+                flex: 1 auto;
+                overflow-y: visible;
+                height: auto;
+                padding: 0.5rem 0rem;
+                margin: 0rem;
+                @import '../ui/tinymce';
+
+                .editor.tinymce {
+                    min-height: 300px;
+                }
+
+                #resources {
+                    @import '../ui/inputs';
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 1rem;
+                    gap: 4px;
+
+                    .resource {
+                        @extend .horizontal-field-minmax;
+
+                        label {
+                            @extend .horizontal-field-minmax-label;
+                            grid-column: 1;
+                        }
+
+                        .minmaxwrapper {
+                            @extend .horizontal-field-minmax-values;
+                        }
+
+                        .healthmaxtext {
+                            @extend .horizontal-field-minmax-input-label;
+                        }
+                    }
+                }
+            }
+
+            .creature-abilities {
+                // grid-column: 1 / span 2;
+                flex: 1 auto;
+                overflow-y: visible;
+                height: auto;
+                min-height: 150px;
+                padding: 0rem;
+                margin: 0rem;
+            }
+
+            .creature-abilities {
+                position: relative;
+                border: 1px solid #cecece;
+                border-radius: 0px;
+                background: $main-background;
+                color: $journal-text-color;
+                outline: none;
 
                 .whiteline {
                     border: $main-border;
                 }
-            }
 
-            .creature-description-grid {
-                .creaturedescription {
-                    .grid {
-                        .resource {
-                            .minmaxwrapper {
-                                background: none;
-                                border: none;
-                                grid-template-columns: 1fr 1fr;
+                .creature-ability-container {
+                    // position: relative;
 
-                                .slant {
-                                    display: none;
-                                }
-                            }
-
-                            .healthmaxtext {
-                                color: $faded-color;
-                            }
-                        }
+                    &.creature-ability-title {
+                        font-family: $journal-title-font;
+                        font-size: 0.8rem;
+                        text-align: left;
+                        padding: 0.2rem;
+                        margin: 0rem;
+                        background: #cecece;
+                        color: $terminal-color-inverse;
                     }
                 }
 
-                .editor {
-                    padding-top: 0.5rem;
-                    color: $journal-text-color;
+                li {
+                    list-style-type: none;
+                    position: relative;
 
-                    .editor-content {
+                    .creature-ability-title {
+                        font-family: $journal-title-font;
+                        font-size: 0.8rem;
+                        text-align: left;
+                        color: $journal-title-color;
+
+                        &:hover {
+                            color: $accent-color;
+                            text-shadow: none;
+                        }
+                    }
+
+                    .creature-ability-text {
                         @import '../ui/text';
+                        color: $journal-text-color;
+                    }
+
+                    .item-controls {
+                        position: absolute;
+                        top: 6px;
+                        right: 6px;
+                    }
+
+                    .item-control {
+                        &:hover {
+                            color: $accent-color;
+                            text-shadow: none;
+                        }
                     }
                 }
 
-                .creature-abilities {
-                    border: $main-border;
-                    border-radius: $main-border-radius;
-                    background: $main-background;
-                    color: $journal-text-color;
-                    outline: none;
+                a {
+                    &.item-control.weapon-create {
+                        position: absolute;
+                        top: 0px;
+                        right: 0px;
+                        text-align: center;
+                        font-family: 'Kosugi', sans-serif;
+                        font-weight: bold;
+                        font-size: 0.8rem;
+                        color: $terminal-color-inverse;
+                        text-transform: uppercase;
+                        margin-right: 24px;
+                        margin-top: 2px;
 
-                    .whiteline {
-                        border: $main-border;
+                        &:hover {
+                            color: $highlight-color;
+                            text-shadow: none;
+                        }
                     }
+                }
+            }
+        }
+        .sheet-body {
+            height: auto;
+            min-height: 100px;
 
-                    li {
-                        list-style-type: none;
-                    }
+            .tab {
+                &.biography {
+                    @import '../ui/tinymce';
+                    min-height: 100px;
 
-                    .creature-ability-container {
-                        position: relative;
-
-                        .creature-ability-title {
-                            font-family: $journal-title-font;
-                            font-size: 1rem;
-                            text-align: left;
-                            color: $journal-title-color;
-
-                            &:hover {
-                                color: $accent-color;
-                                text-shadow: none;
-                            }
-                        }
-
-                        .creature-ability-text {
-                            @import '../ui/text';
-                            color: $journal-text-color;
-                        }
-
-                        .item-controls {
-                            position: absolute;
-                            top: 6px;
-                            right: 6px;
-                        }
-
-                        .item-control {
-                            &:hover {
-                                color: $accent-color;
-                                text-shadow: none;
-                            }
-                        }
+                    .editor.tinymce {
+                        min-height: 300px;
                     }
                 }
             }
@@ -382,42 +697,93 @@
             color: $ui-main-color;
 
             .sheet-header {
+                display: flex;
+                flex: 0;
                 background: none;
+                height: 54px;
+                padding-top: 4px;
 
                 .header {
                     background: none;
-                }
+                    display: grid;
+                    flex: 1;
+                    grid-template-columns: 50px 1fr;
+                    gap: 4px;
 
-                .headerinputtext {
-                    font-family: $input-label-font;
-                    font-size: 0.7rem;
-                }
+                    .sbt-profile {
+                        @extend .profile-picture;
+                    }
 
-                .headerinputfield {
-                    @extend label;
-                    padding-left: 0px;
-                    border-radius: $main-border-radius;
-                    background: none;
-                }
-            }
+                    .name-field {
+                        @extend .vertical-field;
+                        height: 50px;
 
-            .resource {
-                .textvaluewrapper,
-                .valuewrapper {
-                    background: none !important;
-                    border: none;
-                }
-            }
+                        .headerinputtext {
+                            @extend .vertical-field-label;
+                        }
 
-            .circle-statwrapper-vertical {
-                background: $muted-background;
-                border: $main-border;
-                border-radius: $main-border-radius;
+                        .headerinputfield {
+                            @extend .vertical-field-input;
+                        }
+                    }
+                }
             }
 
             .circle-statwrapper-horizontal {
                 background: none;
                 border: none;
+                gap: 4px;
+                flex: 0;
+                padding: 0.25rem 0rem;
+            }
+
+            .item-armor-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 4px;
+                flex: 0;
+                padding: 0.5rem 0rem;
+            }
+
+            .resource {
+                @extend .vertical-field;
+                grid-template-rows: inherit;
+
+                label {
+                    @extend .vertical-field-label;
+                    text-align: left;
+                }
+
+                .mainstat-input,
+                .textvaluewrapper {
+                    @extend .vertical-field-input;
+                    height: 26px;
+
+                    .maxhealth-input,
+                    .textvaluewrapper-input {
+                        font-size: 0.8rem;
+                        height: 26px;
+                    }
+                }
+            }
+
+            .features-wrapper {
+                @extend .vertical-field;
+
+                .resource-label {
+                    @extend .vertical-field-label;
+                    text-align: left;
+                }
+
+                .textvaluewrapper {
+                    @extend .vertical-field-input;
+                    text-align: left;
+
+                    .textvaluewrapper-input {
+                        text-align: left;
+                        font-size: 0.8rem;
+                    }
+                }
             }
 
             br {
