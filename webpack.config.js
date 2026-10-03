@@ -25,11 +25,6 @@ function getFoundryConfig() {
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
     const foundryConfig = getFoundryConfig();
-    const devOutputPath = path.join(
-        foundryConfig.data_folder,
-        'modules',
-        'retro-dark-theme'
-    );
 
     let config = {
         context: __dirname,
