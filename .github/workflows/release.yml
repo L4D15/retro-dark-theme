@@ -1,0 +1,55 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - '*'
+
+permissions:
+    contents: write
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Ensure tag is on master
+              run: |
+                  if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/master; then
+                      echo "::error::Tag $GITHUB_REF_NAME does not point to a commit on master."
+                      exit 1
+                  fi
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+
+            - run: npm ci
+
+            - name: Stamp version and URLs into module.json
+              env:
+                  VERSION: ${{ github.ref_name }}
+                  REPO: ${{ github.repository }}
+              run: |
+                  jq --arg v "$VERSION" --arg repo "$REPO" '
+                      .version = $v
+                      | .manifest = "https://github.com/\($repo)/releases/latest/download/module.json"
+                      | .download = "https://github.com/\($repo)/releases/download/\($v)/retro-dark-theme.zip"
+                  ' module.json > module.json.tmp
+                  mv module.json.tmp module.json
+
+            - run: npm run build
+
+            - name: Create release
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  gh release create "$GITHUB_REF_NAME" \
+                      dist/retro-dark-theme.zip \
+                      dist/retro-dark-theme/module.json \
+                      --title "$GITHUB_REF_NAME" \
+                      --generate-notes

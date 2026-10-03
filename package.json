@@ -1,10 +1,11 @@
 {
     "name": "retro-dark-theme",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "description": "Dark theme with old terminal vibes.",
     "scripts": {
         "build": "webpack --mode production",
-        "build:dev": "webpack"
+        "build:dev": "webpack",
+        "dev": "webpack"
     },
     "author": "Ladislao Lainez",
     "license": "MIT",
