@@ -35,6 +35,11 @@ $text-main-size: 1rem;
 $text-line-height: 1.2rem;
 $text-secondary-font: 'IBM Plex Mono', monospace;
 
+// Body text in system sheets (descriptions, abilities, notes...), same as their inputs
+$sheet-text-font: 'IBM Plex Mono', monospace;
+$sheet-text-size: 0.8rem;
+$sheet-text-line-height: 1.2rem;
+
 // Journal
 $journal-background: #000;
 $journal-text-color: #aaa;

@@ -7,11 +7,15 @@
 }
 
 // Typography for rich text content (journals, editors, chat cards...)
-@mixin rich-text {
+@mixin rich-text(
+    $font: $text-main-font,
+    $size: $text-main-size,
+    $line-height: $text-line-height
+) {
     p {
-        font-family: $text-main-font;
-        font-size: $text-main-size;
-        line-height: $text-line-height;
+        font-family: $font;
+        font-size: $size;
+        line-height: $line-height;
     }
 
     h1 {
@@ -102,6 +106,19 @@
             }
         }
     }
+}
+
+// Console-like body text for system sheets, also for text not wrapped in paragraphs
+@mixin sheet-text {
+    font-family: $sheet-text-font;
+    font-size: $sheet-text-size;
+    line-height: $sheet-text-line-height;
+    color: $input-text-color;
+    @include rich-text(
+        $sheet-text-font,
+        $sheet-text-size,
+        $sheet-text-line-height
+    );
 }
 
 // Inverted label box: light background with dark uppercase text
@@ -301,5 +318,67 @@
     &:hover,
     &:focus {
         outline-color: $highlight-color;
+    }
+}
+
+// Retro push button
+@mixin retro-button {
+    font-family: $button-text-font;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $button-text-color;
+    background: $button-background-color;
+    border: 1px solid $terminal-color;
+    border-radius: $button-border-radius;
+    padding: 0.4rem 0.6rem;
+    @include no-glow;
+
+    &:hover {
+        background: $terminal-color;
+        color: $terminal-color-inverse;
+        border-color: $terminal-color;
+        @include no-glow;
+    }
+
+    &:focus-visible {
+        outline: 1px solid $highlight-color;
+        outline-offset: 2px;
+    }
+}
+
+// Square terminal-style radio/checkbox: [ ] / [■]
+@mixin retro-check {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: $input-border;
+    border-radius: 0;
+    box-shadow: none !important;
+    outline: none;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+        content: none;
+    }
+
+    &:checked::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: $highlight-color;
+        border-radius: 0;
+        transform: none;
+    }
+
+    &:hover {
+        border-color: $highlight-color;
     }
 }
