@@ -1,0 +1,26 @@
+// Floating UI: scene controls, scene navigation, sidebar tabs, players, hotbar...
+.ui-control:not(:disabled) {
+    --control-hover-border-color: #{$highlight-color};
+    --control-active-border-color: #{$highlight-color};
+    --control-button-border-color: #{$terminal-color};
+}
+
+#scene-navigation .ui-control.scene,
+#players {
+    font-family: $ui-font;
+}
+
+#sidebar {
+    font-family: $ui-font;
+
+    > nav.tabs button.ui-control[aria-pressed='true'] {
+        --control-icon-color: #{$highlight-color};
+    }
+}
+
+// Combat tracker
+.combat-tracker .combatant.active {
+    border: none;
+    border-top: 1px solid $accent-color;
+    border-bottom: 1px solid $accent-color;
+}

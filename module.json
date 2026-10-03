@@ -9,8 +9,8 @@
     ],
     "version": "3.0.0",
     "compatibility": {
-        "minimum": "11",
-        "verified": "12"
+        "minimum": "13",
+        "verified": "14"
     },
     "esmodules": ["retro-dark-theme.bundle.mjs"],
     "styles": ["retro-dark-theme.css"],

@@ -1,0 +1,50 @@
+.chat-message {
+    background: $chat-msg-background;
+    border: $chat-msg-border;
+    color: $chat-msg-color;
+    padding: 0;
+
+    .message-header {
+        padding: 0.25rem 0.5rem;
+        background: $chat-msg-header-background;
+        color: $chat-msg-header-color;
+        font-family: $text-secondary-font;
+
+        .message-sender {
+            color: $chat-msg-color;
+        }
+    }
+
+    .message-content {
+        @include rich-text;
+        padding: 0.5rem;
+        font-family: $ui-font;
+
+        .dice-roll .dice-result {
+            .dice-formula {
+                font-family: $number-font;
+                font-weight: normal;
+                color: $mutted-color;
+                background: none;
+                border: none;
+                border-radius: 0;
+                border-left: 3px solid $mutted-color;
+                box-shadow: none;
+            }
+
+            .dice-total {
+                font-family: $number-font;
+                font-weight: $number-weight;
+                background: none;
+                border: 1px solid $faded-color;
+                border-radius: 5px;
+                box-shadow: none;
+            }
+        }
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid $faded-color;
+    }
+}
