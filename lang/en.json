@@ -12,6 +12,16 @@
             "Aberration": {
                 "Name": "Chromatic Aberration",
                 "Hint": "Shaking color fringes on rollable text when hovering over it."
+            },
+            "AccentColor": {
+                "Name": "Accent Color",
+                "Hint": "Color for the values and rollable labels in the system sheets. The player color uses your user color, lightened if it's too dark.",
+                "Choices": {
+                    "none": "None (grey)",
+                    "amber": "Amber",
+                    "green": "Green",
+                    "player": "Player color"
+                }
             }
         },
         "Mothership": {

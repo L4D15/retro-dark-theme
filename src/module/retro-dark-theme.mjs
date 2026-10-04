@@ -11,6 +11,17 @@ const MOTHERSHIP_SHEET_SIZES = {
     DLActorGenerator: { width: 490 },
 };
 
+/** Accent colors for sheet values and rollable labels; `player` uses the user's color. */
+const ACCENT_COLORS = {
+    none: null,
+    amber: '#ffb000',
+    green: '#33ff66',
+    player: 'player',
+};
+
+/** Lowest lightness for the player's color as accent, to stay readable on black. */
+const ACCENT_MIN_LIGHTNESS = 0.6;
+
 /** CRT effects each player can turn off, in case they get in the way of reading. */
 const CRT_EFFECTS = {
     scanlines: 'Scanlines',
@@ -21,6 +32,7 @@ const CRT_EFFECTS = {
 Hooks.once('init', function () {
     console.log(`${MODULE_ID} | Initializing Retro Dark Theme...`);
     _registerEffectSettings();
+    _registerAccentSetting();
     _forceDarkTheme();
 });
 
@@ -29,6 +41,7 @@ Hooks.once('i18nInit', function () {
 });
 
 Hooks.once('ready', function () {
+    _applyAccentColor();
     console.log(`${MODULE_ID} | Retro Dark Theme initialized successfully.`);
 });
 
@@ -53,6 +66,54 @@ function _registerEffectSettings() {
 
         toggle(game.settings.get(MODULE_ID, `effect.${effect}`));
     }
+}
+
+/**
+ * Register a user setting for the accent color, so it follows each player across devices.
+ * It's applied once the user is known, see `_applyAccentColor`.
+ */
+function _registerAccentSetting() {
+    game.settings.register(MODULE_ID, 'accentColor', {
+        name: 'RETRO_DARK_THEME.Settings.AccentColor.Name',
+        hint: 'RETRO_DARK_THEME.Settings.AccentColor.Hint',
+        scope: 'user',
+        config: true,
+        type: String,
+        choices: Object.fromEntries(
+            Object.keys(ACCENT_COLORS).map((key) => [
+                key,
+                `RETRO_DARK_THEME.Settings.AccentColor.Choices.${key}`,
+            ])
+        ),
+        default: 'none',
+        onChange: () => _applyAccentColor(),
+    });
+
+    // Keep the player color accent in sync when the user changes their color
+    Hooks.on('updateUser', (user, changes) => {
+        if (user.isSelf && 'color' in changes) _applyAccentColor();
+    });
+}
+
+/**
+ * Set the accent color as the `--rdt-accent` CSS variable, which the styles fall back
+ * from when it isn't set. The player's color is lightened if it's too dark for black.
+ */
+function _applyAccentColor() {
+    const root = document.documentElement;
+    let accent = ACCENT_COLORS[game.settings.get(MODULE_ID, 'accentColor')];
+
+    if (accent === 'player') {
+        const [hue, saturation, lightness] = game.user.color.hsl;
+        accent = foundry.utils.Color.fromHSL([
+            hue,
+            saturation,
+            Math.max(lightness, ACCENT_MIN_LIGHTNESS),
+        ]).css;
+    }
+
+    if (accent) root.style.setProperty('--rdt-accent', accent);
+    else root.style.removeProperty('--rdt-accent');
 }
 
 /**

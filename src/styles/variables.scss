@@ -104,6 +104,10 @@ $label-color: #8c8c8c;
 $frame-color: #555;
 $frame-border: 1px solid $frame-color;
 
+// Accent each player picks in the settings, set as `--rdt-accent` (none by default)
+$accent-value-color: var(--rdt-accent, #{$value-color});
+$accent-hover-color: var(--rdt-accent, #{$highlight-color});
+
 // Scroll Bar
 $scrollbar-color: #ddd;
 $scrollbar-border-color: #ddd;

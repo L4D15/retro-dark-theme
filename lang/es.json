@@ -12,6 +12,16 @@
             "Aberration": {
                 "Name": "Aberración cromática",
                 "Hint": "Bordes de color temblorosos en los textos tirables al pasar el ratón por encima."
+            },
+            "AccentColor": {
+                "Name": "Color de acento",
+                "Hint": "Color de los valores y de las etiquetas tirables en las hojas del sistema. El color del jugador usa el color de tu usuario, aclarado si es demasiado oscuro.",
+                "Choices": {
+                    "none": "Ninguno (gris)",
+                    "amber": "Ámbar",
+                    "green": "Verde",
+                    "player": "Color del jugador"
+                }
             }
         },
         "Mothership": {

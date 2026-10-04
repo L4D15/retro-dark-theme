@@ -269,7 +269,7 @@
             .rollable,
             .item-control {
                 &:hover {
-                    color: $accent-color;
+                    color: $accent-hover-color;
                     @include no-glow;
                 }
             }
@@ -530,6 +530,16 @@
         &:hover,
         &:focus {
             color: $highlight-color !important;
+        }
+    }
+
+    // Bonuses at 0 are hidden until their row is hovered, or the bonus focused
+    .abilities .mainstatwrapper:not(:hover, :focus-within):has(.mainstatmod-input[value='0']),
+    .saves .resource:not(:hover, :focus-within):has(.mainsavemod-input[value='0']) {
+        .mainstatmod-title,
+        .mainstatmod-input,
+        .mainsavemod-input {
+            visibility: hidden;
         }
     }
 
@@ -934,7 +944,7 @@
                 color: $journal-title-color;
 
                 &:hover {
-                    color: $accent-color;
+                    color: $accent-hover-color;
                     @include no-glow;
                 }
             }
@@ -974,7 +984,7 @@
         }
 
         .item-control:hover {
-            color: $accent-color;
+            color: $accent-hover-color;
             @include no-glow;
         }
     }
