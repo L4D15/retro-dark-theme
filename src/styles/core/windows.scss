@@ -1,0 +1,42 @@
+// Windows: ApplicationV2 (.application) and legacy ApplicationV1 (.window-app)
+.application,
+.window-app {
+    border: $ui-window-border;
+    border-radius: 0;
+    color: $ui-main-color;
+
+    .window-header {
+        font-family: $ui-font;
+        border-bottom: $main-border;
+    }
+
+    nav.tabs:not(.mosh) > [data-tab] {
+        color: $mutted-color;
+
+        &:hover {
+            color: $accent-color;
+            @include no-glow;
+        }
+
+        &.active {
+            color: $highlight-color;
+            font-weight: bold;
+            @include no-glow;
+        }
+    }
+
+    .hint,
+    p.notes {
+        font-family: $ui-font;
+        color: $mutted-color;
+        font-style: italic;
+    }
+}
+
+// Rich text editors
+prose-mirror,
+.prosemirror {
+    .editor-content {
+        @include rich-text;
+    }
+}
