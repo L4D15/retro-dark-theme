@@ -31,6 +31,10 @@ Hooks.once('init', function () {
     _forceDarkTheme();
 });
 
+Hooks.once('i18nInit', function () {
+    _hideCheckSuccessFlavor();
+});
+
 Hooks.once('ready', function () {
     console.log(`${MODULE_ID} | Retro Dark Theme initialized successfully.`);
 });
@@ -84,6 +88,25 @@ function _forceDarkTheme() {
         attributes: true,
         attributeFilter: ['class'],
     });
+}
+
+/**
+ * Successful checks add a flavor line ("You gain some confidence in your skills.") with no
+ * game effect, which reads like a reward next to the stress gained on failures. Blank it:
+ * an empty string still counts as translated, so the system won't fall back to the key.
+ * The English fallback is blanked too, for translations missing some of these lines.
+ */
+function _hideCheckSuccessFlavor() {
+    for (const strings of [game.i18n.translations, game.i18n._fallback]) {
+        const attributes = foundry.utils.getProperty(strings, 'Mosh.attribute') ?? {};
+
+        for (const attribute of Object.values(attributes)) {
+            if (!attribute?.check) continue;
+            for (const systemClass of Object.keys(attribute.check)) {
+                attribute.check[systemClass] = '';
+            }
+        }
+    }
 }
 
 // Chat messages
