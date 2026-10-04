@@ -1523,6 +1523,26 @@
         }
     }
 
+    // Damage rolled on demand from successful attacks (module script)
+    .roll-damage {
+        @include retro-button;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    .wound-effect.hidden {
+        display: none;
+    }
+
     // Placeholder file names without a path (e.g. radiation damage) never load
     .roll-image[src^='icon_file'] {
         display: none;

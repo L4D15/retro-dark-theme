@@ -117,6 +117,7 @@ Hooks.on('renderChatMessageHTML', function (message, html) {
     _addSpeakerPortrait(message, html);
     _tagRollOutcome(html);
     _collapseWeaponDescription(html);
+    _activateDamageButton(message, html);
 });
 
 /**
@@ -230,6 +231,7 @@ Hooks.on('renderDLActorGenerator', function (app) {
 
 Hooks.once('setup', function () {
     _waitForDiceOnChatMessages();
+    _trackAttackRolls();
 });
 
 /** Number of character generator rolls in progress, see `_waitForDiceInGenerator`. */
@@ -264,11 +266,119 @@ function _waitForDiceInGenerator(generatorClass) {
  * Chat messages created during a character generator roll resolve once their
  * Dice So Nice animation is over (right away when Dice So Nice isn't active).
  */
+// Damage rolled on demand
+
+/** Mothership attack rolls in progress, see `_trackAttackRolls`. */
+let attackRolls = 0;
+
+/** Immediate inline roll (`[[formula]]`, not the deferred `[[/r formula]]`). */
+const INLINE_ROLL = /\[\[(?!\/)(.*?)(]{2,3})/;
+
+/** Where the damage result goes in the attack card's damage sentence. */
+const DAMAGE_PLACEHOLDER = '{damage}';
+
+/**
+ * Mothership attacks roll the damage along with a successful attack. Track the attacks
+ * in progress so their chat card gets a "Roll Damage" button instead.
+ */
+function _trackAttackRolls() {
+    const proto = CONFIG.Actor.documentClass.prototype;
+    const rollCheck = proto.rollCheck;
+    if (typeof rollCheck !== 'function') return;
+
+    proto.rollCheck = async function (rollString, aimFor, attribute, skill, skillValue, weapon, ...rest) {
+        const isAttack = !!weapon && attribute !== 'damage';
+        if (isAttack) attackRolls++;
+        try {
+            return await rollCheck.call(this, rollString, aimFor, attribute, skill, skillValue, weapon, ...rest);
+        } finally {
+            if (isAttack) attackRolls--;
+        }
+    };
+}
+
+/**
+ * Before a chat message is created (and its inline rolls evaluated), in an attack card:
+ * swap the damage sentence for a "Roll Damage" button keeping the sentence and its
+ * damage formula (crits included), and hide the wound effect until damage is rolled.
+ */
+function _rewriteAttackContent(data) {
+    if (attackRolls === 0) return;
+
+    // Roll#toMessage passes a ChatMessage, whose source can only change via updateSource
+    const content = data?.content;
+    if (typeof content !== 'string') return;
+
+    const template = document.createElement('template');
+    template.innerHTML = content;
+    const damage = [...template.content.querySelectorAll('.mosh .description')].find(
+        (el) => !el.querySelector('.description') && INLINE_ROLL.test(el.innerHTML)
+    );
+    if (!damage) return;
+
+    // Foundry evaluates every [[formula]] in the content, attributes included: keep the
+    // formula and the sentence with a placeholder in its place
+    const [expression, formula, closing] = damage.innerHTML.match(INLINE_ROLL);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.classList.add('roll-damage');
+    button.dataset.damage = formula + (closing.length === 3 ? ']' : '');
+    button.dataset.sentence = damage.innerHTML.replace(expression, DAMAGE_PLACEHOLDER);
+    button.innerHTML = '<i class="fas fa-burst"></i> Roll Damage';
+    damage.replaceChildren(button);
+
+    // The wound effect body starts with a line break before its "Wound Effect" title
+    for (const body of template.content.querySelectorAll('.mosh .description > .body')) {
+        if (body.firstElementChild?.tagName === 'BR') body.classList.add('wound-effect', 'hidden');
+    }
+
+    if (data instanceof foundry.abstract.Document) {
+        data.updateSource({ content: template.innerHTML });
+    } else {
+        data.content = template.innerHTML;
+    }
+}
+
+/**
+ * Roll the damage from the attack card's button, then write it into the card: the
+ * system's damage sentence with the rolled result, and the wound effect revealed.
+ */
+function _activateDamageButton(message, html) {
+    const button = html.querySelector('button.roll-damage');
+    if (!button) return;
+
+    if (!message.canUserModify(game.user, 'update')) {
+        button.disabled = true;
+        return;
+    }
+
+    button.addEventListener('click', async () => {
+        button.disabled = true;
+        const roll = await new Roll(button.dataset.damage).evaluate();
+        await game.dice3d?.showForRoll(roll, game.user, true);
+
+        const template = document.createElement('template');
+        template.innerHTML = message.content;
+        const placeholder = template.content.querySelector('button.roll-damage');
+        if (!placeholder) return;
+        const description = placeholder.parentElement;
+        description.innerHTML = button.dataset.sentence.replace(
+            DAMAGE_PLACEHOLDER,
+            roll.toAnchor().outerHTML
+        );
+        template.content
+            .querySelectorAll('.wound-effect.hidden')
+            .forEach((el) => el.classList.remove('hidden'));
+        await message.update({ content: template.innerHTML });
+    });
+}
+
 function _waitForDiceOnChatMessages() {
     const messageClass = CONFIG.ChatMessage.documentClass;
     const create = messageClass.create;
 
     messageClass.create = async function (...args) {
+        _rewriteAttackContent(args[0]);
         const message = await create.apply(this, args);
         if (generatorRolls > 0 && message?.id && game.dice3d) {
             await game.dice3d.waitFor3DAnimationByMessageID(message.id);
