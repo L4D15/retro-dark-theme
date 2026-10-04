@@ -155,12 +155,48 @@ function _tagRollOutcome(html) {
 Hooks.on('renderMothershipActorSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipActorSheet);
     _moveSkillTrainingToNotes(html[0]);
+    _openItemsFromNames(app, html);
 });
 
 Hooks.on('renderMothershipCreatureSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipCreatureSheet);
     _applyCreatureHeader(html[0]);
+    _openItemsFromNames(app, html);
 });
+
+Hooks.on('renderMothershipShipSheet', function (app, html) {
+    _openItemsFromNames(app, html);
+});
+
+Hooks.on('renderMothershipShipSheetSBT', function (app, html) {
+    _openItemsFromNames(app, html);
+});
+
+/**
+ * Every row in the item lists (skills, weapons, armor, items, conditions...) gets a chat
+ * button before the edit button that sends its description to chat. Names that only
+ * sent the description to chat open the item instead; skill and weapon names keep
+ * rolling.
+ */
+function _openItemsFromNames(app, html) {
+    html.find('.item[data-item-id]').each((_, row) => {
+        const controls = row.querySelector('.item-controls');
+        const item = app.actor.items.get(row.dataset.itemId);
+        if (!controls || !item) return;
+
+        const name = row.querySelector('.description-roll');
+        if (name) $(name).off('click').on('click', () => item.sheet.render(true));
+
+        const chat = document.createElement('a');
+        chat.classList.add('item-control', 'item-chat');
+        chat.title = 'Send to Chat';
+        chat.innerHTML = '<i class="fas fa-comment"></i>';
+        chat.addEventListener('click', (event) =>
+            app.actor.printDescription(item.id, { event })
+        );
+        controls.prepend(chat);
+    });
+}
 
 Hooks.on('renderDLActorGenerator', function (app) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.DLActorGenerator);
