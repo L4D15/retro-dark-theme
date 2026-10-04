@@ -25,6 +25,10 @@ body {
     --color-light-5: #888;
     --color-light-6: #666;
 
+    // Outcomes (notifications, dice results...)
+    --color-level-success: #{$success-color};
+    --color-level-error: #{$failure-color};
+
     // Glows
     --color-shadow-primary: transparent;
     --color-shadow-highlight: #{$terminal-color};
@@ -40,6 +44,10 @@ body {
     --font-h4: #{$title-h4-font}, monospace;
     --font-h5: #{$title-h5-font}, sans-serif;
     --font-h6: #{$title-h5-font}, sans-serif;
+}
+
+body.retro-dark-theme-no-glow {
+    --color-shadow-highlight: transparent;
 }
 
 body,
@@ -108,4 +116,8 @@ input[type='number'] {
 
 .rollable:hover {
     animation: textShadow 1.6s infinite;
+
+    body.retro-dark-theme-no-aberration & {
+        animation: none;
+    }
 }

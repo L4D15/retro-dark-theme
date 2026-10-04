@@ -227,6 +227,10 @@
             3px 100%;
         z-index: 2;
         pointer-events: none;
+
+        body.retro-dark-theme-no-scanlines & {
+            content: none;
+        }
     }
 
     &.blink::after {
@@ -240,4 +244,8 @@
 
 .aberration {
     animation: textShadow 1.6s infinite;
+
+    body.retro-dark-theme-no-aberration & {
+        animation: none;
+    }
 }

@@ -44,7 +44,8 @@
         border: none;
     }
 
-    h4 {
+    // Dice roll totals are h4 too
+    h4:not(.dice-total) {
         font-family: $title-h4-font;
         font-size: $title-h4-size;
         font-weight: $title-h4-weight;

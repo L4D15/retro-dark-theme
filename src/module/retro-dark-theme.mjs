@@ -9,14 +9,54 @@ const MOTHERSHIP_SHEET_SIZES = {
     MothershipItemSheet: { width: 475, height: 350 },
 };
 
+/** CRT effects each player can turn off, in case they get in the way of reading. */
+const CRT_EFFECTS = {
+    scanlines: {
+        name: 'Scanlines',
+        hint: 'Horizontal lines and RGB pattern over windows and chat messages.',
+    },
+    glow: {
+        name: 'Glow',
+        hint: 'Light bloom around highlighted elements and critical roll results.',
+    },
+    aberration: {
+        name: 'Chromatic Aberration',
+        hint: 'Shaking color fringes on rollable text when hovering over it.',
+    },
+};
+
 Hooks.once('init', function () {
     console.log(`${MODULE_ID} | Initializing Retro Dark Theme...`);
+    _registerEffectSettings();
     _forceDarkTheme();
 });
 
 Hooks.once('ready', function () {
     console.log(`${MODULE_ID} | Retro Dark Theme initialized successfully.`);
 });
+
+/**
+ * Register a client setting per CRT effect. Disabled effects are flagged with a
+ * `retro-dark-theme-no-<effect>` class on the body, which the styles use to turn them off.
+ */
+function _registerEffectSettings() {
+    for (const [effect, { name, hint }] of Object.entries(CRT_EFFECTS)) {
+        const toggle = (enabled) =>
+            document.body.classList.toggle(`${MODULE_ID}-no-${effect}`, !enabled);
+
+        game.settings.register(MODULE_ID, `effect.${effect}`, {
+            name,
+            hint,
+            scope: 'client',
+            config: true,
+            type: Boolean,
+            default: true,
+            onChange: toggle,
+        });
+
+        toggle(game.settings.get(MODULE_ID, `effect.${effect}`));
+    }
+}
 
 /**
  * Foundry forces the light theme on some elements regardless of the user settings
@@ -44,6 +84,45 @@ function _forceDarkTheme() {
         attributes: true,
         attributeFilter: ['class'],
     });
+}
+
+// Chat messages
+
+Hooks.on('renderChatMessageHTML', function (message, html) {
+    _addSpeakerPortrait(message, html);
+    _tagRollOutcome(html);
+});
+
+/**
+ * Show the portrait of the speaking actor next to its name in the message header.
+ */
+function _addSpeakerPortrait(message, html) {
+    const actor = message.speakerActor;
+    const sender = html.querySelector('.message-header .message-sender');
+    if (!actor?.img || !sender) return;
+
+    const portrait = document.createElement('img');
+    portrait.classList.add('message-portrait');
+    portrait.src = actor.img;
+    portrait.alt = actor.name;
+    sender.before(portrait);
+}
+
+/**
+ * Mothership roll cards show the outcome as plain text (SUCCESS!, CRITICAL FAILURE!...).
+ * Tag the message with it so the outcome and the total can be colored.
+ */
+function _tagRollOutcome(html) {
+    const outcome = html.querySelector(
+        '.mosh .rollcontainer > div:not([class]) strong'
+    );
+    if (!outcome) return;
+
+    const text = outcome.textContent.toUpperCase();
+    outcome.classList.add('roll-outcome');
+    html.classList.toggle('roll-success', text.includes('SUCCESS'));
+    html.classList.toggle('roll-failure', text.includes('FAILURE'));
+    html.classList.toggle('roll-critical', text.includes('CRITICAL'));
 }
 
 // Mothership sheets (ApplicationV1: hooks receive jQuery)
