@@ -1,0 +1,457 @@
+// Shared building blocks. Mixins instead of @extend: extending global selectors such as
+// `input` or `label` multiplies every matching selector in the output.
+
+@mixin no-glow {
+    box-shadow: none;
+    text-shadow: none;
+}
+
+// Typography for rich text content (journals, editors, chat cards...)
+@mixin rich-text(
+    $font: $text-main-font,
+    $size: $text-main-size,
+    $line-height: $text-line-height
+) {
+    p {
+        font-family: $font;
+        font-size: $size;
+        line-height: $line-height;
+    }
+
+    h1 {
+        font-family: $title-h1-font;
+        font-size: $title-h1-size;
+        font-weight: $title-h1-weight;
+        color: $title-h1-color;
+        text-transform: uppercase;
+        border: none;
+        border-bottom: 2px solid $faded-color;
+    }
+
+    h2 {
+        font-family: $title-h2-font;
+        font-size: $title-h2-size;
+        font-weight: $title-h2-weight;
+        color: $title-h2-color;
+        border: none;
+    }
+
+    h3 {
+        font-family: $title-h3-font;
+        font-size: $title-h3-size;
+        font-weight: $title-h3-weight;
+        color: $title-h3-color;
+        border: none;
+    }
+
+    // Dice roll totals are h4 too
+    h4:not(.dice-total) {
+        font-family: $title-h4-font;
+        font-size: $title-h4-size;
+        font-weight: $title-h4-weight;
+        color: $title-h4-color;
+        border: none;
+    }
+
+    h5 {
+        font-family: $title-h5-font;
+        font-size: $title-h5-size;
+        font-weight: $title-h5-weight;
+        color: $title-h5-color;
+        border: none;
+    }
+
+    blockquote {
+        border: none;
+        border-left: 4px solid $quote-border-color;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background: $secondary-background;
+        color: $quote-text-color;
+        margin: 1rem 0.4rem 1rem 0rem;
+        padding: 1rem;
+
+        p {
+            font-family: $text-secondary-font;
+            font-size: 0.9rem;
+        }
+    }
+
+    .content-link {
+        background: none;
+        font-weight: bold;
+        border: none;
+        text-decoration: underline;
+    }
+
+    table {
+        border: $table-border;
+        border-radius: 5px;
+
+        thead {
+            background: $table-header-background;
+            font-family: $table-header-font;
+            color: $table-header-color;
+            border: none;
+        }
+
+        tbody {
+            color: $journal-text-color;
+
+            tr {
+                background: none;
+
+                &:nth-child(odd) {
+                    background: rgba(255, 255, 255, 0.05);
+                }
+            }
+        }
+    }
+}
+
+// Console-like body text for system sheets, also for text not wrapped in paragraphs
+@mixin sheet-text {
+    font-family: $sheet-text-font;
+    font-size: $sheet-text-size;
+    line-height: $sheet-text-line-height;
+    color: $input-text-color;
+    @include rich-text(
+        $sheet-text-font,
+        $sheet-text-size,
+        $sheet-text-line-height
+    );
+}
+
+// Inverted label box: light background with dark uppercase text
+@mixin label-box {
+    font-family: $input-label-font;
+    font-weight: bold;
+    background: $terminal-color;
+    color: $input-label-color-inverse;
+    text-transform: uppercase;
+    border: none;
+    border-radius: $input-border-radius;
+    margin: 0;
+}
+
+// Plain field label: dim uppercase text, so the values stand out
+@mixin field-label {
+    font-family: $input-label-font;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    background: none;
+    color: $label-color;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+}
+
+// Frame around a group of fields, with its title set into the top border:
+//  ┌─ TITLE ──────┐
+//  │ fields       │
+//  └──────────────┘
+// The title goes in a `::before` or a child (see `panel-title`, null `$text` for a child),
+// filled with the background color to cut the border behind it.
+@mixin panel {
+    position: relative;
+    border: $frame-border;
+    padding: 0.7rem 0.4rem 0.4rem;
+}
+
+@mixin panel-title($text: attr(data-panel-title)) {
+    @if $text {
+        content: $text;
+    }
+    position: absolute;
+    top: 0;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    padding: 0 0.35rem;
+    background: $ui-background-color;
+    font-family: $input-label-font;
+    font-weight: bold;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    color: $terminal-color;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+// Outlined, transparent input
+@mixin field-input {
+    font-family: $input-text-font;
+    font-weight: normal;
+    background: none;
+    color: $value-color;
+    border: $frame-border;
+    border-radius: $input-border-radius;
+    box-shadow: none;
+    outline: none;
+
+    &:hover,
+    &:focus {
+        color: $highlight-color;
+        border-color: $highlight-color;
+        @include no-glow;
+    }
+}
+
+@mixin number-input {
+    @include field-input;
+    color: $accent-value-color;
+    font-family: $number-font;
+    font-weight: $number-weight;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+// Label on top of an input: [ LABEL ]
+//                            [ value ]
+@mixin vertical-field {
+    display: grid;
+    grid-template-rows: 15px 1fr;
+}
+
+@mixin vertical-field-label {
+    @include field-label;
+    padding: 0.1rem 0;
+    font-size: 0.65rem;
+    line-height: 13px;
+    text-align: left;
+}
+
+@mixin vertical-field-input {
+    @include field-input;
+    color: $accent-value-color;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 100%;
+        height: 100%;
+        background: none;
+        border: none;
+        border-radius: 0;
+        padding-left: 0.5rem;
+        color: inherit;
+        font-family: inherit;
+        text-transform: none;
+        @include no-glow;
+    }
+}
+
+// Label next to a value: [ LABEL | value ]
+@mixin horizontal-field-label {
+    @include field-label;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 26px;
+    padding: 0;
+    font-size: 0.75rem;
+    text-align: left;
+    position: static;
+    width: 100%;
+    min-width: 0;
+
+    > * {
+        text-align: left;
+    }
+
+    &:hover {
+        color: $accent-hover-color;
+    }
+}
+
+@mixin horizontal-field-input {
+    @include number-input;
+    width: 100%;
+    height: 26px;
+    font-size: 1rem;
+    position: static;
+}
+
+// Label next to a pair of values: LABEL [ current | max ]
+@mixin horizontal-field-minmax {
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    grid-template-rows: 26px;
+    align-items: center;
+    width: 100%;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+}
+
+@mixin horizontal-field-minmax-label {
+    @include field-label;
+    display: block;
+    justify-self: stretch;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+    text-align: left;
+    margin: 0;
+    position: static;
+    width: auto;
+    grid-column: 1;
+    grid-row: 1;
+
+    &.rollable:hover {
+        color: $accent-hover-color;
+    }
+}
+
+@mixin horizontal-field-minmax-values {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 10px 1fr;
+    gap: 0;
+    width: 100% !important;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+    background: none !important;
+    border: none;
+    border-radius: 0 !important;
+
+    // Gap between the values, a slash only when they're current / max: the second value
+    // can also be a minimum (stress) or a different stat (armor points / reduction)
+    .slant {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: stretch;
+        width: auto;
+        height: auto;
+        margin: 0;
+        background: none;
+        border: none !important;
+        transform: none !important;
+        font-family: $number-font;
+        font-size: 0.8rem;
+        color: $label-color;
+    }
+
+    &:has(input[name$='.max']) .slant::before {
+        content: '/';
+    }
+
+    // Minimums (stress) are secondary, like the bonuses
+    input[name$='.min'] {
+        color: $label-color;
+    }
+
+    input,
+    .maxhealth-input {
+        @include number-input;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 20px;
+        height: 26px;
+        font-size: 0.9rem;
+        background: none;
+    }
+
+    .whiteText,
+    .highlightText {
+        color: inherit;
+    }
+}
+
+@mixin profile-picture {
+    flex: 0 0 auto;
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover;
+    border-radius: 0;
+    border: 1px solid $terminal-color;
+    padding: 0;
+
+    &:hover {
+        border: $accent-border;
+    }
+}
+
+// Border for inputs with mosh's `.noborder` class, whose `border: 0 !important` can't be
+// overridden from the modules layer.
+@mixin noborder-outline {
+    outline: $frame-border;
+    outline-offset: -1px;
+
+    &:hover,
+    &:focus {
+        outline-color: $highlight-color;
+    }
+}
+
+// Retro push button
+@mixin retro-button {
+    font-family: $button-text-font;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $button-text-color;
+    background: $button-background-color;
+    border: 1px solid $terminal-color;
+    border-radius: $button-border-radius;
+    padding: 0.4rem 0.6rem;
+    @include no-glow;
+
+    &:hover {
+        background: $terminal-color;
+        color: $terminal-color-inverse;
+        border-color: $terminal-color;
+        @include no-glow;
+    }
+
+    &:focus-visible {
+        outline: 1px solid $highlight-color;
+        outline-offset: 2px;
+    }
+}
+
+// Square terminal-style radio/checkbox: [ ] / [■]
+@mixin retro-check {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: $frame-border;
+    border-radius: 0;
+    box-shadow: none !important;
+    outline: none;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+        content: none;
+    }
+
+    &:checked::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: $highlight-color;
+        border-radius: 0;
+        transform: none;
+    }
+
+    &:hover {
+        border-color: $highlight-color;
+    }
+}

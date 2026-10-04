@@ -1,831 +1,2030 @@
-// Pre-defined styles
+// Mothership (mosh) system sheets.
+//
+// Foundry loads mosh.css in the `system` cascade layer and this module in `modules`, so
+// these rules win over mosh.css regardless of specificity. Only inline styles in the
+// templates need !important. Mosh's own !important rules (e.g. `.noborder`) can't be
+// overridden from a later layer, so borders on those elements are drawn with outlines.
+// Wrappers that only get in the way of the layout are flattened with `display: contents`
+// instead of moving elements around with JS.
 
-.vertical-field {
-    display: grid;
-    grid-template-rows: 15px 1fr;
-}
+// Whole-sheet accent: players can tint their sheets with their accent color, keeping the
+// brightness hierarchy as shades of it. The colors below read `--rdt-sheet-*` properties,
+// only defined on sheets with that option on, and keep the theme colors anywhere else.
+$terminal-color: var(--rdt-sheet-fg, #{$terminal-color});
+$ui-main-color: var(--rdt-sheet-fg, #{$ui-main-color});
+$value-color: var(--rdt-sheet-fg, #{$value-color});
+$highlight-color: var(--rdt-sheet-bright, #{$highlight-color});
+$accent-color: var(--rdt-sheet-bright, #{$accent-color});
+$button-text-color: var(--rdt-sheet-bright, #{$button-text-color});
+$journal-title-color: var(--rdt-sheet-bright, #{$journal-title-color});
+$quote-text-color: var(--rdt-sheet-bright, #{$quote-text-color});
+$title-h1-color: var(--rdt-sheet-bright, #{$title-h1-color});
+$title-h2-color: var(--rdt-sheet-bright, #{$title-h2-color});
+$title-h4-color: var(--rdt-sheet-bright, #{$title-h4-color});
+$title-h5-color: var(--rdt-sheet-bright, #{$title-h5-color});
+$label-color: var(--rdt-sheet-label, #{$label-color});
+$mutted-color: var(--rdt-sheet-muted, #{$mutted-color});
+$journal-text-color: var(--rdt-sheet-muted, #{$journal-text-color});
+$frame-color: var(--rdt-sheet-frame, #{$frame-color});
+$faded-color: var(--rdt-sheet-faded, #{$faded-color});
+$secondary-background: var(--rdt-sheet-faded, #{$secondary-background});
+$table-row-strip-color: var(--rdt-sheet-strip, #{$table-row-strip-color});
+$muted-background: var(--rdt-sheet-strip, #{$muted-background});
 
-.vertical-field-label {
-    @extend label;
-    padding: 0.1rem 0.5rem;
-    margin: 0px;
-    font-size: 0.7rem;
-    background: $terminal-color;
-    color: $input-label-color-inverse;
-    text-transform: uppercase;
-}
+// Colors derived from the ones above
+$input-text-color: $terminal-color;
+$input-label-color: $terminal-color;
+$table-header-background: $terminal-color;
+$input-border: 1px solid $terminal-color;
+$nav-border: 1px solid $terminal-color;
+$accent-border: 1px solid $accent-color;
+$active-border: 1px solid $highlight-color;
+$frame-border: 1px solid $frame-color;
+$main-border: 1px solid $faded-color;
+$table-border: 1px solid $faded-color;
 
-.vertical-field-input {
-    @extend input;
-    padding: 0px;
-    margin: 0px;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
+body.retro-dark-theme-accent-sheet .mosh.sheet {
+    --rdt-sheet-fg: var(--rdt-accent);
+    --rdt-sheet-bright: color-mix(in srgb, var(--rdt-accent) 55%, white);
+    --rdt-sheet-label: color-mix(in srgb, var(--rdt-accent) 62%, black);
+    --rdt-sheet-muted: color-mix(in srgb, var(--rdt-accent) 75%, black);
+    --rdt-sheet-frame: color-mix(in srgb, var(--rdt-accent) 38%, black);
+    --rdt-sheet-faded: color-mix(in srgb, var(--rdt-accent) 18%, black);
+    --rdt-sheet-strip: color-mix(in srgb, var(--rdt-accent) 9%, black);
 
-    input,
-    input[type='text'],
-    textarea {
-        border: none !important;
-        padding-left: 0.5rem;
-        text-transform: none;
+    // Item icons in shades of the accent, through the SVG filter added with the accent.
+    // Portraits and ship images keep their colors.
+    ol.items-list li.item .item-image img,
+    &.item img[data-edit='img'] {
+        filter: url(#rdt-accent-tint);
+    }
+
+    // Foundry's resize handle
+    .window-resizable-handle {
+        background: $frame-color;
+        color: $terminal-color;
+        border-color: $faded-color;
     }
 }
 
-.horizontal-field {
-    display: grid;
-    grid-template-columns: 1fr 40px;
-    height: 26px;
+// Every system window: sheets and the extra windows (settings, generator...)
+.window-app.mosh .window-content {
+    @include crt;
+    background: $ui-background-color;
+    color: $ui-main-color;
+    padding: 0.25rem 0.5rem;
 }
 
-.horizontal-field-label {
-    @extend label;
-    background: $terminal-color;
-    border: $input-border;
-    border-radius: $input-border-radius;
-    padding: 0rem;
-    margin-bottom: 0px;
-    text-align: right;
-    color: $terminal-color-inverse;
-    width: 100%;
-    height: 26px;
-    position: static;
-
-    &:hover {
-        background: $highlight-color;
-    }
-}
-
-.horizontal-field-label-text {
-    font-size: 0.8rem;
-    padding: 6px 0.25rem;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    width: 100%;
-    height: 100%;
-    text-align: right;
-}
-
-.horizontal-field-input {
-    @extend input;
-    z-index: inherit;
-    width: auto;
-    height: 100%;
-    margin: 0rem;
-    padding: 0rem 0rem;
-    text-align: center;
-    font-size: 1rem;
-
-    &:hover {
-        border-color: $highlight-color;
-    }
-}
-
-.horizontal-field-bonus-input {
-    @extend .horizontal-field-input;
-}
-
-.horizontal-field-with-bonus {
-    display: grid;
-    grid-template-columns: 1fr 10px 34px;
-    align-items: center;
-    width: auto;
-    height: 26px;
-    padding: 0rem;
-}
-
-.horizontal-field-minmax {
-    display: grid;
-    width: 100%;
-    height: 26px;
-    padding: 0px;
-    align-items: center;
-    justify-items: center;
-}
-
-.horizontal-field-minmax-label {
-    @extend label;
-    background: none;
-    border: none;
-    border-radius: 0px;
-    padding: 6px 0.25rem;
-    margin-bottom: 0px;
-    text-align: right;
-    color: $terminal-color;
-    width: 100%;
-    height: 100%;
-    position: static;
-    font-size: 0.8rem;
-}
-
-.horizontal-field-minmax-values {
-    grid-column: 2;
-    height: 100%;
-    width: 100%;
-    background: none;
-    border: none;
-    border-radius: 0px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    .slant {
-        display: none;
+.mosh.sheet {
+    &,
+    * {
+        scrollbar-color: $label-color transparent;
     }
 
-    input,
-    .maxhealth-input {
-        width: calc(100% - 2px);
-        min-width: 20px;
-        height: var(--form-field-height);
-        padding: 1px 3px;
-        background: $faded-color;
-        border: $input-border;
-        border-radius: $input-border-radius;
-        font-family: $input-text-font;
-        font-weight: normal;
-        color: $input-text-color !important;
+    // Tabs
+    nav.mosh.sheet-tabs {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: $number-font;
-        font-weight: $number-weight;
-        font-size: 0.8rem;
+        justify-content: stretch;
+        background: none;
+        border: none;
+        border-radius: 0;
+        margin: 0.5rem 0 0;
+        padding: 0;
+        height: auto !important;
+
+        .tab-select {
+            flex: 1 0 auto;
+            background: none;
+            border: $frame-border;
+            border-radius: 0;
+            color: $label-color;
+            font-family: $input-label-font;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 0.5rem 0.7rem;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+            @include no-glow;
+
+            &.active {
+                background: $terminal-color;
+                color: $terminal-color-inverse;
+                text-decoration: none;
+            }
+
+            &:hover:not(.active) {
+                color: $highlight-color;
+                border-color: $highlight-color;
+            }
+        }
+    }
+
+    .sheet-body {
+        background: none;
+        border: $frame-border;
+        border-radius: 0;
+        @include sheet-text;
+
+        .tab {
+            padding: 0;
+        }
+
+        .editor {
+            .editor-edit {
+                background: $button-background-color;
+                color: $button-text-color;
+                border: none;
+                border-radius: $button-border-radius;
+
+                &:hover {
+                    color: $accent-color;
+                    @include no-glow;
+                }
+            }
+
+            .editor-content {
+                padding: 0.5rem;
+            }
+        }
+
+        // Skill training progress: [ SKILL TRAINING | skill | ■■■□□□□ ]
+        .skill_training_frame {
+            height: auto;
+            background: none;
+            color: $terminal-color;
+            font-family: $table-header-font;
+            border: $main-border;
+            border-radius: 0;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+
+            > .grid {
+                grid-template-columns: auto 1fr auto !important;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .skill-stat {
+                position: static !important;
+                font-family: $input-label-font;
+                text-transform: uppercase;
+            }
+
+            textarea {
+                @include field-input;
+                @include sheet-text;
+                position: static !important;
+                transform: none !important;
+                height: 26px !important;
+                padding: 0.2rem 0.4rem;
+                background: none !important;
+                color: $input-text-color !important;
+                resize: none;
+            }
+
+            .char-pip-button {
+                position: static !important;
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                padding-bottom: 10px;
+            }
+
+            .circle,
+            .circle-f {
+                position: relative;
+                overflow: visible;
+                flex: 0 0 auto;
+                width: 12px;
+                height: 12px;
+                margin: 0;
+                border: 1px solid $mutted-color;
+                border-radius: 0;
+                background: none !important;
+                font-size: 0;
+            }
+
+            .circle-f {
+                background: $terminal-color !important;
+                border-color: $terminal-color;
+            }
+
+            // Rank milestones (Trained, Expert, Master)
+            .circle[style],
+            .circle-f[style] {
+                border-color: $highlight-color;
+            }
+
+            .circle-f[style] {
+                background: $highlight-color !important;
+            }
+
+            // Rank name under its milestone pip
+            .skill_training_text {
+                position: absolute !important;
+                top: 13px !important;
+                left: auto !important;
+                right: -1px;
+                line-height: 1;
+                font-family: $input-label-font;
+                font-size: 0.65rem;
+                color: $mutted-color !important;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    // Item lists (skills, weapons, items...)
+    ol.items-list {
+        background: none;
+        border: $table-border;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+
+        // Placeholder for lists with no rows
+        &[data-empty]::after {
+            content: '— ' attr(data-empty) ' —';
+            display: block;
+            padding: 0.4rem;
+            font-family: $input-label-font;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: $label-color;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        li.item {
+            padding: 0;
+            margin: 0;
+            height: auto;
+            align-items: center;
+            border: none;
+
+            &.item-header {
+                background: none;
+                color: $terminal-color;
+                border: none;
+                border-bottom: $frame-border;
+                border-radius: 0;
+                height: 28px;
+                text-transform: uppercase;
+
+                div,
+                a {
+                    font-family: $table-header-font;
+                    font-weight: bold;
+                    font-size: 0.75rem;
+                    color: $terminal-color;
+                    text-align: center;
+                }
+
+                .skill-stat {
+                    padding: 0;
+                }
+            }
+
+            &:not(.item-header) {
+                &:nth-child(odd) {
+                    background: $table-row-strip-color;
+                }
+
+                div,
+                h4,
+                .skill-stat a {
+                    font-family: $table-body-font;
+                    font-weight: normal;
+                    font-size: 0.8rem;
+                    color: $input-text-color;
+                    text-align: center;
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .item-image {
+                    flex: 0 0 27px;
+                    height: 27px;
+                }
+            }
+
+            > :nth-child(2),
+            &:not(.item-header) > :nth-child(2) {
+                text-align: left;
+                padding-left: 0.25rem;
+            }
+
+            // Long names wrap instead of being cut by the system's fixed row height
+            &:not(.item-header) > :nth-child(2) {
+                display: flex;
+                align-items: center;
+                height: auto;
+                min-height: 27px;
+                line-height: 1.2;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+
+            .skill-name,
+            .skill-roll,
+            .list-roll,
+            .rollable,
+            .item-control {
+                &:hover {
+                    color: $accent-hover-color;
+                    @include no-glow;
+                }
+            }
+        }
+    }
+
+    // Header name/value fields shared by every sheet
+    .headerinputtext {
+        @include vertical-field-label;
+    }
+
+    .headerinputfield {
+        @include vertical-field-input;
+        height: auto;
+    }
+}
+
+// Building blocks shared by the ship sheet and other system windows (deckplan,
+// megadamage, macros...). Re-skinned in place, keeping the system layout.
+.mosh {
+    .circle-statwrapper,
+    .circle-statwrapper-vertical,
+    .circle-statwrapper-horizontal {
+        background: none;
+        border: $main-border;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0 0 0.5rem;
+        gap: 4px;
+    }
+
+    .circlestattitle,
+    .area-title {
+        @include label-box;
+        width: 100%;
+        padding: 0.1rem 0.5rem;
+        font-size: 0.75rem;
+        text-align: center;
+
+        i {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .circlestatlabel {
+        padding: 2px;
+    }
+
+    .circlestattext,
+    .minmaxtext {
+        font-family: $input-label-font;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: $terminal-color;
+        text-transform: uppercase;
+    }
+
+    .healthmaxtext {
+        font-family: $input-label-font;
+        font-size: 0.6rem;
+        color: $mutted-color;
+        text-transform: uppercase;
+    }
+
+    .circle-input,
+    .smallcircle-input {
+        @include number-input;
+        width: 48px;
+        height: 32px;
+        margin: 0;
+        font-size: 1.2rem;
+        background: none;
+    }
+
+    .circle-stat {
+        margin-top: 4px;
+    }
+
+    .minmaxwrapper,
+    .minmaxwrapper-black,
+    .valuewrapper {
+        background: none !important;
+        border: $input-border;
+        border-radius: 0 !important;
+        color: $input-text-color;
+
+        .slant {
+            border-color: $faded-color !important;
+            transform: none !important;
+        }
+
+        input,
+        .maxhealth-input {
+            font-family: $number-font;
+            font-weight: $number-weight;
+            color: $input-text-color;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+    }
+
+    .button-black,
+    .button-grey,
+    .button-white,
+    .dropbtn {
+        @include retro-button;
+    }
+
+    .actor-sidebar-tab {
+        @include retro-button;
+        box-shadow: none;
+        opacity: 0.7;
 
         &:hover {
+            opacity: 1;
+        }
+    }
+
+    .sbt-crew-section {
+        border: $main-border;
+        outline: none;
+        border-radius: 0;
+
+        // Add crew button, dark grey in the system
+        .item-control {
+            font-family: $input-label-font;
+            color: $label-color;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $accent-hover-color;
+                @include no-glow;
+            }
+        }
+    }
+
+    .sbt-text-area,
+    textarea.textarea-input {
+        @include field-input;
+        @include sheet-text;
+        border-radius: 0;
+    }
+
+    .transponder span,
+    .sbt-crew-name,
+    .sbt-crew-job {
+        font-family: $input-label-font;
+        font-size: 0.75rem;
+        color: $terminal-color;
+        text-transform: uppercase;
+    }
+
+    input[type='checkbox'] {
+        @include retro-check;
+    }
+
+    // Megadamage effects list (ship sidebar and popout)
+    .sbt-megadamage-menu,
+    .megadamage-list {
+        @include sheet-text;
+        padding: 0.25rem 0.5rem;
+
+        b,
+        strong {
+            font-family: $input-label-font;
             color: $highlight-color;
+            text-transform: uppercase;
+        }
+
+        em {
+            color: $mutted-color;
         }
     }
 }
 
-.horizontal-field-minmax-min-input {
-    @extend .horizontal-field-input;
-}
+// Character sheet
+//
+//  [portrait] [ name | credits ]
+//             [ class | rank | pronouns | level ]
+//  ┌─ STATS ────┐ ┌─ SAVES ───┐ ┌─ STATUS ─┐
+//  └────────────┘ └───────────┘ └──────────┘
+//  ┌─ TRAUMA RESPONSE ────────────────────┐
+//  └──────────────────────────────────────┘
+// The panel titles come from `data-panel-title` attributes added on render.
+.mosh.sheet.actor form:not(.actor-generator) > .char-header {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
 
-.horizontal-field-minmax-max-input {
-    @extend .horizontal-field-input;
-}
+    .header-fields {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
+        grid-template-rows: 100px repeat(4, auto) auto;
+        grid-template-areas: none;
+        gap: 4px 6px;
+        padding: 0;
+        margin-top: 0.25rem;
+        container-type: normal;
 
-.horizontal-field-minmax-input-label {
-    display: none;
-}
+        // The status fields are laid out one by one in the third column (see `.health`),
+        // so their frame and title are drawn by the grid itself, over the same area.
+        &::after {
+            content: '';
+            grid-column: 3 / 4;
+            grid-row: 2 / span 4;
+            position: absolute;
+            inset: 0;
+            border: $frame-border;
+            pointer-events: none;
+        }
 
-.profile-picture {
-    flex: 0;
-    width: 100px;
-    height: 100px;
-    border-radius: 0px;
-    border: 1px solid $terminal-color;
-    padding: 0rem;
-
-    &:hover {
-        border: $accent-border;
-    }
-}
-
-.system-mosh {
-    // Chat cards
-    #interface {
-        #ui-right {
-            #sidebar {
-                .chat-sidebar {
-                    #chat-log {
-                        .chat-message {
-                            .message-content {
-                                .mosh {
-                                    .rollcontainer {
-                                        background: none;
-                                        font-family: $ui-font;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        &::before {
+            @include panel-title(attr(data-panel-title));
+            grid-column: 3;
+            grid-row: 2;
+            z-index: 1;
         }
     }
-}
 
-// Sheets
-.sheet {
-    // Actor
-    &.actor {
-        .window-content {
-            @import '../ui/inputs';
+    .header {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        align-items: start;
+        height: 100px;
+        margin-bottom: 0.85rem;
+        background: none;
+        border: none;
+        border-radius: 0;
+        padding: 0;
 
-            background: $ui-background-color;
-            color: $ui-main-color;
+        .profile {
+            @include profile-picture;
+            margin: 0;
+        }
 
-            // Character sheet
+        .headergrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 1fr 1fr;
+            gap: 4px 8px;
+            height: 100%;
+            padding: 0 0 0 0.5rem;
 
-            header {
-                &.header-grid {
-                    margin-top: 0.25rem;
-                    flex: 0;
-                }
-
-                .header-grid {
-                    padding: 0rem;
-                    flex: 0 1 auto;
-                    grid-template-areas: 'header header header' 'abilities saves centercol';
-                }
+            > div {
+                @include vertical-field;
+                min-width: 0;
             }
 
-            .header-fields {
-                grid-template-columns: 4fr 3fr 116px;
-                grid-template-rows: 100px 116px 64px;
-
-                .header {
-                    background: none;
-                    border-radius: 0px;
-                    border: none;
-                    grid-template-columns: 100px 1fr;
-                    align-items: start;
-                    justify-content: start;
-                    height: 100px;
-
-                    .headergrid {
-                        padding: 0rem 0rem 0rem 0.5rem;
-                        height: 100%;
-
-                        & > div {
-                            @extend .vertical-field;
-                        }
-                    }
-
-                    .profile {
-                        @extend .profile-picture;
-                    }
-
-                    .headerinputtext {
-                        @extend .vertical-field-label;
-                    }
-
-                    .headerinputfield {
-                        @extend .vertical-field-input;
-                    }
-                }
-
-                .health {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 4px;
-                    align-items: start;
-                    justify-items: start;
-                    height: min-content;
-
-                    .resource {
-                        @extend .horizontal-field-minmax;
-
-                        .resource-label {
-                            @extend .horizontal-field-minmax-label;
-                        }
-
-                        .healthmaxtext {
-                            @extend .horizontal-field-minmax-input-label;
-                        }
-
-                        .minmaxtext {
-                            grid-column: 1;
-                            margin: 0px;
-                        }
-
-                        .minmaxwrapper {
-                            @extend .horizontal-field-minmax-values;
-                        }
-                    }
-                }
-
-                .abilities {
-                    height: min-content;
-                    .grid {
-                        gap: 4px;
-                    }
-
-                    .mainstatwrapper {
-                        @extend .horizontal-field-with-bonus;
-
-                        .mainstat {
-                            @extend .horizontal-field;
-                            order: 1;
-                            height: 100%;
-
-                            .mainstatlabel {
-                                @extend .horizontal-field-label;
-                                height: 26px;
-
-                                .mainstattext {
-                                    @extend .horizontal-field-label-text;
-                                }
-                            }
-
-                            .circle-input {
-                                @extend .horizontal-field-input;
-                            }
-                        }
-
-                        .mainstatmod-input {
-                            @extend .horizontal-field-bonus-input;
-                            order: 3;
-                            margin: 0rem;
-                            width: auto;
-                            position: static;
-                        }
-
-                        .mainstatmod-title {
-                            position: static;
-                            margin: 0px;
-                            order: 2;
-                        }
-                    }
-                }
-
-                .saves {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 4px;
-                    align-items: start;
-                    justify-items: start;
-                    padding: 0rem;
-                    height: auto;
-                    background: none;
-                    border-radius: 0px;
-                    height: min-content;
-
-                    .saves-list {
-                        display: grid;
-                        grid-template-rows: repeat(3, 1fr);
-                        gap: 4px;
-                        width: 100%;
-
-                        .save-wrapper {
-                            @extend .horizontal-field-with-bonus;
-
-                            .resource {
-                                @extend .horizontal-field;
-                                padding: 0px;
-
-                                .mainsavelabel {
-                                    @extend .horizontal-field-label;
-                                    height: 26px;
-
-                                    .ability-mod {
-                                        @extend .horizontal-field-label-text;
-                                    }
-                                }
-
-                                input.square-input {
-                                    @extend .horizontal-field-input;
-                                }
-                            }
-
-                            .mainstatmod-title {
-                                position: static;
-                                margin: 0px;
-                            }
-
-                            .mainsavemod-input {
-                                @extend .horizontal-field-input;
-                                position: static;
-                            }
-                        }
-                    }
-                }
-
-                .trauma-response {
-                    display: grid;
-                    grid-column-start: 1;
-                    grid-column-end: 4;
-                    grid-template-rows: 18px 1fr;
-
-                    .resource-label {
-                        @extend label;
-                        padding: 0.1rem 0.5rem;
-                        margin: 0px;
-                        font-size: 0.7rem;
-                        background: $terminal-color;
-                        color: $input-label-color-inverse;
-                        text-align: left;
-                    }
-
-                    textarea {
-                        @extend textarea;
-                        margin: 0px;
-                        font-size: 0.8rem;
-                    }
-                }
-            }
-
-            @import '../ui/navigation';
-
-            .sheet-body {
-                border: $nav-border;
-                border-radius: 0px;
-                @import '../ui/items-list';
-
-                .tab {
-                    .skill_training_frame {
-                        background: none;
-                        color: $table-header-color;
-                        font-family: $table-header-font;
-                        border: $main-border;
-                        border-radius: $main-border-radius;
-                        font-size: 0.8rem;
-                    }
-
-                    .editor {
-                        .editor-edit {
-                            background: $button-background-color;
-                            color: $button-text-color;
-                            font-family: $button-text-font;
-                            border: none;
-                            border-radius: $button-border-radius;
-                            height: 24px;
-                            width: 24px;
-
-                            &:hover {
-                                color: $accent-color;
-                                box-shadow: none;
-                                text-shadow: none;
-                            }
-                        }
-
-                        .editor-content {
-                            padding: 0.5rem;
-                            @import '../ui/text';
-                        }
-                    }
-
-                    // In case there is a Tiny MCE editor somewhere
-                    @import '../ui/tinymce';
-                }
+            .headernamegrid {
+                grid-column: 1 / -2;
             }
         }
     }
 
-    // NPC sheet
-    &.creature {
-        @import '../ui/inputs';
+    // Values and the "+" before their bonus
+    .mainstatmod-title {
+        color: $label-color;
+    }
 
-        .creature-header-grid {
-            background: none;
-            flex: 0;
-            display: flex;
-            flex-direction: row;
-            margin-top: 0.25rem;
+    .mainstatmod-input,
+    .mainsavemod-input {
+        color: $label-color !important;
+        font-size: 0.85rem !important;
 
-            .profile {
-                @extend .profile-picture;
-            }
+        &:hover,
+        &:focus {
+            color: $highlight-color !important;
+        }
+    }
 
-            .creature-header {
-                flex: 1;
+    // Bonuses at 0 are hidden until their row is hovered, or the bonus focused
+    .abilities .mainstatwrapper:not(:hover, :focus-within):has(.mainstatmod-input[value='0']),
+    .saves .resource:not(:hover, :focus-within):has(.mainsavemod-input[value='0']) {
+        .mainstatmod-title,
+        .mainstatmod-input,
+        .mainsavemod-input {
+            visibility: hidden;
+        }
+    }
+
+    // Attributes: LABEL [ value ] + [ bonus ]
+    .abilities {
+        @include panel;
+        grid-column: 1;
+        grid-row: 2 / span 4;
+        align-self: stretch;
+        margin: 0;
+
+        &::before {
+            @include panel-title;
+        }
+
+        > .grid {
+            gap: 4px !important;
+            align-content: start;
+            margin: 0;
+        }
+
+        .mainstatwrapper {
+            display: grid;
+            grid-template-columns: 1fr 10px 30px;
+            align-items: center;
+            height: 26px;
+            padding: 0;
+            margin: 0;
+
+            .mainstat {
+                order: 1;
                 display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: min-content min-content min-content;
-                gap: 4px;
-                align-items: start;
-                padding: 0rem 0rem 0rem 0.5rem;
-                margin: 0rem;
-                height: 100px;
-
-                .creature-name-wrapper {
-                    grid-column: 1 / span 3;
-                    text-transform: none;
-                    font-size: 1rem;
-
-                    .creaturename {
-                        font-size: 1rem;
-                    }
-                }
-
-                .headerinputtext {
-                    @extend .vertical-field-label;
-                }
-
-                .headerinputfield {
-                    @extend .vertical-field-input;
-                }
-            }
-
-            .mainstatwrapper {
+                grid-template-columns: 1fr 34px;
                 height: 26px;
-
-                .resource {
-                    @extend .horizontal-field;
-
-                    .mainstatlabel {
-                        @extend .horizontal-field-label;
-                        height: 26px;
-
-                        span.ability-mod {
-                            @extend .horizontal-field-label-text;
-                            height: 26px;
-                        }
-                    }
-
-                    .creaturestat {
-                        @extend .horizontal-field-input;
-                        height: 26px;
-                    }
-                }
-            }
-        }
-
-        .creature-description-grid {
-            display: flex;
-            flex-direction: column;
-
-            .creaturedescription {
-                display: grid;
-                grid-template-columns: 1fr 124px;
-                flex: 1 auto;
-                overflow-y: visible;
-                height: auto;
-                padding: 0.5rem 0rem;
-                margin: 0rem;
-                @import '../ui/tinymce';
-
-                .editor.tinymce {
-                    min-height: 300px;
-                }
-
-                #resources {
-                    @import '../ui/inputs';
-                    display: flex;
-                    flex-direction: column;
-                    font-size: 1rem;
-                    gap: 4px;
-
-                    .resource {
-                        @extend .horizontal-field-minmax;
-
-                        label {
-                            @extend .horizontal-field-minmax-label;
-                            grid-column: 1;
-                        }
-
-                        .minmaxwrapper {
-                            @extend .horizontal-field-minmax-values;
-                        }
-
-                        .healthmaxtext {
-                            @extend .horizontal-field-minmax-input-label;
-                        }
-                    }
-                }
+                margin: 0;
+                padding: 0;
             }
 
-            .creature-abilities {
-                // grid-column: 1 / span 2;
-                flex: 1 auto;
-                overflow-y: visible;
-                height: auto;
-                min-height: 150px;
-                padding: 0rem;
-                margin: 0rem;
+            .mainstatlabel {
+                @include horizontal-field-label;
+                margin: 0;
             }
 
-            .creature-abilities {
-                position: relative;
-                border: 1px solid #cecece;
-                border-radius: 0px;
-                background: $main-background;
-                color: $journal-text-color;
-                outline: none;
-
-                .whiteline {
-                    border: $main-border;
-                }
-
-                .creature-ability-container {
-                    // position: relative;
-
-                    &.creature-ability-title {
-                        font-family: $journal-title-font;
-                        font-size: 0.8rem;
-                        text-align: left;
-                        padding: 0.2rem;
-                        margin: 0rem;
-                        background: #cecece;
-                        color: $terminal-color-inverse;
-                    }
-                }
-
-                li {
-                    list-style-type: none;
-                    position: relative;
-
-                    .creature-ability-title {
-                        font-family: $journal-title-font;
-                        font-size: 0.8rem;
-                        text-align: left;
-                        color: $journal-title-color;
-
-                        &:hover {
-                            color: $accent-color;
-                            text-shadow: none;
-                        }
-                    }
-
-                    .creature-ability-text {
-                        @import '../ui/text';
-                        color: $journal-text-color;
-                    }
-
-                    .item-controls {
-                        position: absolute;
-                        top: 6px;
-                        right: 6px;
-                    }
-
-                    .item-control {
-                        &:hover {
-                            color: $accent-color;
-                            text-shadow: none;
-                        }
-                    }
-                }
-
-                a {
-                    &.item-control.weapon-create {
-                        position: absolute;
-                        top: 0px;
-                        right: 0px;
-                        text-align: center;
-                        font-family: 'Kosugi', sans-serif;
-                        font-weight: bold;
-                        font-size: 0.8rem;
-                        color: $terminal-color-inverse;
-                        text-transform: uppercase;
-                        margin-right: 24px;
-                        margin-top: 2px;
-
-                        &:hover {
-                            color: $highlight-color;
-                            text-shadow: none;
-                        }
-                    }
-                }
+            .mainstattext {
+                color: inherit;
+                font-size: inherit;
+                padding: 0;
             }
-        }
-        .sheet-body {
-            height: auto;
-            min-height: 100px;
 
-            .tab {
-                &.biography {
-                    @import '../ui/tinymce';
-                    min-height: 100px;
+            .circle-input {
+                @include horizontal-field-input;
+            }
 
-                    .editor.tinymce {
-                        min-height: 300px;
-                    }
-                }
+            .mainstatmod-title {
+                order: 2;
+                position: static;
+                margin: 0;
+                text-align: center;
+            }
+
+            .mainstatmod-input {
+                order: 3;
+                @include horizontal-field-input;
             }
         }
     }
 
-    &.item {
-        .window-content {
-            @import '../ui/inputs';
-            @import '../ui/navigation';
+    // Saves: same layout as the attributes, flattening the inner wrapper
+    .saves {
+        @include panel;
+        grid-column: 2;
+        grid-row: 2 / span 4;
+        align-self: stretch;
+        display: grid;
+        grid-template-columns: 1fr;
+        align-content: start;
+        gap: 4px;
+        height: auto !important;
+        margin: 0;
+        background: none;
+        border-radius: 0;
 
-            background: $ui-background-color;
-            color: $ui-main-color;
+        &::before {
+            @include panel-title;
+        }
 
-            .sheet-header {
-                display: flex;
-                flex: 0;
-                background: none;
-                height: 54px;
-                padding-top: 4px;
+        .resource {
+            display: grid;
+            grid-template-columns: 1fr 34px 10px 30px;
+            align-items: center;
+            height: 26px;
+            padding: 0;
+            margin: 0;
 
-                .header {
-                    background: none;
-                    display: grid;
-                    flex: 1;
-                    grid-template-columns: 50px 1fr;
-                    gap: 4px;
+            > .grid {
+                display: contents;
+            }
+        }
 
-                    .sbt-profile {
-                        @extend .profile-picture;
-                    }
+        .savetext {
+            @include horizontal-field-label;
+        }
 
-                    .name-field {
-                        @extend .vertical-field;
-                        height: 50px;
+        .square-input,
+        .mainsavemod-input {
+            @include horizontal-field-input;
+            padding: 0 !important;
+        }
 
-                        .headerinputtext {
-                            @extend .vertical-field-label;
-                        }
+        div.mainsavemod-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-                        .headerinputfield {
-                            @extend .vertical-field-input;
-                        }
-                    }
+        .mainstatmod-title {
+            position: static;
+            margin: 0;
+            text-align: center;
+        }
+    }
+
+    // Health, Wounds, Stress and Armor/Resolve, one per row in the third column, inset
+    // into the frame drawn by `.header-fields`, and the Trauma Response below everything
+    // else.
+    .health {
+        display: contents;
+
+        > .resource {
+            @include horizontal-field-minmax;
+            grid-column: 3 !important;
+            justify-self: stretch;
+            width: auto;
+            margin: 0 0.4rem;
+
+            @for $i from 1 through 4 {
+                &:nth-child(#{$i}) {
+                    grid-row: #{$i + 1};
                 }
             }
 
-            .circle-statwrapper-horizontal {
-                background: none;
-                border: none;
-                gap: 4px;
-                flex: 0;
-                padding: 0.25rem 0rem;
+            &:nth-child(1) {
+                margin-top: 0.7rem;
             }
 
-            .item-armor-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 4px;
-                flex: 0;
-                padding: 0.5rem 0rem;
+            &:nth-child(4) {
+                margin-bottom: 0.5rem;
             }
 
-            .resource {
-                @extend .vertical-field;
-                grid-template-rows: inherit;
-
-                label {
-                    @extend .vertical-field-label;
-                    text-align: left;
-                }
-
-                .mainstat-input,
-                .textvaluewrapper {
-                    @extend .vertical-field-input;
-                    height: 26px;
-
-                    .maxhealth-input,
-                    .textvaluewrapper-input {
-                        font-size: 0.8rem;
-                        height: 26px;
-                    }
-                }
+            .resource-label {
+                @include horizontal-field-minmax-label;
             }
 
-            .features-wrapper {
-                @extend .vertical-field;
-
-                .resource-label {
-                    @extend .vertical-field-label;
-                    text-align: left;
-                }
-
-                .textvaluewrapper {
-                    @extend .vertical-field-input;
-                    text-align: left;
-
-                    .textvaluewrapper-input {
-                        text-align: left;
-                        font-size: 0.8rem;
-                    }
-                }
+            .minmaxwrapper,
+            .valuewrapper {
+                @include horizontal-field-minmax-values;
             }
 
-            br {
+            .valuewrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .healthmaxtext {
                 display: none;
             }
 
-            .sheet-body {
-                border: $main-border;
+            // Armor values are calculated from the equipped armor, not editable
+            div.maxhealth-input {
+                border-color: transparent;
+            }
+        }
 
-                .tab {
-                    @import '../ui/text';
-                    padding: 0.5rem;
-                }
+        > div:not(.resource) {
+            @include panel;
+            grid-column: 1 / -1 !important;
+            grid-row: 6;
+            display: block;
+            margin: 0.6rem 0 0 !important;
+            padding: 0.5rem 0.5rem 0.25rem;
+
+            .resource-label {
+                @include panel-title(null);
+            }
+
+            textarea {
+                @include field-input;
+                display: block;
+                width: 100%;
+                height: 44px !important;
+                margin: 0;
+                padding: 0;
+                border: none;
+                font-size: 0.8rem;
+                resize: none;
             }
         }
     }
 }
 
-.dialog {
+// NPC (creature) sheet
+//
+//  [portrait] [ name                  ]
+//             [ combat | instinct | ... ]
+//  ┌─ DESCRIPTION ──┐ ┌─ STATUS ─┐
+//  └────────────────┘ └──────────┘
+//  ┌─ SPECIAL ABILITIES ── + ADD ┐
+//  └─────────────────────────────┘
+// The panel titles come from `data-panel-title` attributes added on render.
+.mosh.sheet.creature {
+    .creature-header-grid {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 0.5rem;
+        background: none;
+        margin-top: 0.25rem;
+        height: auto;
+
+        .profile {
+            @include profile-picture;
+        }
+
+        .whiteline {
+            display: none;
+        }
+    }
+
+    .creature-header-fields {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .creature-name-field {
+        @include vertical-field;
+
+        input.creaturename {
+            @include field-input;
+            @include noborder-outline;
+            width: 100%;
+            height: 30px;
+            font-size: 1rem;
+            padding-left: 0.5rem;
+            text-transform: none;
+        }
+    }
+
+    // Without the JS header changes (e.g. a sheet that failed to update) keep the name usable
+    .creature-header-grid > input.creaturename {
+        @include field-input;
+    }
+
+    .creature-header {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        padding: 0;
+        margin: 0;
+        height: auto;
+        background: none;
+
+        .mainstatwrapper {
+            height: 26px;
+            margin: 0;
+        }
+
+        .creature-mainstat {
+            display: grid;
+            grid-template-columns: 1fr 40px;
+            height: 26px;
+            margin: 0;
+            padding: 0;
+            background: none;
+        }
+
+        span.creaturestat {
+            @include horizontal-field-label;
+            font-size: 0.7rem;
+        }
+
+        input.creaturestat {
+            @include horizontal-field-input;
+            @include noborder-outline;
+            width: 100% !important;
+        }
+    }
+
+    .creature-description-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        margin-top: 0.85rem;
+    }
+
+    // Description editor with the health stats in a narrow column on the right. The
+    // editor is re-rendered by Foundry, so its frame and title are drawn by the grid.
+    .creaturedescription {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 140px;
+        gap: 6px;
+        height: auto;
+        min-height: 150px;
+        overflow: visible;
+        padding: 0;
+        margin: 0;
+        background: none;
+        border: none;
+
+        // Absolutely positioned grid items reach the container edge on an `auto` line,
+        // so the area is closed explicitly.
+        &::after {
+            content: '';
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            position: absolute;
+            inset: 0;
+            border: $frame-border;
+            pointer-events: none;
+        }
+
+        &::before {
+            @include panel-title;
+            grid-column: 1;
+            grid-row: 1;
+            z-index: 1;
+        }
+
+        > br {
+            display: none;
+        }
+
+        > .editor {
+            grid-column: 1;
+            grid-row: 1;
+            min-height: 150px;
+            padding: 0.5rem 0.5rem 0.25rem;
+            @include sheet-text;
+        }
+
+        > .grid {
+            @include panel;
+            grid-column: 2;
+            grid-row: 1;
+            align-self: start;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 0;
+
+            &::before {
+                @include panel-title;
+            }
+
+            .resource {
+                @include horizontal-field-minmax;
+            }
+
+            .resource-label {
+                @include horizontal-field-minmax-label;
+            }
+
+            .minmaxwrapper {
+                @include horizontal-field-minmax-values;
+            }
+
+            .healthmaxtext {
+                display: none;
+            }
+        }
+    }
+
+    .creature-abilities {
+        @include panel;
+        min-height: 150px;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        background: none;
+        color: $journal-text-color;
+        border-radius: 0;
+        outline: none;
+
+        .whiteline {
+            display: none;
+        }
+
+        > .creature-ability-title {
+            @include panel-title(null);
+        }
+
+        li.creature-ability-container {
+            list-style: none;
+            position: relative;
+            margin: 0 !important;
+            padding: 0.25rem 0.5rem;
+
+            .creature-ability-title {
+                font-family: $journal-title-font;
+                font-size: 0.8rem;
+                text-align: left;
+                color: $journal-title-color;
+
+                &:hover {
+                    color: $accent-hover-color;
+                    @include no-glow;
+                }
+            }
+
+            .creature-ability-text {
+                @include sheet-text;
+            }
+
+            .item-controls {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.5rem;
+            }
+        }
+
+        // Add button set into the top border, like the title
+        a.item-control.weapon-create {
+            position: absolute;
+            top: 0;
+            right: 0.5rem;
+            transform: translateY(-50%);
+            margin: 0 !important;
+            padding: 0 0.35rem;
+            background: $ui-background-color;
+            font-family: $input-label-font;
+            font-weight: bold;
+            font-size: 0.7rem;
+            line-height: 1;
+            letter-spacing: 0.06em;
+            color: $terminal-color;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $highlight-color;
+                @include no-glow;
+            }
+        }
+
+        .item-control:hover {
+            color: $accent-hover-color;
+            @include no-glow;
+        }
+    }
+
+    .sheet-body {
+        height: auto;
+        min-height: 100px;
+    }
+}
+
+// Item sheets (armor, weapons, items...)
+.mosh.sheet.item {
+    // Opened at the height of the content: the description grows with its text instead
+    // of filling the window, and the window only scrolls past most of the screen. The
+    // system sets the body height inline on every resize (window height - 192px); it
+    // stretches to fill a window resized taller instead.
+    &.window-app {
+        max-height: 90vh;
+    }
+
+    .window-content > form {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    .sheet-body {
+        flex: 1 0 auto;
+        height: auto !important;
+    }
+
+    .sheet-body .tab,
+    .sheet-body .tab .editor,
+    .sheet-body .tab .editor-content {
+        height: auto;
+        min-height: 0;
+    }
+
+    .sheet-body .tab .editor {
+        min-height: 5rem;
+    }
+
+    .sheet-header {
+        display: flex;
+        flex: 0 0 auto;
+        height: auto;
+        padding-top: 4px;
+        background: none;
+
+        .header {
+            display: grid;
+            grid-template-columns: 50px 1fr !important;
+            gap: 0.5rem;
+            flex: 1;
+            background: none;
+
+            .sbt-profile {
+                @include profile-picture;
+                width: 50px !important;
+                height: 50px !important;
+            }
+
+            > div {
+                @include vertical-field;
+                height: 50px;
+            }
+        }
+    }
+
+    br {
+        display: none;
+    }
+
+    // Rows of stats in the simpler item types (items, conditions, modules...)
+    .circle-statwrapper-horizontal {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        flex: 0 0 auto;
+        width: 100%;
+        height: auto;
+        margin: 0.5rem 0;
+        padding: 0;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    // Flatten the rows of stats into a single three column grid
+    .item-armor-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        flex: 0 0 auto;
+        margin: 0.5rem 0 !important;
+        padding: 0;
+
+        > div,
+        .circle-statwrapper-horizontal,
+        .circle-statwrapper-vertical {
+            display: contents;
+        }
+    }
+
+    .resource {
+        @include vertical-field;
+        grid-template-columns: 1fr;
+        grid-template-rows: 15px 26px !important;
+        align-self: stretch;
+        width: 100%;
+        align-items: stretch;
+        justify-items: stretch;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        background: none;
+
+        label {
+            @include vertical-field-label;
+            width: 100%;
+        }
+
+        .valuewrapper,
+        .textvaluewrapper {
+            display: contents;
+        }
+
+        input[type='text'] {
+            @include field-input;
+            width: 100%;
+            height: 26px;
+            margin: 0;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .textvaluewrapper-input {
+            text-align: left !important;
+            padding-left: 0.5rem;
+        }
+
+        input[type='checkbox'] {
+            justify-self: center;
+            margin: 4px 0 0;
+        }
+    }
+
+    .sheet-body {
+        border: $main-border;
+
+        .tab {
+            padding: 0.5rem;
+        }
+    }
+}
+
+// Class sheet: base stat adjustments, trauma response and character generator options
+.mosh.sheet.item {
+    .header-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        flex: 0 0 auto;
+        margin: 0.5rem 0;
+
+        > .grid {
+            gap: 4px !important;
+            align-content: start;
+            margin: 0;
+        }
+
+        .mainstatwrapper {
+            height: 26px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mainstat {
+            display: grid;
+            grid-template-columns: 1fr 40px;
+            align-items: center;
+            height: 26px;
+            margin: 0;
+            padding: 0;
+            background: none;
+        }
+
+        .mainstatlabel {
+            @include horizontal-field-label;
+            margin: 0;
+        }
+
+        .mainstattext {
+            color: inherit;
+            font-size: inherit;
+            padding: 0;
+        }
+
+        input.circle-input[type='text'] {
+            @include horizontal-field-input;
+        }
+
+        input.circle-input[type='checkbox'] {
+            justify-self: center;
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+    }
+
+    // Trauma response
+    form > div:has(> .resource-label + textarea) {
+        display: grid;
+        grid-template-rows: 18px 1fr;
+        margin: 0 0 0.5rem !important;
+
+        .resource-label {
+            @include vertical-field-label;
+            line-height: 16px;
+        }
+
+        textarea {
+            @include field-input;
+            @include sheet-text;
+            height: 50px !important;
+            margin: 0;
+            resize: none;
+        }
+    }
+
+    // Fields laid out in a grid inside tabs: label on top of the input
+    .tab .grid > div:has(> .textvaluewrapper) {
+        @include vertical-field;
+        grid-template-rows: 15px 26px;
+
+        label {
+            @include vertical-field-label;
+        }
+
+        .textvaluewrapper {
+            display: contents;
+        }
+
+        input {
+            @include field-input;
+            width: 100%;
+            height: 26px;
+            margin: 0;
+            text-align: center;
+        }
+    }
+
+    // Inline editing rows inside lists
+    ol.items-list li.item input[type='text'],
+    ol.items-list li.item input:not([type]) {
+        @include field-input;
+        width: 100%;
+        height: 22px;
+        margin: 0;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}
+
+// Character generator: same attribute rows and columns as the character sheet, with
+// dice buttons, and the class options stacked below
+//
+//  [ name       | class     | credits ]
+//  [ attributes ] [ saves ] [ health  ]
+//                           [ wounds  ]
+//  [ skills                           ]
+//  [ loadout                          ]
+//  [ trinket                          ]
+//  [ patch                            ]
+//  [ roll everything / remove items / save ]
+// Grow with the content: skills and loadout are filled in without re-rendering, so the
+// height Foundry measured on render ends up hiding the buttons below a scrollbar
+.window-app.mosh:has(> .window-content > form.actor-generator) {
+    height: auto !important;
+    max-height: 100vh;
+}
+
+.mosh .actor-generator {
+    // Header fields and both stat columns flattened into a single grid
+    .char-header {
+        display: grid;
+        grid-template-columns: 4fr 3fr 3fr;
+        gap: 4px 8px;
+        margin-top: 0.25rem;
+    }
+
+    #generator-header-grid-1col,
+    .header-fields,
+    .header-fields > .grid {
+        display: contents;
+    }
+
+    #generator-header-grid-1col {
+        > div {
+            @include vertical-field;
+            grid-row: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        > div:nth-child(1) {
+            grid-column: 1;
+        }
+
+        > div:nth-child(2) {
+            grid-column: 2;
+        }
+
+        > div:nth-child(4) {
+            grid-column: 3;
+        }
+
+        .headerinputfield {
+            min-height: 30px;
+        }
+
+        // Wounds, below health: [ LABEL | bonus ], the bonus aligned with health's
+        > div:nth-child(3) {
+            grid-column: 3;
+            grid-row: 3;
+            grid-template-columns: 1fr 40px 10px 34px;
+            grid-template-rows: 26px;
+            margin: 0;
+
+            .headerinputtext {
+                @include horizontal-field-label;
+                grid-column: 1 / 3;
+            }
+
+            .headerinputfield {
+                grid-column: 4;
+                min-height: 0;
+                height: 26px;
+
+                input {
+                    padding: 0;
+                    text-align: center;
+                    font-family: $number-font;
+                    font-weight: $number-weight;
+                }
+            }
+        }
+    }
+
+    // Attributes in the first column, health and then the saves in the other two
+    .header-fields > .grid:first-child > * {
+        grid-column: 1;
+    }
+
+    .header-fields > .grid:last-child > :first-child {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
+    .header-fields > .grid:last-child > :not(:first-child) {
+        grid-column: 2;
+    }
+
+    @for $i from 1 through 4 {
+        .header-fields > .grid:first-child > :nth-child(#{$i}),
+        .header-fields > .grid:last-child > :nth-child(#{$i + 1}) {
+            grid-row: #{$i + 1};
+        }
+    }
+
+    // Class options, one per row, with room between them to tell the groups apart. The
+    // system pairs them in two groups (patch + trinket, skills + loadout); flattening
+    // the groups lets the form order them freely
+    &.actor-generator {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .element-group {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin: 0;
+
+        &:not(.grid-3col) {
+            display: contents;
+        }
+
+        > .grid {
+            gap: 4px !important;
+            align-content: start;
+            margin: 0;
+        }
+    }
+
+    .element-group > :has([id='system.class.skills.uuid']) {
+        order: 1;
+    }
+
+    .element-group > :has([id='system.class.loadout.uuid']) {
+        order: 2;
+    }
+
+    .element-group > :has([id='system.class.trinket.uuid']) {
+        order: 3;
+    }
+
+    .element-group > :has([id='system.class.patch.uuid']) {
+        order: 4;
+    }
+
+    .element-group.grid-3col {
+        order: 5;
+    }
+
+    // Class options (patch, trinket, skills, loadout) styled as the character sheet's
+    // Trauma Response: a small label bar on top of the frame, touching it, with the
+    // roll/restart button at the end of the bar
+    .element-group:not(.grid-3col) {
+        > .grid {
+            gap: 0 !important;
+        }
+
+        .mainstat {
+            grid-template-columns: 1fr 40px;
+            height: 18px;
+        }
+
+        .mainstatlabel {
+            @include vertical-field-label;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            height: 18px;
+            line-height: 16px;
+
+            > * {
+                text-align: left;
+            }
+
+            &:hover {
+                background: $terminal-color;
+            }
+        }
+
+        .clicable-item.circle-input {
+            height: 18px;
+            padding: 1px;
+            font-size: 0.75rem !important;
+            line-height: 16px;
+        }
+
+        input.circle-input:not(.clicable-item) {
+            height: 18px;
+            font-size: 0.75rem;
+        }
+
+        .headerinputfield {
+            @include sheet-text;
+            min-height: 26px;
+
+            input {
+                font-size: inherit;
+            }
+        }
+
+        .ulinputfield ul {
+            min-height: 50px;
+        }
+    }
+
+    // Remove previous items, roll everything and save, as tall as the stat rows and
+    // spaced evenly in both directions:
+    //  [ remove items ] [ roll everything ]
+    //          [ save            ]
+    .element-group.grid-3col {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+
+        > .mainstatwrapper {
+            display: contents;
+        }
+
+        > .mainstat:has(.checkbox-round) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        [id='roll.everything'] {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        // Centered below, as wide as one column
+        #submit {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            justify-self: center;
+            width: calc((100% - 8px) / 2);
+        }
+
+        .mainstat,
+        .mainstatlabel,
+        .clicable-item.circle-input {
+            height: 26px;
+            min-height: 0;
+        }
+    }
+
+    .mainstatwrapper {
+        display: grid;
+        grid-template-columns: 1fr 10px 34px;
+        align-items: center;
+        width: 100%;
+        height: 26px;
+        margin: 0;
+    }
+
+    .mainstatwrapper > .mainstat {
+        order: 1;
+    }
+
+    .mainstat {
+        display: grid;
+        grid-template-columns: 1fr 40px;
+        align-items: center;
+        width: 100%;
+        height: 26px;
+        margin: 0;
+        padding: 0;
+        background: none;
+    }
+
+    .mainstatlabel {
+        @include horizontal-field-label;
+        margin: 0;
+    }
+
+    .mainstattext {
+        color: inherit;
+        font-size: inherit !important;
+        padding: 0;
+    }
+
+    .mainstatmod-title {
+        order: 2;
+        position: static;
+        margin: 0;
+        text-align: center;
+    }
+
+    .mainstatmod-input {
+        order: 3;
+        @include horizontal-field-input;
+    }
+
+    // Dice and action buttons next to each label
+    .clicable-item.circle-input {
+        width: 40px;
+        height: 26px;
+        padding: 3px;
+        margin: 0;
+        border: $input-border;
+        border-radius: 0;
+        background: none;
+        object-fit: contain;
+        font-size: 1rem !important;
+        line-height: 20px;
+        color: $input-text-color;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $highlight-color;
+        }
+    }
+
+    img.clicable-item {
+        filter: invert(1);
+    }
+
+    // Rolled results replace the dice button with a readonly input, same size as it
+    input.circle-input:not(.clicable-item) {
+        @include number-input;
+        width: 40px;
+        height: 26px;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    // Skills restart icon: pin the icon font and glyph in case the box styles above
+    // displace them
+    i.clicable-item.circle-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--fa-family-classic, 'Font Awesome 7 Pro') !important;
+        font-weight: 900 !important;
+        font-style: normal;
+
+        &::before {
+            content: '\f0e2';
+        }
+    }
+
+    // Remove previous items: the system's checkbox has no look of its own, show it as
+    // the square terminal check centered in the button box
+    input.checkbox-round.circle-input {
+        @include retro-check;
+        width: 40px;
+        min-height: 26px;
+        padding: 0;
+        border-radius: 0;
+        // Check icon instead of the filled square
+        &:checked::before {
+            content: '\f00c';
+            width: auto;
+            height: auto;
+            background: none;
+            color: $highlight-color;
+            font-family: var(--fa-family-classic, 'Font Awesome 7 Pro');
+            font-weight: 900;
+            font-size: 1rem;
+            line-height: 1;
+        }
+    }
+
+    .headerinputfield {
+        min-height: 26px;
+    }
+
+    .ulinputfield ul {
+        @include sheet-text;
+        min-height: 80px;
+        margin: 0;
+        padding: 0.25rem 0.5rem 0.25rem 1.5rem;
+    }
+}
+
+// Roll table settings
+.window-app.mosh:not(.sheet) .resource:has(> label + input) {
+    @include vertical-field;
+    grid-template-rows: 15px 26px;
+
+    label {
+        @include vertical-field-label;
+    }
+
+    input {
+        @include field-input;
+        width: 100%;
+        height: 26px;
+        margin: 0;
+        font-size: 0.75rem;
+    }
+}
+
+// Ship sheet: keeps the system layout, re-skinned by the shared building blocks above
+.mosh.sheet.ship form > .header {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+// Chat cards (rolls, damage, reloads, item descriptions...)
+.chat-message .message-content .mosh {
+    .rollcontainer {
+        @include sheet-text;
+        background: none;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .rollweaponh1,
+    .rollh1 {
+        @include label-box;
+        height: auto;
+        width: auto;
+        margin: 0;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.85rem;
+        align-self: center;
+    }
+
+    .roll-image {
+        width: 40px;
+        margin: 0 0 0 0.5rem;
+        border: 1px solid $terminal-color;
+        border-radius: 0;
+    }
+
+    // The system ends cards with inline bottom margins and empty spacers
+    .rollcontainer > :last-child {
+        margin-bottom: 0 !important;
+
+        > div:empty:last-child {
+            display: none;
+        }
+    }
+
+    // Damage rolled on demand from successful attacks (module script)
+    .roll-damage {
+        @include retro-button;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    .wound-effect.hidden {
+        display: none;
+    }
+
+    // Placeholder file names without a path (e.g. radiation damage) never load
+    .roll-image[src^='icon_file'] {
+        display: none;
+    }
+
+    // Roll outcome (SUCCESS!, FAILURE!...)
+    .rollcontainer > div:not([class]) strong {
+        font-family: $journal-title-font;
+        font-size: 1rem;
+        color: $highlight-color;
+        text-transform: uppercase;
+    }
+
+    .description,
+    .body {
+        @include sheet-text;
+
+        strong {
+            color: $highlight-color;
+        }
+    }
+
+    .high-failure {
+        color: $failure-color;
+        font-weight: bold;
+    }
+
+    // Weapon description folded by the module script, opened from its divider
+    .weapon-description {
+        > summary {
+            display: block;
+            list-style: none;
+            cursor: pointer;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        .grid.grid-2col {
+            grid-template-columns: 10px auto 1fr !important;
+            gap: 0.25rem;
+            align-items: center;
+
+            > div {
+                height: auto !important;
+            }
+
+            > div:nth-child(2) {
+                color: $mutted-color;
+                white-space: nowrap;
+
+                &::after {
+                    content: ' [+]';
+                }
+            }
+
+            > div:not(:nth-child(2)) {
+                border-bottom-color: $mutted-color !important;
+            }
+        }
+
+        > summary:hover .grid.grid-2col > div:nth-child(2) {
+            color: $highlight-color;
+        }
+
+        &[open] .grid.grid-2col > div:nth-child(2)::after {
+            content: ' [-]';
+        }
+
+        &[open] > summary {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .rollh2 {
+        font-family: $input-label-font;
+        color: $terminal-color;
+    }
+
+    .table-results .result-text {
+        @include sheet-text;
+    }
+
+    // Stats tables in item descriptions (weapon ranges, damage, shots...), compacted to
+    // fit the width of the chat log
+    table {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0.5rem 0;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 0.15rem 0.2rem;
+        font-size: 0.7rem;
+        line-height: 1.1rem;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: anywhere;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td a.content-link > i {
+        display: none;
+    }
+}
+
+// Dialogs (roll type, skill selection, cover, distress signal...)
+.application.dialog.macro-popup-dialog {
+    // The system sets fixed heights that cut off or pad the content
+    height: auto !important;
+    background: $ui-window-background;
+    color: $ui-main-color;
+    font-family: $ui-font;
+
+    .window-header {
+        background: $ui-header-background-color;
+    }
+
     .window-content {
-        .dialog-content {
-            .macro_window {
-                background: none;
-                color: $journal-text-color;
+        @include crt;
+        padding: 0.5rem;
+    }
 
-                .macro_desc {
-                    padding-top: 0px;
-                }
-            }
+    .macro_window {
+        background: none;
+        border: $main-border;
+        border-radius: 0;
+        color: $input-text-color;
+    }
 
-            label {
-                .macro_window {
-                    background: $muted-background;
-                    border: $main-border;
-                    border-radius: $main-border-radius;
+    label:has(.macro_window):hover .macro_window {
+        border-color: $mutted-color;
+    }
 
-                    &:has(input[type='radio']:checked) {
-                        background: $secondary-background;
-                        color: $ui-main-color;
-                    }
-                }
-            }
+    label:has(input:checked) .macro_window {
+        background: $secondary-background;
+        border-color: $terminal-color;
+    }
+
+    .macro_desc {
+        @include sheet-text;
+
+        span {
+            color: inherit !important;
+            font-size: inherit !important;
+        }
+
+        h3,
+        h4 {
+            font-family: $journal-title-font;
+            font-size: 1rem;
+            font-weight: bold;
+            color: $highlight-color;
+            text-transform: uppercase;
+            border-bottom: 1px solid $line-color;
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: $highlight-color;
+        }
+
+        em {
+            color: $mutted-color;
+        }
+    }
+
+    // Skill bonus next to the skill icon
+    .grid-4col > .macro_desc:nth-child(3) span {
+        font-family: $number-font;
+        font-weight: $number-weight;
+        font-size: 1rem !important;
+        color: $highlight-color !important;
+    }
+
+    .macro_img img[src*='icon_file_macro'] {
+        display: none;
+    }
+
+    // Without its image (hidden above, or a broken path such as the morale check's) the
+    // image column would stay as an empty gap next to the description
+    .grid:has(> .macro_img img[src*='icon_file_macro']) {
+        grid-template-columns: 1fr !important;
+
+        > .macro_img {
+            display: none;
+        }
+    }
+
+    .macro_img img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .macro_prompt,
+    .dialog-content > h4 {
+        font-family: $input-label-font;
+        font-size: 0.75rem;
+        color: $mutted-color;
+        text-transform: uppercase;
+    }
+
+    // Headings keep a large top margin from the general typography
+    .dialog-content > h4 {
+        margin: 0.75rem 0 0.5rem;
+    }
+
+    input[type='radio'],
+    input[type='checkbox'] {
+        @include retro-check;
+    }
+
+    .form-footer button {
+        @include retro-button;
+        justify-content: center;
+    }
+
+    // Advantage/disadvantage in the outcome colors used by the chat results
+    .form-footer button[data-action='action_advantage'] {
+        --outcome-color: #{$success-color};
+    }
+
+    .form-footer button[data-action='action_disadvantage'] {
+        --outcome-color: #{$failure-color};
+    }
+
+    .form-footer button[data-action='action_advantage'],
+    .form-footer button[data-action='action_disadvantage'] {
+        color: var(--outcome-color);
+        border-color: var(--outcome-color);
+
+        &:hover {
+            background: var(--outcome-color);
+            color: $main-color;
+            border-color: var(--outcome-color);
         }
     }
 }

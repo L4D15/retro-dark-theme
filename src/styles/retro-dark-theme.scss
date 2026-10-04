@@ -1,13 +1,17 @@
 @import './imports';
 @import './variables';
-@import 'ui/index';
-@import 'sheets/index';
+@import './mixins';
+@import './effects/crt';
+
+// Foundry core
+@import './core/theme';
+@import './core/interface';
+@import './core/windows';
+@import './core/chat';
+@import './core/journal';
 
 // System specific
-@import 'systems/mothership';
+@import './systems/mothership';
 
 // Module specific
-@import 'modules/gm-screen';
-
-// Effects
-@import 'effects/crt-effect';
+@import './modules/gm-screen';

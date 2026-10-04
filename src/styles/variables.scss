@@ -35,6 +35,11 @@ $text-main-size: 1rem;
 $text-line-height: 1.2rem;
 $text-secondary-font: 'IBM Plex Mono', monospace;
 
+// Body text in system sheets (descriptions, abilities, notes...), same as their inputs
+$sheet-text-font: 'IBM Plex Mono', monospace;
+$sheet-text-size: 0.8rem;
+$sheet-text-line-height: 1.2rem;
+
 // Journal
 $journal-background: #000;
 $journal-text-color: #aaa;
@@ -79,6 +84,10 @@ $text-highlight-color: #fff;
 
 $line-color: #af1c1c;
 
+// Outcomes
+$success-color: #3ddc6b;
+$failure-color: #ff4545;
+
 // Inputs
 $input-label-font: 'Kosugi', sans-serif;
 $input-label-color: $terminal-color;
@@ -88,6 +97,16 @@ $input-text-font: 'IBM Plex Mono', sans-serif;
 $input-text-color: $terminal-color;
 $input-border: 1px solid $terminal-color;
 $input-border-radius: 0px;
+
+// Sheet hierarchy: bright values, dimmer labels, dimmest frames
+$value-color: #ececec;
+$label-color: #8c8c8c;
+$frame-color: #555;
+$frame-border: 1px solid $frame-color;
+
+// Accent each player picks in the settings, set as `--rdt-accent` (none by default)
+$accent-value-color: var(--rdt-accent, #{$value-color});
+$accent-hover-color: var(--rdt-accent, #{$highlight-color});
 
 // Scroll Bar
 $scrollbar-color: #ddd;
@@ -99,7 +118,7 @@ $table-header-background: $terminal-color;
 $table-row-strip-color: #171619;
 $table-header-font: 'Kosugi', sans-serif;
 $table-header-color: $terminal-color-inverse;
-$table-body-font: 'IMB Plex Mono';
+$table-body-font: 'IBM Plex Mono', monospace;
 $table-body-color: #fff;
 
 // Quotes

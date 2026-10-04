@@ -1,0 +1,60 @@
+.journal-sheet.journal-entry {
+    .window-content {
+        @include crt;
+        background: $journal-background;
+    }
+
+    .journal-sidebar {
+        background: $journal-sidebar-background;
+
+        .toc .page {
+            .page-heading:hover,
+            .heading:hover {
+                color: $accent-color;
+                @include no-glow;
+            }
+
+            &.active {
+                border: none;
+                border-top: 1px solid $accent-color;
+                border-bottom: 1px solid $accent-color;
+            }
+        }
+    }
+
+    .journal-header .title {
+        color: $title-top-color;
+        font-family: $title-top-font;
+        font-style: normal;
+        text-transform: uppercase;
+        font-weight: normal;
+        border: none;
+    }
+
+    .journal-entry-content {
+        background: $journal-background;
+    }
+
+    .journal-page-header {
+        border: none;
+        font-family: $journal-title-font;
+        text-align: center;
+        background: $journal-header-background;
+        color: $journal-title-color;
+
+        h1 {
+            font-family: $journal-title-font;
+            color: $journal-title-color;
+            font-style: normal;
+            font-weight: bold;
+            border: none;
+            margin-top: 0.5rem;
+        }
+    }
+
+    .journal-page-content {
+        @include rich-text;
+        background: none;
+        color: $journal-text-color;
+    }
+}

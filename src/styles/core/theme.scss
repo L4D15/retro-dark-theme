@@ -1,0 +1,123 @@
+// Foundry v14 builds every color from a small palette and a set of theme variables.
+// Re-tinting those turns the whole core UI into the retro terminal look without
+// having to target each application. Foundry loads this stylesheet in the `modules`
+// cascade layer, after the core layers, so these declarations win over the core ones.
+
+:root,
+body {
+    // Accents (orange, red and purple in core)
+    --color-warm-1: #{$terminal-color};
+    --color-warm-2: #3a3f4f;
+    --color-warm-3: #{$line-color};
+    --color-cool-3: #3a3f4f;
+    --color-cool-4: #{$faded-color};
+    --color-cool-5: #000;
+    --color-cool-5-25: rgba(0, 0, 0, 0.25);
+    --color-cool-5-50: rgba(0, 0, 0, 0.5);
+    --color-cool-5-75: rgba(0, 0, 0, 0.75);
+    --color-cool-5-90: rgba(0, 0, 0, 0.9);
+
+    // Text (cream in core)
+    --color-light-1: #fff;
+    --color-light-2: #ddd;
+    --color-light-3: #{$terminal-color};
+    --color-light-4: #{$mutted-color};
+    --color-light-5: #888;
+    --color-light-6: #666;
+
+    // Outcomes (notifications, dice results...)
+    --color-level-success: #{$success-color};
+    --color-level-error: #{$failure-color};
+
+    // Glows
+    --color-shadow-primary: transparent;
+    --color-shadow-highlight: #{$terminal-color};
+
+    // Fonts
+    --font-sans: #{$ui-font};
+    --font-body: #{$ui-font};
+    --font-monospace: #{$text-secondary-font};
+    --font-blockquote: #{$text-secondary-font};
+    --font-h1: #{$title-h1-font}, monospace;
+    --font-h2: #{$title-h2-font}, monospace;
+    --font-h3: #{$title-h3-font}, monospace;
+    --font-h4: #{$title-h4-font}, monospace;
+    --font-h5: #{$title-h5-font}, sans-serif;
+    --font-h6: #{$title-h5-font}, sans-serif;
+}
+
+body.retro-dark-theme-no-glow {
+    --color-shadow-highlight: transparent;
+}
+
+body,
+.themed {
+    --hr-border: 0;
+    --hr-gradient: linear-gradient(
+        90deg,
+        transparent 0%,
+        #{$faded-color} 50%,
+        transparent 100%
+    );
+    --sidebar-background: #{$ui-tab-background};
+    --sidebar-separator: #{$main-border};
+    --sidebar-entry-hover-bg: #{$secondary-background};
+    --table-header-bg-color: #{$table-header-background};
+    --table-header-border-color: #{$table-header-background};
+    --table-header-text-color: #{$table-header-color};
+    --table-row-color-even: #{$table-row-strip-color};
+    --table-row-color-odd: transparent;
+    --content-link-background: none;
+    --content-link-border-color: #{$faded-color};
+}
+
+.application,
+.window-app {
+    --background: #{$ui-window-background};
+    --color-header-background: #{$ui-header-background-color};
+    --color-border: #{$faded-color};
+    --color-tabs-border: #{$faded-color};
+    --color-form-label: #{$input-label-color};
+}
+
+body {
+    background: #000;
+    font-family: $ui-font;
+}
+
+// Text buttons use the retro font. Icon-only buttons put the Font Awesome classes on the
+// <button> itself, so they must keep the icon font.
+button:not(.icon, [class*='fa-']),
+a.button:not(.icon, [class*='fa-']) {
+    font-family: $button-text-font;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button,
+a.button {
+    border-radius: $button-border-radius;
+
+    &:hover {
+        @include no-glow;
+    }
+}
+
+input,
+select,
+textarea {
+    border-radius: $input-border-radius;
+}
+
+input[type='number'] {
+    font-family: $number-font;
+    font-weight: $number-weight;
+}
+
+.rollable:hover {
+    animation: textShadow 1.6s infinite;
+
+    body.retro-dark-theme-no-aberration & {
+        animation: none;
+    }
+}

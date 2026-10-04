@@ -47,7 +47,7 @@ module.exports = (env, argv) => {
                 filename: 'retro-dark-theme.css',
             }),
             new CopyPlugin({
-                patterns: [{ from: 'module.json' }],
+                patterns: [{ from: 'module.json' }, { from: 'lang', to: 'lang' }],
             }),
         ],
         output: {
