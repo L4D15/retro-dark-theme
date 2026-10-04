@@ -1,3 +1,11 @@
+# 3.3.0
+
+-   General: Add Spanish translation.
+-   Mothership: Open items from their name in sheet lists, with a button to send them to chat.
+-   Mothership: Roll attack damage on demand from a button in the attack card, showing the wound effect once rolled.
+-   Mothership: Fold the weapon description in attack cards and fit description tables to the chat.
+-   Mothership: Fix styling issues in chat cards and roll dialogs.
+
 # 3.2.0
 
 -   Mothership: Color the advantage and disadvantage buttons in roll dialogs.
