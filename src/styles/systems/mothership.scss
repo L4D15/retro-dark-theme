@@ -1393,4 +1393,25 @@
         @include retro-button;
         justify-content: center;
     }
+
+    // Advantage/disadvantage in the outcome colors used by the chat results
+    .form-footer button[data-action='action_advantage'] {
+        --outcome-color: #{$success-color};
+    }
+
+    .form-footer button[data-action='action_disadvantage'] {
+        --outcome-color: #{$failure-color};
+    }
+
+    .form-footer button[data-action='action_advantage'],
+    .form-footer button[data-action='action_disadvantage'] {
+        color: var(--outcome-color);
+        border-color: var(--outcome-color);
+
+        &:hover {
+            background: var(--outcome-color);
+            color: $main-color;
+            border-color: var(--outcome-color);
+        }
+    }
 }
