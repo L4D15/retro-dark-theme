@@ -1,3 +1,10 @@
+# 3.2.0
+
+-   Mothership: Color the advantage and disadvantage buttons in roll dialogs.
+-   Mothership: Hide the flavor text added to successful checks, which has no game effect.
+-   Mothership: Restyle the character generator to match the character sheet layout.
+-   Mothership: Show character generator results once their Dice So Nice animation ends.
+
 # 3.1.0
 
 -   General: Update theme for Foundry v14.
