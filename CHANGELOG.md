@@ -1,3 +1,11 @@
+# 3.4.0
+
+-   General: Add a per-player accent color setting, which can tint just the highlights or whole Mothership sheets.
+-   Mothership: Group character and NPC sheets into framed panels with plain labels.
+-   Mothership: Show a placeholder line in empty item lists and wrap long item names.
+-   Mothership: Fit item sheets to their content.
+-   Mothership: Restyle the add-crew button, checkboxes and scrollbars in sheets.
+
 # 3.3.0
 
 -   General: Add Spanish translation.
