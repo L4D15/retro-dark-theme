@@ -20,7 +20,8 @@
             "Panels": {
                 "Stats": "Stats",
                 "Saves": "Saves",
-                "Status": "Status"
+                "Status": "Status",
+                "Description": "Description"
             }
         }
     }

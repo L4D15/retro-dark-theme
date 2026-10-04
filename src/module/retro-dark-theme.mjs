@@ -172,13 +172,21 @@ function _collapseWeaponDescription(html) {
 Hooks.on('renderMothershipActorSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipActorSheet);
     _moveSkillTrainingToNotes(html[0]);
-    _titleCharacterPanels(html[0]);
+    _titlePanels(html[0], {
+        '.char-header .abilities': 'Stats',
+        '.char-header .saves': 'Saves',
+        '.char-header .header-fields': 'Status',
+    });
     _openItemsFromNames(app, html);
 });
 
 Hooks.on('renderMothershipCreatureSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipCreatureSheet);
     _applyCreatureHeader(html[0]);
+    _titlePanels(html[0], {
+        '.creaturedescription': 'Description',
+        '.creaturedescription > .grid': 'Status',
+    });
     _openItemsFromNames(app, html);
 });
 
@@ -409,17 +417,11 @@ function _moveSkillTrainingToNotes(root) {
 }
 
 /**
- * Name the panels framing the stats, saves and status fields of the character sheet. The
- * titles are drawn by the stylesheet from `data-panel-title`; the status panel is drawn
- * by the header grid, since its fields aren't wrapped in a common element.
+ * Name the panels framing groups of fields in the sheets, given as selector: title key.
+ * The titles are drawn by the stylesheet from `data-panel-title`. Panels whose fields
+ * aren't wrapped in a common element are drawn by their grid, which gets the title.
  */
-function _titleCharacterPanels(root) {
-    const panels = {
-        '.char-header .abilities': 'Stats',
-        '.char-header .saves': 'Saves',
-        '.char-header .header-fields': 'Status',
-    };
-
+function _titlePanels(root, panels) {
     for (const [selector, key] of Object.entries(panels)) {
         const panel = root.querySelector(selector);
         if (!panel) continue;

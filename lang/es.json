@@ -20,7 +20,8 @@
             "Panels": {
                 "Stats": "Estadísticas",
                 "Saves": "Salvaciones",
-                "Status": "Estado"
+                "Status": "Estado",
+                "Description": "Descripción"
             }
         }
     }

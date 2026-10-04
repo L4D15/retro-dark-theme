@@ -290,18 +290,20 @@
 
 @mixin horizontal-field-minmax-label {
     @include field-label;
+    display: block;
+    justify-self: stretch;
+    padding-right: 0.5rem;
     font-size: 0.75rem;
     text-align: left;
-
-    &.rollable:hover {
-        color: $highlight-color;
-    }
     margin: 0;
-    padding: 0;
     position: static;
     width: auto;
     grid-column: 1;
     grid-row: 1;
+
+    &.rollable:hover {
+        color: $highlight-color;
+    }
 }
 
 @mixin horizontal-field-minmax-values {
