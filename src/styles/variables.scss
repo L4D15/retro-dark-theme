@@ -98,6 +98,12 @@ $input-text-color: $terminal-color;
 $input-border: 1px solid $terminal-color;
 $input-border-radius: 0px;
 
+// Sheet hierarchy: bright values, dimmer labels, dimmest frames
+$value-color: #ececec;
+$label-color: #8c8c8c;
+$frame-color: #555;
+$frame-border: 1px solid $frame-color;
+
 // Scroll Bar
 $scrollbar-color: #ddd;
 $scrollbar-border-color: #ddd;
@@ -108,7 +114,7 @@ $table-header-background: $terminal-color;
 $table-row-strip-color: #171619;
 $table-header-font: 'Kosugi', sans-serif;
 $table-header-color: $terminal-color-inverse;
-$table-body-font: 'IMB Plex Mono';
+$table-body-font: 'IBM Plex Mono', monospace;
 $table-body-color: #fff;
 
 // Quotes

@@ -16,7 +16,12 @@
         },
         "Mothership": {
             "SendToChat": "Enviar al chat",
-            "RollDamage": "Tirar daño"
+            "RollDamage": "Tirar daño",
+            "Panels": {
+                "Stats": "Estadísticas",
+                "Saves": "Salvaciones",
+                "Status": "Estado"
+            }
         }
     }
 }

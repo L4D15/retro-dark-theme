@@ -16,7 +16,12 @@
         },
         "Mothership": {
             "SendToChat": "Send to Chat",
-            "RollDamage": "Roll Damage"
+            "RollDamage": "Roll Damage",
+            "Panels": {
+                "Stats": "Stats",
+                "Saves": "Saves",
+                "Status": "Status"
+            }
         }
     }
 }

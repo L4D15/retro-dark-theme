@@ -172,6 +172,7 @@ function _collapseWeaponDescription(html) {
 Hooks.on('renderMothershipActorSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipActorSheet);
     _moveSkillTrainingToNotes(html[0]);
+    _titleCharacterPanels(html[0]);
     _openItemsFromNames(app, html);
 });
 
@@ -405,6 +406,27 @@ function _moveSkillTrainingToNotes(root) {
     );
 
     if (notesTab && trainingFrame) notesTab.prepend(trainingFrame);
+}
+
+/**
+ * Name the panels framing the stats, saves and status fields of the character sheet. The
+ * titles are drawn by the stylesheet from `data-panel-title`; the status panel is drawn
+ * by the header grid, since its fields aren't wrapped in a common element.
+ */
+function _titleCharacterPanels(root) {
+    const panels = {
+        '.char-header .abilities': 'Stats',
+        '.char-header .saves': 'Saves',
+        '.char-header .header-fields': 'Status',
+    };
+
+    for (const [selector, key] of Object.entries(panels)) {
+        const panel = root.querySelector(selector);
+        if (!panel) continue;
+        panel.dataset.panelTitle = game.i18n.localize(
+            `RETRO_DARK_THEME.Mothership.Panels.${key}`
+        );
+    }
 }
 
 /**
