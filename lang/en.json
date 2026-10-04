@@ -22,6 +22,14 @@
                     "green": "Green",
                     "player": "Player color"
                 }
+            },
+            "AccentScope": {
+                "Name": "Accent On",
+                "Hint": "Whether the accent color only highlights values, or tints the whole system sheets as shades of it. Other windows keep their colors.",
+                "Choices": {
+                    "values": "Values only",
+                    "sheet": "Whole sheet"
+                }
             }
         },
         "Mothership": {

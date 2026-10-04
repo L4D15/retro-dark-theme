@@ -89,6 +89,20 @@ function _registerAccentSetting() {
         onChange: () => _applyAccentColor(),
     });
 
+    game.settings.register(MODULE_ID, 'accentScope', {
+        name: 'RETRO_DARK_THEME.Settings.AccentScope.Name',
+        hint: 'RETRO_DARK_THEME.Settings.AccentScope.Hint',
+        scope: 'user',
+        config: true,
+        type: String,
+        choices: {
+            values: 'RETRO_DARK_THEME.Settings.AccentScope.Choices.values',
+            sheet: 'RETRO_DARK_THEME.Settings.AccentScope.Choices.sheet',
+        },
+        default: 'values',
+        onChange: () => _applyAccentColor(),
+    });
+
     // Keep the player color accent in sync when the user changes their color
     Hooks.on('updateUser', (user, changes) => {
         if (user.isSelf && 'color' in changes) _applyAccentColor();
@@ -98,6 +112,7 @@ function _registerAccentSetting() {
 /**
  * Set the accent color as the `--rdt-accent` CSS variable, which the styles fall back
  * from when it isn't set. The player's color is lightened if it's too dark for black.
+ * Tinting whole sheets flags the body with `retro-dark-theme-accent-sheet`.
  */
 function _applyAccentColor() {
     const root = document.documentElement;
@@ -114,6 +129,9 @@ function _applyAccentColor() {
 
     if (accent) root.style.setProperty('--rdt-accent', accent);
     else root.style.removeProperty('--rdt-accent');
+
+    const wholeSheet = game.settings.get(MODULE_ID, 'accentScope') === 'sheet';
+    document.body.classList.toggle(`${MODULE_ID}-accent-sheet`, !!accent && wholeSheet);
 }
 
 /**

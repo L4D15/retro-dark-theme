@@ -385,7 +385,7 @@
 // Border for inputs with mosh's `.noborder` class, whose `border: 0 !important` can't be
 // overridden from the modules layer.
 @mixin noborder-outline {
-    outline: $input-border;
+    outline: $frame-border;
     outline-offset: -1px;
 
     &:hover,

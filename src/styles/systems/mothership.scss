@@ -7,6 +7,51 @@
 // Wrappers that only get in the way of the layout are flattened with `display: contents`
 // instead of moving elements around with JS.
 
+// Whole-sheet accent: players can tint their sheets with their accent color, keeping the
+// brightness hierarchy as shades of it. The colors below read `--rdt-sheet-*` properties,
+// only defined on sheets with that option on, and keep the theme colors anywhere else.
+$terminal-color: var(--rdt-sheet-fg, #{$terminal-color});
+$ui-main-color: var(--rdt-sheet-fg, #{$ui-main-color});
+$highlight-color: var(--rdt-sheet-bright, #{$highlight-color});
+$accent-color: var(--rdt-sheet-bright, #{$accent-color});
+$button-text-color: var(--rdt-sheet-bright, #{$button-text-color});
+$journal-title-color: var(--rdt-sheet-bright, #{$journal-title-color});
+$quote-text-color: var(--rdt-sheet-bright, #{$quote-text-color});
+$title-h1-color: var(--rdt-sheet-bright, #{$title-h1-color});
+$title-h2-color: var(--rdt-sheet-bright, #{$title-h2-color});
+$title-h4-color: var(--rdt-sheet-bright, #{$title-h4-color});
+$title-h5-color: var(--rdt-sheet-bright, #{$title-h5-color});
+$label-color: var(--rdt-sheet-label, #{$label-color});
+$mutted-color: var(--rdt-sheet-muted, #{$mutted-color});
+$journal-text-color: var(--rdt-sheet-muted, #{$journal-text-color});
+$frame-color: var(--rdt-sheet-frame, #{$frame-color});
+$faded-color: var(--rdt-sheet-faded, #{$faded-color});
+$secondary-background: var(--rdt-sheet-faded, #{$secondary-background});
+$table-row-strip-color: var(--rdt-sheet-strip, #{$table-row-strip-color});
+$muted-background: var(--rdt-sheet-strip, #{$muted-background});
+
+// Colors derived from the ones above
+$input-text-color: $terminal-color;
+$input-label-color: $terminal-color;
+$table-header-background: $terminal-color;
+$input-border: 1px solid $terminal-color;
+$nav-border: 1px solid $terminal-color;
+$accent-border: 1px solid $accent-color;
+$active-border: 1px solid $highlight-color;
+$frame-border: 1px solid $frame-color;
+$main-border: 1px solid $faded-color;
+$table-border: 1px solid $faded-color;
+
+body.retro-dark-theme-accent-sheet .mosh.sheet {
+    --rdt-sheet-fg: var(--rdt-accent);
+    --rdt-sheet-bright: color-mix(in srgb, var(--rdt-accent) 55%, white);
+    --rdt-sheet-label: color-mix(in srgb, var(--rdt-accent) 62%, black);
+    --rdt-sheet-muted: color-mix(in srgb, var(--rdt-accent) 75%, black);
+    --rdt-sheet-frame: color-mix(in srgb, var(--rdt-accent) 38%, black);
+    --rdt-sheet-faded: color-mix(in srgb, var(--rdt-accent) 18%, black);
+    --rdt-sheet-strip: color-mix(in srgb, var(--rdt-accent) 9%, black);
+}
+
 // Every system window: sheets and the extra windows (settings, generator...)
 .window-app.mosh .window-content {
     @include crt;

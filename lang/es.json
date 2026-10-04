@@ -22,6 +22,14 @@
                     "green": "Verde",
                     "player": "Color del jugador"
                 }
+            },
+            "AccentScope": {
+                "Name": "Aplicar acento a",
+                "Hint": "Si el color de acento solo resalta los valores o tiñe las hojas del sistema enteras con tonos de ese color. El resto de ventanas mantiene sus colores.",
+                "Choices": {
+                    "values": "Solo los valores",
+                    "sheet": "Toda la hoja"
+                }
             }
         },
         "Mothership": {
