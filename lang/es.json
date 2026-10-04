@@ -12,11 +12,36 @@
             "Aberration": {
                 "Name": "Aberración cromática",
                 "Hint": "Bordes de color temblorosos en los textos tirables al pasar el ratón por encima."
+            },
+            "AccentColor": {
+                "Name": "Color de acento",
+                "Hint": "Color de los valores y de las etiquetas tirables en las hojas del sistema. El color del jugador usa el color de tu usuario, aclarado si es demasiado oscuro.",
+                "Choices": {
+                    "none": "Ninguno (gris)",
+                    "amber": "Ámbar",
+                    "green": "Verde",
+                    "player": "Color del jugador"
+                }
+            },
+            "AccentScope": {
+                "Name": "Aplicar acento a",
+                "Hint": "Si el color de acento solo resalta los valores o tiñe las hojas del sistema enteras con tonos de ese color. El resto de ventanas mantiene sus colores.",
+                "Choices": {
+                    "values": "Solo los valores",
+                    "sheet": "Toda la hoja"
+                }
             }
         },
         "Mothership": {
             "SendToChat": "Enviar al chat",
-            "RollDamage": "Tirar daño"
+            "RollDamage": "Tirar daño",
+            "EmptyList": "Sin entradas",
+            "Panels": {
+                "Stats": "Estadísticas",
+                "Saves": "Salvaciones",
+                "Status": "Estado",
+                "Description": "Descripción"
+            }
         }
     }
 }

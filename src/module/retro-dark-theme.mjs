@@ -6,10 +6,22 @@ const MODULE_ID = 'retro-dark-theme';
 const MOTHERSHIP_SHEET_SIZES = {
     MothershipActorSheet: { width: 475, height: 700 },
     MothershipCreatureSheet: { width: 475, height: 700 },
-    MothershipItemSheet: { width: 475, height: 350 },
+    // Fitted to the content, which grows with the description (see the stylesheet)
+    MothershipItemSheet: { width: 475, height: 'auto' },
     // Narrower than the system's 800px, to fit the same stat columns as the character sheet
     DLActorGenerator: { width: 490 },
 };
+
+/** Accent colors for sheet values and rollable labels; `player` uses the user's color. */
+const ACCENT_COLORS = {
+    none: null,
+    amber: '#ffb000',
+    green: '#33ff66',
+    player: 'player',
+};
+
+/** Lowest lightness for the player's color as accent, to stay readable on black. */
+const ACCENT_MIN_LIGHTNESS = 0.6;
 
 /** CRT effects each player can turn off, in case they get in the way of reading. */
 const CRT_EFFECTS = {
@@ -21,6 +33,7 @@ const CRT_EFFECTS = {
 Hooks.once('init', function () {
     console.log(`${MODULE_ID} | Initializing Retro Dark Theme...`);
     _registerEffectSettings();
+    _registerAccentSetting();
     _forceDarkTheme();
 });
 
@@ -29,6 +42,7 @@ Hooks.once('i18nInit', function () {
 });
 
 Hooks.once('ready', function () {
+    _applyAccentColor();
     console.log(`${MODULE_ID} | Retro Dark Theme initialized successfully.`);
 });
 
@@ -53,6 +67,100 @@ function _registerEffectSettings() {
 
         toggle(game.settings.get(MODULE_ID, `effect.${effect}`));
     }
+}
+
+/**
+ * Register a user setting for the accent color, so it follows each player across devices.
+ * It's applied once the user is known, see `_applyAccentColor`.
+ */
+function _registerAccentSetting() {
+    game.settings.register(MODULE_ID, 'accentColor', {
+        name: 'RETRO_DARK_THEME.Settings.AccentColor.Name',
+        hint: 'RETRO_DARK_THEME.Settings.AccentColor.Hint',
+        scope: 'user',
+        config: true,
+        type: String,
+        choices: Object.fromEntries(
+            Object.keys(ACCENT_COLORS).map((key) => [
+                key,
+                `RETRO_DARK_THEME.Settings.AccentColor.Choices.${key}`,
+            ])
+        ),
+        default: 'none',
+        onChange: () => _applyAccentColor(),
+    });
+
+    game.settings.register(MODULE_ID, 'accentScope', {
+        name: 'RETRO_DARK_THEME.Settings.AccentScope.Name',
+        hint: 'RETRO_DARK_THEME.Settings.AccentScope.Hint',
+        scope: 'user',
+        config: true,
+        type: String,
+        choices: {
+            values: 'RETRO_DARK_THEME.Settings.AccentScope.Choices.values',
+            sheet: 'RETRO_DARK_THEME.Settings.AccentScope.Choices.sheet',
+        },
+        default: 'values',
+        onChange: () => _applyAccentColor(),
+    });
+
+    // Keep the player color accent in sync when the user changes their color
+    Hooks.on('updateUser', (user, changes) => {
+        if (user.isSelf && 'color' in changes) _applyAccentColor();
+    });
+}
+
+/**
+ * Set the accent color as the `--rdt-accent` CSS variable, which the styles fall back
+ * from when it isn't set. The player's color is lightened if it's too dark for black.
+ * Tinting whole sheets flags the body with `retro-dark-theme-accent-sheet`.
+ */
+function _applyAccentColor() {
+    const root = document.documentElement;
+    let accent = ACCENT_COLORS[game.settings.get(MODULE_ID, 'accentColor')];
+
+    if (accent === 'player') {
+        const [hue, saturation, lightness] = game.user.color.hsl;
+        accent = foundry.utils.Color.fromHSL([
+            hue,
+            saturation,
+            Math.max(lightness, ACCENT_MIN_LIGHTNESS),
+        ]).css;
+    }
+
+    if (accent) {
+        root.style.setProperty('--rdt-accent', accent);
+        _updateAccentTintFilter(accent);
+    } else root.style.removeProperty('--rdt-accent');
+
+    const wholeSheet = game.settings.get(MODULE_ID, 'accentScope') === 'sheet';
+    document.body.classList.toggle(`${MODULE_ID}-accent-sheet`, !!accent && wholeSheet);
+}
+
+/**
+ * Images can't take a CSS color, so tinted sheets show item icons through an SVG filter
+ * (`#rdt-accent-tint`) that turns their brightness into shades of the accent.
+ */
+function _updateAccentTintFilter(accent) {
+    let matrix = document.getElementById('rdt-accent-tint-matrix');
+
+    if (!matrix) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.style.cssText = 'position: absolute; width: 0; height: 0;';
+        svg.innerHTML = `<filter id="rdt-accent-tint" color-interpolation-filters="sRGB">
+            <feColorMatrix id="rdt-accent-tint-matrix" type="matrix" />
+        </filter>`;
+        document.body.append(svg);
+        matrix = document.getElementById('rdt-accent-tint-matrix');
+    }
+
+    // Each channel is the pixel luminance scaled by that channel of the accent
+    const luminance = [0.2126, 0.7152, 0.0722];
+    const rows = foundry.utils.Color.from(accent).rgb.map((channel) =>
+        [...luminance.map((weight) => weight * channel), 0, 0].join(' ')
+    );
+    matrix.setAttribute('values', [...rows, '0 0 0 1 0'].join(' '));
 }
 
 /**
@@ -172,21 +280,34 @@ function _collapseWeaponDescription(html) {
 Hooks.on('renderMothershipActorSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipActorSheet);
     _moveSkillTrainingToNotes(html[0]);
+    _titlePanels(html[0], {
+        '.char-header .abilities': 'Stats',
+        '.char-header .saves': 'Saves',
+        '.char-header .header-fields': 'Status',
+    });
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipCreatureSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipCreatureSheet);
     _applyCreatureHeader(html[0]);
+    _titlePanels(html[0], {
+        '.creaturedescription': 'Description',
+        '.creaturedescription > .grid': 'Status',
+    });
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipShipSheet', function (app, html) {
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipShipSheetSBT', function (app, html) {
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 /**
@@ -213,6 +334,19 @@ function _openItemsFromNames(app, html) {
         );
         controls.prepend(chat);
     });
+}
+
+/**
+ * Item lists with no rows get a placeholder line under their header, drawn by the
+ * stylesheet from `data-empty`.
+ */
+function _markEmptyLists(root) {
+    const placeholder = game.i18n.localize('RETRO_DARK_THEME.Mothership.EmptyList');
+
+    for (const list of root.querySelectorAll('ol.items-list')) {
+        if (list.querySelector(':scope > li.item:not(.item-header)')) continue;
+        list.dataset.empty = placeholder;
+    }
 }
 
 Hooks.on('renderDLActorGenerator', function (app) {
@@ -381,8 +515,8 @@ function _waitForDiceOnChatMessages() {
 }
 
 Hooks.on('renderMothershipItemSheet', function (app) {
-    // Class and Skill sheets inherit from the item sheet but use their own layout
-    if (app.constructor.name !== 'MothershipItemSheet') return;
+    // The class sheet inherits from the item sheet but keeps its own, larger layout
+    if (app.constructor.name === 'MothershipClassSheet') return;
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipItemSheet);
 });
 
@@ -405,6 +539,21 @@ function _moveSkillTrainingToNotes(root) {
     );
 
     if (notesTab && trainingFrame) notesTab.prepend(trainingFrame);
+}
+
+/**
+ * Name the panels framing groups of fields in the sheets, given as selector: title key.
+ * The titles are drawn by the stylesheet from `data-panel-title`. Panels whose fields
+ * aren't wrapped in a common element are drawn by their grid, which gets the title.
+ */
+function _titlePanels(root, panels) {
+    for (const [selector, key] of Object.entries(panels)) {
+        const panel = root.querySelector(selector);
+        if (!panel) continue;
+        panel.dataset.panelTitle = game.i18n.localize(
+            `RETRO_DARK_THEME.Mothership.Panels.${key}`
+        );
+    }
 }
 
 /**

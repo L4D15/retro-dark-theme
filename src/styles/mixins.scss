@@ -134,13 +134,58 @@
     margin: 0;
 }
 
+// Plain field label: dim uppercase text, so the values stand out
+@mixin field-label {
+    font-family: $input-label-font;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    background: none;
+    color: $label-color;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+}
+
+// Frame around a group of fields, with its title set into the top border:
+//  ┌─ TITLE ──────┐
+//  │ fields       │
+//  └──────────────┘
+// The title goes in a `::before` or a child (see `panel-title`, null `$text` for a child),
+// filled with the background color to cut the border behind it.
+@mixin panel {
+    position: relative;
+    border: $frame-border;
+    padding: 0.7rem 0.4rem 0.4rem;
+}
+
+@mixin panel-title($text: attr(data-panel-title)) {
+    @if $text {
+        content: $text;
+    }
+    position: absolute;
+    top: 0;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    padding: 0 0.35rem;
+    background: $ui-background-color;
+    font-family: $input-label-font;
+    font-weight: bold;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    color: $terminal-color;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
 // Outlined, transparent input
 @mixin field-input {
     font-family: $input-text-font;
     font-weight: normal;
     background: none;
-    color: $input-text-color;
-    border: $input-border;
+    color: $value-color;
+    border: $frame-border;
     border-radius: $input-border-radius;
     box-shadow: none;
     outline: none;
@@ -155,6 +200,7 @@
 
 @mixin number-input {
     @include field-input;
+    color: $accent-value-color;
     font-family: $number-font;
     font-weight: $number-weight;
     text-align: center;
@@ -170,15 +216,16 @@
 }
 
 @mixin vertical-field-label {
-    @include label-box;
-    padding: 0.1rem 0.5rem;
-    font-size: 0.7rem;
+    @include field-label;
+    padding: 0.1rem 0;
+    font-size: 0.65rem;
     line-height: 13px;
     text-align: left;
 }
 
 @mixin vertical-field-input {
     @include field-input;
+    color: $accent-value-color;
     padding: 0;
     margin: 0;
     font-size: 1rem;
@@ -201,23 +248,24 @@
 
 // Label next to a value: [ LABEL | value ]
 @mixin horizontal-field-label {
-    @include label-box;
+    @include field-label;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: start;
     height: 26px;
-    padding: 0 0.25rem;
-    font-size: 0.8rem;
-    text-align: right;
+    padding: 0;
+    font-size: 0.75rem;
+    text-align: left;
     position: static;
     width: 100%;
+    min-width: 0;
 
     > * {
-        text-align: right;
+        text-align: left;
     }
 
     &:hover {
-        background: $highlight-color;
+        color: $accent-hover-color;
     }
 }
 
@@ -232,7 +280,7 @@
 // Label next to a pair of values: LABEL [ current | max ]
 @mixin horizontal-field-minmax {
     display: grid;
-    grid-template-columns: 1fr 64px;
+    grid-template-columns: 1fr 70px;
     grid-template-rows: 26px;
     align-items: center;
     width: 100%;
@@ -243,28 +291,29 @@
 }
 
 @mixin horizontal-field-minmax-label {
-    font-family: $input-label-font;
-    font-weight: bold;
-    font-size: 0.8rem;
-    color: $terminal-color;
-    background: none;
-    border: none;
-    text-align: right;
-    text-transform: uppercase;
+    @include field-label;
+    display: block;
+    justify-self: stretch;
+    padding-right: 0.5rem;
+    font-size: 0.75rem;
+    text-align: left;
     margin: 0;
-    padding: 0;
     position: static;
     width: auto;
     grid-column: 1;
     grid-row: 1;
+
+    &.rollable:hover {
+        color: $accent-hover-color;
+    }
 }
 
 @mixin horizontal-field-minmax-values {
     grid-column: 2;
     grid-row: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
+    grid-template-columns: 1fr 10px 1fr;
+    gap: 0;
     width: 100% !important;
     height: 26px;
     margin: 0;
@@ -273,8 +322,31 @@
     border: none;
     border-radius: 0 !important;
 
+    // Gap between the values, a slash only when they're current / max: the second value
+    // can also be a minimum (stress) or a different stat (armor points / reduction)
     .slant {
-        display: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: stretch;
+        width: auto;
+        height: auto;
+        margin: 0;
+        background: none;
+        border: none !important;
+        transform: none !important;
+        font-family: $number-font;
+        font-size: 0.8rem;
+        color: $label-color;
+    }
+
+    &:has(input[name$='.max']) .slant::before {
+        content: '/';
+    }
+
+    // Minimums (stress) are secondary, like the bonuses
+    input[name$='.min'] {
+        color: $label-color;
     }
 
     input,
@@ -286,8 +358,8 @@
         width: 100%;
         min-width: 20px;
         height: 26px;
-        font-size: 0.8rem;
-        background: $faded-color;
+        font-size: 0.9rem;
+        background: none;
     }
 
     .whiteText,
@@ -313,7 +385,7 @@
 // Border for inputs with mosh's `.noborder` class, whose `border: 0 !important` can't be
 // overridden from the modules layer.
 @mixin noborder-outline {
-    outline: $input-border;
+    outline: $frame-border;
     outline-offset: -1px;
 
     &:hover,
@@ -359,7 +431,7 @@
     margin: 0;
     padding: 0;
     background: none;
-    border: $input-border;
+    border: $frame-border;
     border-radius: 0;
     box-shadow: none !important;
     outline: none;

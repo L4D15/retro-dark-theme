@@ -12,11 +12,36 @@
             "Aberration": {
                 "Name": "Chromatic Aberration",
                 "Hint": "Shaking color fringes on rollable text when hovering over it."
+            },
+            "AccentColor": {
+                "Name": "Accent Color",
+                "Hint": "Color for the values and rollable labels in the system sheets. The player color uses your user color, lightened if it's too dark.",
+                "Choices": {
+                    "none": "None (grey)",
+                    "amber": "Amber",
+                    "green": "Green",
+                    "player": "Player color"
+                }
+            },
+            "AccentScope": {
+                "Name": "Accent On",
+                "Hint": "Whether the accent color only highlights values, or tints the whole system sheets as shades of it. Other windows keep their colors.",
+                "Choices": {
+                    "values": "Values only",
+                    "sheet": "Whole sheet"
+                }
             }
         },
         "Mothership": {
             "SendToChat": "Send to Chat",
-            "RollDamage": "Roll Damage"
+            "RollDamage": "Roll Damage",
+            "EmptyList": "No entries",
+            "Panels": {
+                "Stats": "Stats",
+                "Saves": "Saves",
+                "Status": "Status",
+                "Description": "Description"
+            }
         }
     }
 }
