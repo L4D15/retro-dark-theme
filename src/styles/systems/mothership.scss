@@ -52,26 +52,11 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
     --rdt-sheet-faded: color-mix(in srgb, var(--rdt-accent) 18%, black);
     --rdt-sheet-strip: color-mix(in srgb, var(--rdt-accent) 9%, black);
 
-    // Item icons in the accent: greyscale, multiplied by an overlay of the accent color.
-    // The icons are 24px, centered in their 27px cell.
-    ol.items-list li.item .item-image {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-            filter: grayscale(1);
-        }
-
-        &:has(img)::after {
-            content: '';
-            position: absolute;
-            inset: 1.5px;
-            background: var(--rdt-accent);
-            mix-blend-mode: multiply;
-            pointer-events: none;
-        }
+    // Item icons in shades of the accent, through the SVG filter added with the accent.
+    // Portraits and ship images keep their colors.
+    ol.items-list li.item .item-image img,
+    &.item img[data-edit='img'] {
+        filter: url(#rdt-accent-tint);
     }
 
     // Foundry's resize handle
@@ -91,6 +76,11 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
 }
 
 .mosh.sheet {
+    &,
+    * {
+        scrollbar-color: $label-color transparent;
+    }
+
     // Tabs
     nav.mosh.sheet-tabs {
         display: flex;
@@ -468,6 +458,18 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
         border: $main-border;
         outline: none;
         border-radius: 0;
+
+        // Add crew button, dark grey in the system
+        .item-control {
+            font-family: $input-label-font;
+            color: $label-color;
+            text-transform: uppercase;
+
+            &:hover {
+                color: $accent-hover-color;
+                @include no-glow;
+            }
+        }
     }
 
     .sbt-text-area,
@@ -487,7 +489,7 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
     }
 
     input[type='checkbox'] {
-        accent-color: $terminal-color;
+        @include retro-check;
     }
 
     // Megadamage effects list (ship sidebar and popout)
@@ -1072,6 +1074,36 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
 
 // Item sheets (armor, weapons, items...)
 .mosh.sheet.item {
+    // Opened at the height of the content: the description grows with its text instead
+    // of filling the window, and the window only scrolls past most of the screen. The
+    // system sets the body height inline on every resize (window height - 192px); it
+    // stretches to fill a window resized taller instead.
+    &.window-app {
+        max-height: 90vh;
+    }
+
+    .window-content > form {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+
+    .sheet-body {
+        flex: 1 0 auto;
+        height: auto !important;
+    }
+
+    .sheet-body .tab,
+    .sheet-body .tab .editor,
+    .sheet-body .tab .editor-content {
+        height: auto;
+        min-height: 0;
+    }
+
+    .sheet-body .tab .editor {
+        min-height: 5rem;
+    }
+
     .sheet-header {
         display: flex;
         flex: 0 0 auto;

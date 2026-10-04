@@ -6,7 +6,8 @@ const MODULE_ID = 'retro-dark-theme';
 const MOTHERSHIP_SHEET_SIZES = {
     MothershipActorSheet: { width: 475, height: 700 },
     MothershipCreatureSheet: { width: 475, height: 700 },
-    MothershipItemSheet: { width: 475, height: 350 },
+    // Fitted to the content, which grows with the description (see the stylesheet)
+    MothershipItemSheet: { width: 475, height: 'auto' },
     // Narrower than the system's 800px, to fit the same stat columns as the character sheet
     DLActorGenerator: { width: 490 },
 };
@@ -127,11 +128,39 @@ function _applyAccentColor() {
         ]).css;
     }
 
-    if (accent) root.style.setProperty('--rdt-accent', accent);
-    else root.style.removeProperty('--rdt-accent');
+    if (accent) {
+        root.style.setProperty('--rdt-accent', accent);
+        _updateAccentTintFilter(accent);
+    } else root.style.removeProperty('--rdt-accent');
 
     const wholeSheet = game.settings.get(MODULE_ID, 'accentScope') === 'sheet';
     document.body.classList.toggle(`${MODULE_ID}-accent-sheet`, !!accent && wholeSheet);
+}
+
+/**
+ * Images can't take a CSS color, so tinted sheets show item icons through an SVG filter
+ * (`#rdt-accent-tint`) that turns their brightness into shades of the accent.
+ */
+function _updateAccentTintFilter(accent) {
+    let matrix = document.getElementById('rdt-accent-tint-matrix');
+
+    if (!matrix) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.style.cssText = 'position: absolute; width: 0; height: 0;';
+        svg.innerHTML = `<filter id="rdt-accent-tint" color-interpolation-filters="sRGB">
+            <feColorMatrix id="rdt-accent-tint-matrix" type="matrix" />
+        </filter>`;
+        document.body.append(svg);
+        matrix = document.getElementById('rdt-accent-tint-matrix');
+    }
+
+    // Each channel is the pixel luminance scaled by that channel of the accent
+    const luminance = [0.2126, 0.7152, 0.0722];
+    const rows = foundry.utils.Color.from(accent).rgb.map((channel) =>
+        [...luminance.map((weight) => weight * channel), 0, 0].join(' ')
+    );
+    matrix.setAttribute('values', [...rows, '0 0 0 1 0'].join(' '));
 }
 
 /**
@@ -486,8 +515,8 @@ function _waitForDiceOnChatMessages() {
 }
 
 Hooks.on('renderMothershipItemSheet', function (app) {
-    // Class and Skill sheets inherit from the item sheet but use their own layout
-    if (app.constructor.name !== 'MothershipItemSheet') return;
+    // The class sheet inherits from the item sheet but keeps its own, larger layout
+    if (app.constructor.name === 'MothershipClassSheet') return;
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipItemSheet);
 });
 
