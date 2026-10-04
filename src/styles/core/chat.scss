@@ -252,21 +252,25 @@
         --outcome-color: #{$failure-color};
     }
 
+    // Only the checked roll: later rolls in the same card (e.g. the maintenance issue
+    // drawn after a failed maintenance check) aren't successes or failures themselves
+    $checked-total: '.dice-roll:not(.dice-roll ~ .dice-roll) .dice-total';
+
     &.roll-success,
     &.roll-failure {
         .roll-outcome,
-        .dice-total {
+        #{$checked-total} {
             color: var(--outcome-color) !important;
         }
 
-        .dice-total {
+        #{$checked-total} {
             border-color: var(--outcome-color);
         }
     }
 
     &.roll-critical {
         .roll-outcome,
-        .dice-total {
+        #{$checked-total} {
             text-shadow: 0 0 6px var(--outcome-color);
 
             body.retro-dark-theme-no-glow & {
