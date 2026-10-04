@@ -1536,6 +1536,54 @@
         font-weight: bold;
     }
 
+    // Weapon description folded by the module script, opened from its divider
+    .weapon-description {
+        > summary {
+            display: block;
+            list-style: none;
+            cursor: pointer;
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+        }
+
+        .grid.grid-2col {
+            grid-template-columns: 10px auto 1fr !important;
+            gap: 0.25rem;
+            align-items: center;
+
+            > div {
+                height: auto !important;
+            }
+
+            > div:nth-child(2) {
+                color: $mutted-color;
+                white-space: nowrap;
+
+                &::after {
+                    content: ' [+]';
+                }
+            }
+
+            > div:not(:nth-child(2)) {
+                border-bottom-color: $mutted-color !important;
+            }
+        }
+
+        > summary:hover .grid.grid-2col > div:nth-child(2) {
+            color: $highlight-color;
+        }
+
+        &[open] .grid.grid-2col > div:nth-child(2)::after {
+            content: ' [-]';
+        }
+
+        &[open] > summary {
+            margin-bottom: 0.5rem;
+        }
+    }
+
     .rollh2 {
         font-family: $input-label-font;
         color: $terminal-color;
@@ -1543,6 +1591,33 @@
 
     .table-results .result-text {
         @include sheet-text;
+    }
+
+    // Stats tables in item descriptions (weapon ranges, damage, shots...), compacted to
+    // fit the width of the chat log
+    table {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0.5rem 0;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 0.15rem 0.2rem;
+        font-size: 0.7rem;
+        line-height: 1.1rem;
+        text-align: center;
+        vertical-align: middle;
+        overflow-wrap: anywhere;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td a.content-link > i {
+        display: none;
     }
 }
 

@@ -116,6 +116,7 @@ function _hideCheckSuccessFlavor() {
 Hooks.on('renderChatMessageHTML', function (message, html) {
     _addSpeakerPortrait(message, html);
     _tagRollOutcome(html);
+    _collapseWeaponDescription(html);
 });
 
 /**
@@ -148,6 +149,30 @@ function _tagRollOutcome(html) {
     html.classList.toggle('roll-success', text.includes('SUCCESS'));
     html.classList.toggle('roll-failure', text.includes('FAILURE'));
     html.classList.toggle('roll-critical', text.includes('CRITICAL'));
+}
+
+/**
+ * Attack and damage cards include the weapon's whole description, stats table included.
+ * Fold it under its "Description" divider, leaving the wound effect below it in sight.
+ */
+function _collapseWeaponDescription(html) {
+    const divider = html.querySelector('.mosh .rollcontainer .grid.grid-2col');
+    if (!divider || divider.closest('.weapon-description')) return;
+
+    // The description follows the divider after a spacer
+    let content = divider.nextElementSibling;
+    while (content && !content.matches('.description')) {
+        content = content.nextElementSibling;
+    }
+    const body = content?.querySelector('.body');
+    if (!body?.innerHTML.trim()) return;
+
+    const details = document.createElement('details');
+    details.classList.add('weapon-description');
+    const summary = document.createElement('summary');
+    summary.append(divider);
+    details.append(summary, body);
+    content.prepend(details);
 }
 
 // Mothership sheets (ApplicationV1: hooks receive jQuery)
