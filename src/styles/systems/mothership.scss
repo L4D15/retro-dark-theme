@@ -12,6 +12,7 @@
 // only defined on sheets with that option on, and keep the theme colors anywhere else.
 $terminal-color: var(--rdt-sheet-fg, #{$terminal-color});
 $ui-main-color: var(--rdt-sheet-fg, #{$ui-main-color});
+$value-color: var(--rdt-sheet-fg, #{$value-color});
 $highlight-color: var(--rdt-sheet-bright, #{$highlight-color});
 $accent-color: var(--rdt-sheet-bright, #{$accent-color});
 $button-text-color: var(--rdt-sheet-bright, #{$button-text-color});
@@ -50,6 +51,35 @@ body.retro-dark-theme-accent-sheet .mosh.sheet {
     --rdt-sheet-frame: color-mix(in srgb, var(--rdt-accent) 38%, black);
     --rdt-sheet-faded: color-mix(in srgb, var(--rdt-accent) 18%, black);
     --rdt-sheet-strip: color-mix(in srgb, var(--rdt-accent) 9%, black);
+
+    // Item icons in the accent: greyscale, multiplied by an overlay of the accent color.
+    // The icons are 24px, centered in their 27px cell.
+    ol.items-list li.item .item-image {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            filter: grayscale(1);
+        }
+
+        &:has(img)::after {
+            content: '';
+            position: absolute;
+            inset: 1.5px;
+            background: var(--rdt-accent);
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+    }
+
+    // Foundry's resize handle
+    .window-resizable-handle {
+        background: $frame-color;
+        color: $terminal-color;
+        border-color: $faded-color;
+    }
 }
 
 // Every system window: sheets and the extra windows (settings, generator...)
