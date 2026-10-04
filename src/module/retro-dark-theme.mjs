@@ -7,6 +7,8 @@ const MOTHERSHIP_SHEET_SIZES = {
     MothershipActorSheet: { width: 475, height: 700 },
     MothershipCreatureSheet: { width: 475, height: 700 },
     MothershipItemSheet: { width: 475, height: 350 },
+    // Narrower than the system's 800px, to fit the same stat columns as the character sheet
+    DLActorGenerator: { width: 490 },
 };
 
 /** CRT effects each player can turn off, in case they get in the way of reading. */
@@ -159,6 +161,60 @@ Hooks.on('renderMothershipCreatureSheet', function (app, html) {
     _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.MothershipCreatureSheet);
     _applyCreatureHeader(html[0]);
 });
+
+Hooks.on('renderDLActorGenerator', function (app) {
+    _applyInitialSheetSize(app, MOTHERSHIP_SHEET_SIZES.DLActorGenerator);
+    _waitForDiceInGenerator(app.constructor);
+});
+
+Hooks.once('setup', function () {
+    _waitForDiceOnChatMessages();
+});
+
+/** Number of character generator rolls in progress, see `_waitForDiceInGenerator`. */
+let generatorRolls = 0;
+
+/**
+ * The character generator fills in each result as soon as its roll is sent to chat,
+ * while Dice So Nice is still throwing the dice. Count its rolls in progress, so the
+ * chat messages they create wait for the animation before the results are shown.
+ */
+function _waitForDiceInGenerator(generatorClass) {
+    const proto = generatorClass.prototype;
+    if (proto[`${MODULE_ID}.waitsForDice`]) return;
+    proto[`${MODULE_ID}.waitsForDice`] = true;
+
+    for (const method of ['rollDices', 'rollTable']) {
+        const original = proto[method];
+        if (typeof original !== 'function') continue;
+
+        proto[method] = async function (...args) {
+            generatorRolls++;
+            try {
+                return await original.apply(this, args);
+            } finally {
+                generatorRolls--;
+            }
+        };
+    }
+}
+
+/**
+ * Chat messages created during a character generator roll resolve once their
+ * Dice So Nice animation is over (right away when Dice So Nice isn't active).
+ */
+function _waitForDiceOnChatMessages() {
+    const messageClass = CONFIG.ChatMessage.documentClass;
+    const create = messageClass.create;
+
+    messageClass.create = async function (...args) {
+        const message = await create.apply(this, args);
+        if (generatorRolls > 0 && message?.id && game.dice3d) {
+            await game.dice3d.waitFor3DAnimationByMessageID(message.id);
+        }
+        return message;
+    };
+}
 
 Hooks.on('renderMothershipItemSheet', function (app) {
     // Class and Skill sheets inherit from the item sheet but use their own layout

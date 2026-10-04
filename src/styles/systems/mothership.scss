@@ -1087,45 +1087,247 @@
     }
 }
 
-// Character generator: same attribute rows as the character sheet, with dice buttons
+// Character generator: same attribute rows and columns as the character sheet, with
+// dice buttons, and the class options stacked below
+//
+//  [ name       | class     | credits ]
+//  [ attributes ] [ saves ] [ health  ]
+//                           [ wounds  ]
+//  [ skills                           ]
+//  [ loadout                          ]
+//  [ trinket                          ]
+//  [ patch                            ]
+//  [ roll everything / remove items / save ]
+// Grow with the content: skills and loadout are filled in without re-rendering, so the
+// height Foundry measured on render ends up hiding the buttons below a scrollbar
+.window-app.mosh:has(> .window-content > form.actor-generator) {
+    height: auto !important;
+    max-height: 100vh;
+}
+
 .mosh .actor-generator {
+    // Header fields and both stat columns flattened into a single grid
     .char-header {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        display: grid;
+        grid-template-columns: 4fr 3fr 3fr;
+        gap: 4px 8px;
         margin-top: 0.25rem;
     }
 
-    #generator-header-grid-1col {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
-        height: auto;
-        background: none;
-        border: none;
-        border-radius: 0;
-        padding: 0;
+    #generator-header-grid-1col,
+    .header-fields,
+    .header-fields > .grid {
+        display: contents;
+    }
 
+    #generator-header-grid-1col {
         > div {
             @include vertical-field;
+            grid-row: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        > div:nth-child(1) {
+            grid-column: 1;
+        }
+
+        > div:nth-child(2) {
+            grid-column: 2;
+        }
+
+        > div:nth-child(4) {
+            grid-column: 3;
         }
 
         .headerinputfield {
             min-height: 30px;
         }
+
+        // Wounds, below health: [ LABEL | bonus ], the bonus aligned with health's
+        > div:nth-child(3) {
+            grid-column: 3;
+            grid-row: 3;
+            grid-template-columns: 1fr 40px 10px 34px;
+            grid-template-rows: 26px;
+            margin: 0;
+
+            .headerinputtext {
+                @include horizontal-field-label;
+                grid-column: 1 / 3;
+            }
+
+            .headerinputfield {
+                grid-column: 4;
+                min-height: 0;
+                height: 26px;
+
+                input {
+                    padding: 0;
+                    text-align: center;
+                    font-family: $number-font;
+                    font-weight: $number-weight;
+                }
+            }
+        }
     }
 
-    .header-fields,
+    // Attributes in the first column, health and then the saves in the other two
+    .header-fields > .grid:first-child > * {
+        grid-column: 1;
+    }
+
+    .header-fields > .grid:last-child > :first-child {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
+    .header-fields > .grid:last-child > :not(:first-child) {
+        grid-column: 2;
+    }
+
+    @for $i from 1 through 4 {
+        .header-fields > .grid:first-child > :nth-child(#{$i}),
+        .header-fields > .grid:last-child > :nth-child(#{$i + 1}) {
+            grid-row: #{$i + 1};
+        }
+    }
+
+    // Class options, one per row, with room between them to tell the groups apart. The
+    // system pairs them in two groups (patch + trinket, skills + loadout); flattening
+    // the groups lets the form order them freely
+    &.actor-generator {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
     .element-group {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4px 8px;
-        margin: 0 0 0.5rem;
+        grid-template-columns: 1fr;
+        margin: 0;
+
+        &:not(.grid-3col) {
+            display: contents;
+        }
 
         > .grid {
             gap: 4px !important;
             align-content: start;
             margin: 0;
+        }
+    }
+
+    .element-group > :has([id='system.class.skills.uuid']) {
+        order: 1;
+    }
+
+    .element-group > :has([id='system.class.loadout.uuid']) {
+        order: 2;
+    }
+
+    .element-group > :has([id='system.class.trinket.uuid']) {
+        order: 3;
+    }
+
+    .element-group > :has([id='system.class.patch.uuid']) {
+        order: 4;
+    }
+
+    .element-group.grid-3col {
+        order: 5;
+    }
+
+    // Class options (patch, trinket, skills, loadout) styled as the character sheet's
+    // Trauma Response: a small label bar on top of the frame, touching it, with the
+    // roll/restart button at the end of the bar
+    .element-group:not(.grid-3col) {
+        > .grid {
+            gap: 0 !important;
+        }
+
+        .mainstat {
+            grid-template-columns: 1fr 40px;
+            height: 18px;
+        }
+
+        .mainstatlabel {
+            @include vertical-field-label;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            height: 18px;
+            line-height: 16px;
+
+            > * {
+                text-align: left;
+            }
+
+            &:hover {
+                background: $terminal-color;
+            }
+        }
+
+        .clicable-item.circle-input {
+            height: 18px;
+            padding: 1px;
+            font-size: 0.75rem !important;
+            line-height: 16px;
+        }
+
+        input.circle-input:not(.clicable-item) {
+            height: 18px;
+            font-size: 0.75rem;
+        }
+
+        .headerinputfield {
+            @include sheet-text;
+            min-height: 26px;
+
+            input {
+                font-size: inherit;
+            }
+        }
+
+        .ulinputfield ul {
+            min-height: 50px;
+        }
+    }
+
+    // Remove previous items, roll everything and save, as tall as the stat rows and
+    // spaced evenly in both directions:
+    //  [ remove items ] [ roll everything ]
+    //          [ save            ]
+    .element-group.grid-3col {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+
+        > .mainstatwrapper {
+            display: contents;
+        }
+
+        > .mainstat:has(.checkbox-round) {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        [id='roll.everything'] {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        // Centered below, as wide as one column
+        #submit {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            justify-self: center;
+            width: calc((100% - 8px) / 2);
+        }
+
+        .mainstat,
+        .mainstatlabel,
+        .clicable-item.circle-input {
+            height: 26px;
+            min-height: 0;
         }
     }
 
@@ -1198,6 +1400,52 @@
 
     img.clicable-item {
         filter: invert(1);
+    }
+
+    // Rolled results replace the dice button with a readonly input, same size as it
+    input.circle-input:not(.clicable-item) {
+        @include number-input;
+        width: 40px;
+        height: 26px;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    // Skills restart icon: pin the icon font and glyph in case the box styles above
+    // displace them
+    i.clicable-item.circle-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--fa-family-classic, 'Font Awesome 7 Pro') !important;
+        font-weight: 900 !important;
+        font-style: normal;
+
+        &::before {
+            content: '\f0e2';
+        }
+    }
+
+    // Remove previous items: the system's checkbox has no look of its own, show it as
+    // the square terminal check centered in the button box
+    input.checkbox-round.circle-input {
+        @include retro-check;
+        width: 40px;
+        min-height: 26px;
+        padding: 0;
+        border-radius: 0;
+        // Check icon instead of the filled square
+        &:checked::before {
+            content: '\f00c';
+            width: auto;
+            height: auto;
+            background: none;
+            color: $highlight-color;
+            font-family: var(--fa-family-classic, 'Font Awesome 7 Pro');
+            font-weight: 900;
+            font-size: 1rem;
+            line-height: 1;
+        }
     }
 
     .headerinputfield {
