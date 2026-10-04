@@ -178,6 +178,7 @@ Hooks.on('renderMothershipActorSheet', function (app, html) {
         '.char-header .header-fields': 'Status',
     });
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipCreatureSheet', function (app, html) {
@@ -188,14 +189,17 @@ Hooks.on('renderMothershipCreatureSheet', function (app, html) {
         '.creaturedescription > .grid': 'Status',
     });
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipShipSheet', function (app, html) {
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 Hooks.on('renderMothershipShipSheetSBT', function (app, html) {
     _openItemsFromNames(app, html);
+    _markEmptyLists(html[0]);
 });
 
 /**
@@ -222,6 +226,19 @@ function _openItemsFromNames(app, html) {
         );
         controls.prepend(chat);
     });
+}
+
+/**
+ * Item lists with no rows get a placeholder line under their header, drawn by the
+ * stylesheet from `data-empty`.
+ */
+function _markEmptyLists(root) {
+    const placeholder = game.i18n.localize('RETRO_DARK_THEME.Mothership.EmptyList');
+
+    for (const list of root.querySelectorAll('ol.items-list')) {
+        if (list.querySelector(':scope > li.item:not(.item-header)')) continue;
+        list.dataset.empty = placeholder;
+    }
 }
 
 Hooks.on('renderDLActorGenerator', function (app) {

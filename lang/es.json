@@ -17,6 +17,7 @@
         "Mothership": {
             "SendToChat": "Enviar al chat",
             "RollDamage": "Tirar daño",
+            "EmptyList": "Sin entradas",
             "Panels": {
                 "Stats": "Estadísticas",
                 "Saves": "Salvaciones",
