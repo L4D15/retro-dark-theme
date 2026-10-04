@@ -13,18 +13,9 @@ const MOTHERSHIP_SHEET_SIZES = {
 
 /** CRT effects each player can turn off, in case they get in the way of reading. */
 const CRT_EFFECTS = {
-    scanlines: {
-        name: 'Scanlines',
-        hint: 'Horizontal lines and RGB pattern over windows and chat messages.',
-    },
-    glow: {
-        name: 'Glow',
-        hint: 'Light bloom around highlighted elements and critical roll results.',
-    },
-    aberration: {
-        name: 'Chromatic Aberration',
-        hint: 'Shaking color fringes on rollable text when hovering over it.',
-    },
+    scanlines: 'Scanlines',
+    glow: 'Glow',
+    aberration: 'Aberration',
 };
 
 Hooks.once('init', function () {
@@ -46,13 +37,13 @@ Hooks.once('ready', function () {
  * `retro-dark-theme-no-<effect>` class on the body, which the styles use to turn them off.
  */
 function _registerEffectSettings() {
-    for (const [effect, { name, hint }] of Object.entries(CRT_EFFECTS)) {
+    for (const [effect, key] of Object.entries(CRT_EFFECTS)) {
         const toggle = (enabled) =>
             document.body.classList.toggle(`${MODULE_ID}-no-${effect}`, !enabled);
 
         game.settings.register(MODULE_ID, `effect.${effect}`, {
-            name,
-            hint,
+            name: `RETRO_DARK_THEME.Settings.${key}.Name`,
+            hint: `RETRO_DARK_THEME.Settings.${key}.Hint`,
             scope: 'client',
             config: true,
             type: Boolean,
@@ -215,7 +206,7 @@ function _openItemsFromNames(app, html) {
 
         const chat = document.createElement('a');
         chat.classList.add('item-control', 'item-chat');
-        chat.title = 'Send to Chat';
+        chat.title = game.i18n.localize('RETRO_DARK_THEME.Mothership.SendToChat');
         chat.innerHTML = '<i class="fas fa-comment"></i>';
         chat.addEventListener('click', (event) =>
             app.actor.printDescription(item.id, { event })
@@ -324,7 +315,9 @@ function _rewriteAttackContent(data) {
     button.classList.add('roll-damage');
     button.dataset.damage = formula + (closing.length === 3 ? ']' : '');
     button.dataset.sentence = damage.innerHTML.replace(expression, DAMAGE_PLACEHOLDER);
-    button.innerHTML = '<i class="fas fa-burst"></i> Roll Damage';
+    button.innerHTML = `<i class="fas fa-burst"></i> ${game.i18n.localize(
+        'RETRO_DARK_THEME.Mothership.RollDamage'
+    )}`;
     damage.replaceChildren(button);
 
     // The wound effect body starts with a line break before its "Wound Effect" title

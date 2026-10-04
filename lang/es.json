@@ -1,0 +1,22 @@
+{
+    "RETRO_DARK_THEME": {
+        "Settings": {
+            "Scanlines": {
+                "Name": "Líneas de escaneo",
+                "Hint": "Líneas horizontales y patrón RGB sobre las ventanas y los mensajes del chat."
+            },
+            "Glow": {
+                "Name": "Resplandor",
+                "Hint": "Halo de luz alrededor de los elementos destacados y de los resultados críticos."
+            },
+            "Aberration": {
+                "Name": "Aberración cromática",
+                "Hint": "Bordes de color temblorosos en los textos tirables al pasar el ratón por encima."
+            }
+        },
+        "Mothership": {
+            "SendToChat": "Enviar al chat",
+            "RollDamage": "Tirar daño"
+        }
+    }
+}

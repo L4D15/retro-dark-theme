@@ -1,0 +1,22 @@
+{
+    "RETRO_DARK_THEME": {
+        "Settings": {
+            "Scanlines": {
+                "Name": "Scanlines",
+                "Hint": "Horizontal lines and RGB pattern over windows and chat messages."
+            },
+            "Glow": {
+                "Name": "Glow",
+                "Hint": "Light bloom around highlighted elements and critical roll results."
+            },
+            "Aberration": {
+                "Name": "Chromatic Aberration",
+                "Hint": "Shaking color fringes on rollable text when hovering over it."
+            }
+        },
+        "Mothership": {
+            "SendToChat": "Send to Chat",
+            "RollDamage": "Roll Damage"
+        }
+    }
+}

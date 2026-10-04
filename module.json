@@ -14,6 +14,18 @@
     },
     "esmodules": ["retro-dark-theme.bundle.mjs"],
     "styles": ["retro-dark-theme.css"],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        },
+        {
+            "lang": "es",
+            "name": "Español",
+            "path": "lang/es.json"
+        }
+    ],
     "flags": {
         "hotReload": {
             "extensions": ["css", "html", "json"],
